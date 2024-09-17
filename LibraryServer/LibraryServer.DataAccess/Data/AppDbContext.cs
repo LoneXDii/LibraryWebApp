@@ -1,4 +1,4 @@
-﻿using LibraryServer.Domain.Entities;
+﻿using LibraryServer.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryServer.DataAccess.Data;

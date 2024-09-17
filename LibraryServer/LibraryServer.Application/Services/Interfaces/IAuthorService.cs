@@ -1,13 +1,14 @@
 ﻿using LibraryServer.Application.DTO;
+using LibraryServer.Application.Models;
 using System.Linq.Expressions;
 
 namespace LibraryServer.Application.Services.Interfaces;
 
 public interface IAuthorService
 {
-    Task<IReadOnlyList<AuthorDTO>> ListAllAsync();
-    Task<IReadOnlyList<AuthorDTO>> ListAsync(Expression<Func<AuthorDTO, bool>> filter);
-    Task<AuthorDTO> GetByIdAsync(int id);
+    Task<ResponseData<List<AuthorDTO>>> ListAllAsync();
+    Task<ResponseData<List<AuthorDTO>>> ListAsync(Expression<Func<AuthorDTO, bool>> filter);
+    Task<ResponseData<AuthorDTO>> GetByIdAsync(int id);
     Task AddAsync(AuthorDTO author);
     Task UpdateAsync(int id, AuthorDTO author);
     Task DeleteAsync(AuthorDTO author);

@@ -31,12 +31,12 @@ internal class Repository<T> : IRepository<T> where T : Entity
         return await query.ElementAtAsync(id);
     }
 
-    public async Task<IReadOnlyList<T>> ListAllAsync()
+    public async Task<IEnumerable<T>> ListAllAsync()
     {
         return await _entities.AsQueryable().ToListAsync();
     }
 
-    public async Task<IReadOnlyList<T>> ListAsync(Expression<Func<T, bool>> filter, 
+    public async Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> filter, 
                                             params Expression<Func<T, object>>[] includedProperties)
     {
         IQueryable<T>? query = _entities.AsQueryable();
@@ -56,9 +56,10 @@ internal class Repository<T> : IRepository<T> where T : Entity
         return await query.ToListAsync();
     }
 
-    public async Task AddAsync(T entity)
+    public async Task<T> AddAsync(T entity)
     {
-        await _dbContext.Set<T>().AddAsync(entity);
+        var newEntity = await _dbContext.Set<T>().AddAsync(entity);
+        return newEntity.Entity;
     }
 
     public Task UpdateAsync(T entity)

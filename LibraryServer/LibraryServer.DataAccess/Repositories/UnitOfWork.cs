@@ -1,6 +1,6 @@
 ﻿using LibraryServer.DataAccess.Data;
 using LibraryServer.DataAccess.Repositories.Interfaces;
-using LibraryServer.Domain.Entities;
+using LibraryServer.DataAccess.Entities;
 
 namespace LibraryServer.DataAccess.Repositories;
 

@@ -1,6 +1,6 @@
 ﻿using LibraryServer.DataAccess.Entities.Abstractions;
 
-namespace LibraryServer.Domain.Entities;
+namespace LibraryServer.DataAccess.Entities;
 
 public class Book : Entity
 {
@@ -8,9 +8,9 @@ public class Book : Entity
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public int GenreId { get; set; }
-    public Genre Genre { get; set; } = new();
+    public Genre? Genre { get; set; }
     public int AuthorId { get; set; }
-    public Author Author { get; set; } = new();
+    public Author? Author { get; set; }
     public DateTime TimeOfTake { get; set; }
     public DateTime TimeToReturn { get; set;}
     public int Quantity { get; set; }
