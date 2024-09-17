@@ -1,5 +1,5 @@
 ﻿using LibraryServer.DataAccess.Data;
-using LibraryServer.DataAccess.Repositories.Abstractions;
+using LibraryServer.DataAccess.Repositories.Interfaces;
 using LibraryServer.Domain.Entities;
 
 namespace LibraryServer.DataAccess.Repositories;

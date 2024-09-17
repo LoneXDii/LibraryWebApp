@@ -1,6 +1,6 @@
 ﻿using LibraryServer.Domain.Entities;
 
-namespace LibraryServer.DataAccess.Repositories.Abstractions;
+namespace LibraryServer.DataAccess.Repositories.Interfaces;
 
 public interface IUnitOfWork
 {

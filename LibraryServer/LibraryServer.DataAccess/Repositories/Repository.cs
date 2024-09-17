@@ -1,6 +1,6 @@
 ﻿using LibraryServer.DataAccess.Data;
 using LibraryServer.DataAccess.Entities.Abstractions;
-using LibraryServer.DataAccess.Repositories.Abstractions;
+using LibraryServer.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
