@@ -10,7 +10,9 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddAutoMapper(typeof(AppMappingProfile))
-                .AddScoped<IBookService, BookService>();
+                .AddScoped<IBookService, BookService>()
+                .AddScoped<IAuthorService, AuthorService>()
+                .AddScoped<IGenreService, GenreService>();
 
         return services;
     }

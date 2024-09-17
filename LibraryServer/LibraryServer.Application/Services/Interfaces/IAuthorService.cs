@@ -9,7 +9,7 @@ public interface IAuthorService
     Task<ResponseData<List<AuthorDTO>>> ListAllAsync();
     Task<ResponseData<List<AuthorDTO>>> ListAsync(Expression<Func<AuthorDTO, bool>> filter);
     Task<ResponseData<AuthorDTO>> GetByIdAsync(int id);
-    Task AddAsync(AuthorDTO author);
+    Task<ResponseData<AuthorDTO>> AddAsync(AuthorDTO author);
     Task UpdateAsync(int id, AuthorDTO author);
-    Task DeleteAsync(AuthorDTO author);
+    Task DeleteAsync(int id);
 }

@@ -20,7 +20,8 @@ internal class BookService : IBookService
         _mapper = mapper;
     }
 
-    public async Task<ResponseData<DataListModel<BookDTO>>> ListAsync(Expression<Func<BookDTO, bool>>? filter, int pageNo = 1, int pageSize = 9)
+    public async Task<ResponseData<DataListModel<BookDTO>>> ListAsync(Expression<Func<BookDTO, bool>>? filter, 
+                                                                      int pageNo = 1, int pageSize = 9)
     {
         if (pageSize > _maxPageSize)
             pageSize = _maxPageSize;
@@ -99,18 +100,6 @@ internal class BookService : IBookService
         return ResponseData<BookDTO>.Success(book);
     }
 
-    public async Task DeleteAsync(int id)
-    {
-        var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
-        if (book is null)
-        {
-            return;
-        }
-
-        await _unitOfWork.BookRepository.DeleteAsync(book);
-        await _unitOfWork.SaveAllAsync();
-    }
-
     public async Task UpdateAsync(int id, BookDTO book)
     {
         var bookDb = await _unitOfWork.BookRepository.GetByIdAsync(id);
@@ -126,6 +115,18 @@ internal class BookService : IBookService
         bookDb.TimeToReturn = book.TimeToReturn;
 
         await _unitOfWork.BookRepository.UpdateAsync(bookDb);
+        await _unitOfWork.SaveAllAsync();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
+        if (book is null)
+        {
+            return;
+        }
+
+        await _unitOfWork.BookRepository.DeleteAsync(book);
         await _unitOfWork.SaveAllAsync();
     }
 }
