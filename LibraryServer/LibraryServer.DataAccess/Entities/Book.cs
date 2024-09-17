@@ -2,7 +2,7 @@
 
 namespace LibraryServer.Domain.Entities;
 
-internal class Book : Entity
+public class Book : Entity
 {
     public string ISBN { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;

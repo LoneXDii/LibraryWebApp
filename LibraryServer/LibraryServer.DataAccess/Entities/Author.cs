@@ -2,7 +2,7 @@
 
 namespace LibraryServer.Domain.Entities;
 
-internal class Author : Entity
+public class Author : Entity
 {
     public string Name { get; set; } = string.Empty;
     public string Surname { get; set; } = string.Empty;
