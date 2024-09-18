@@ -58,6 +58,7 @@ internal class GenreService : IGenreService
         }
 
         genreDb.Name = genre.Name;
+        genreDb.NormalizedName = genre.NormalizedName;
 
         await _unitOfWork.GenreRepository.UpdateAsync(genreDb);
         await _unitOfWork.SaveAllAsync();

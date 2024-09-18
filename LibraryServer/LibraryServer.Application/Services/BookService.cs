@@ -68,6 +68,7 @@ internal class BookService : IBookService
     public async Task<BookDTO> FirstOrDefaultAsync(Expression<Func<BookDTO, bool>> filter)
     {
         var bookFilter = _mapper.Map<Expression<Func<Book, bool>>>(filter);
+
         var book = await _unitOfWork.BookRepository.FirstOrDefaultAsync(bookFilter);
 
         if (book is null)
