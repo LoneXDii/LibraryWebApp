@@ -12,16 +12,56 @@ public class DbInitializer
 
         List<Genre> genres = new List<Genre>
         {
-            new Genre { Name = "Science Fiction" },
-            new Genre { Name = "Fantasy" },
-            new Genre { Name = "Mystery" },
-            new Genre { Name = "Thriller" },
-            new Genre { Name = "Romance" },
-            new Genre { Name = "Horror" },
-            new Genre { Name = "Historical" },
-            new Genre { Name = "Biography" },
-            new Genre { Name = "Self-Help" },
-            new Genre { Name = "Non-Fiction" }
+            new Genre 
+            { 
+                Name = "Science Fiction",                     
+                NormalizedName = "science-fiction"
+            },
+            new Genre
+            { 
+                Name = "Fantasy",
+                NormalizedName = "fantasy"
+            },
+            new Genre 
+            { 
+                Name = "Mystery",
+                NormalizedName = "mystery"
+            },
+            new Genre 
+            { 
+                Name = "Thriller", 
+                NormalizedName = "thriller"
+            },
+            new Genre 
+            { 
+                Name = "Romance",
+                NormalizedName = "romance"
+            },
+            new Genre 
+            { 
+                Name = "Horror",
+                NormalizedName = "horror"
+            },
+            new Genre 
+            { 
+                Name = "Historical",
+                NormalizedName = "historical"
+            },
+            new Genre 
+            { 
+                Name = "Biography",
+                NormalizedName = "biography"
+            },
+            new Genre 
+            { 
+                Name = "Self-Help",
+                NormalizedName = "self-help"
+            },
+            new Genre 
+            { 
+                Name = "Non-Fiction",
+                NormalizedName = "non-fiction"
+            }
         };
 
         List<Author> authors = new List<Author>

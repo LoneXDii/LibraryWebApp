@@ -66,6 +66,11 @@ internal class AuthorService : IAuthorService
     {
         var authorDb = await _unitOfWork.AuthorRepository.GetByIdAsync(id);
 
+        if (authorDb is null)
+        {
+            return;
+        }
+
         authorDb.Name = author.Name;
         authorDb.Surname = author.Surname;
         authorDb.Country = author.Country;

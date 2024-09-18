@@ -5,6 +5,7 @@ using LibraryServer.Application.Services.Interfaces;
 using LibraryServer.DataAccess.Repositories.Interfaces;
 using LibraryServer.DataAccess.Entities;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LibraryServer.Application.Services;
 
@@ -20,7 +21,7 @@ internal class BookService : IBookService
         _mapper = mapper;
     }
 
-    public async Task<ResponseData<DataListModel<BookDTO>>> ListAsync(Expression<Func<BookDTO, bool>>? filter, 
+    public async Task<ResponseData<DataListModel<BookDTO>>> ListAsync(string? genreNormalizedName, 
                                                                       int pageNo = 1, int pageSize = 9)
     {
         if (pageSize > _maxPageSize)
@@ -29,10 +30,14 @@ internal class BookService : IBookService
         List<Book> books;
         var dataList = new DataListModel<BookDTO>();
 
-        if(filter is not null)
+        if(genreNormalizedName is not null)
         {
-            var bookFilter = _mapper.Map<Expression<Func<Book, bool>>>(filter);
-            books = (await _unitOfWork.BookRepository.ListAsync(bookFilter)).ToList();
+            var genre = await _unitOfWork.GenreRepository.FirstOrDefaultAsync(g => g.NormalizedName == genreNormalizedName);
+            if (genre is null)
+            {
+                return ResponseData<DataListModel<BookDTO>>.Error("No such genre");
+            }
+            books = (await _unitOfWork.BookRepository.ListAsync(b => b.GenreId == genre.Id)).ToList();
         }
         else
         {
@@ -103,6 +108,11 @@ internal class BookService : IBookService
     public async Task UpdateAsync(int id, BookDTO book)
     {
         var bookDb = await _unitOfWork.BookRepository.GetByIdAsync(id);
+
+        if (bookDb is null)
+        {
+            return;
+        }
 
         bookDb.AuthorId = book.AuthorId;
         bookDb.GenreId = book.GenreId;

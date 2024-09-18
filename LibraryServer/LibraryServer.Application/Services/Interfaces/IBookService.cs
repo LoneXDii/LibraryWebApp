@@ -6,7 +6,7 @@ namespace LibraryServer.Application.Services.Interfaces;
 
 public interface IBookService
 {
-    Task<ResponseData<DataListModel<BookDTO>>> ListAsync(Expression<Func<BookDTO, bool>>? filter, int pageNo = 1, int pageSize = 9);
+    Task<ResponseData<DataListModel<BookDTO>>> ListAsync(string? genreName, int pageNo = 1, int pageSize = 9);
     Task<ResponseData<BookDTO>> GetByIdAsync(int id);
     Task<ResponseData<BookDTO>> FirstOrDefaultAsync(Expression<Func<BookDTO, bool>> filter);
     Task<ResponseData<BookDTO>> AddAsync(BookDTO book);
