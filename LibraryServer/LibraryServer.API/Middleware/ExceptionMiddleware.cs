@@ -1,4 +1,5 @@
-﻿using LibraryServer.Domain.Common.Exceptions;
+﻿using FluentValidation;
+using LibraryServer.Domain.Common.Exceptions;
 using System.Text.Json;
 
 namespace LibraryServer.API.Middleware;
@@ -35,6 +36,7 @@ public class ExceptionMiddleware
             StatusCode = ex switch
             {
                 NotFoundException => StatusCodes.Status404NotFound,
+                ValidationException => StatusCodes.Status400BadRequest,
                 _ => StatusCodes.Status500InternalServerError
             }
         };

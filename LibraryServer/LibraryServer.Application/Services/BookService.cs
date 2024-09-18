@@ -6,6 +6,9 @@ using LibraryServer.DataAccess.Repositories.Interfaces;
 using LibraryServer.Domain.Entities;
 using LibraryServer.Domain.Common.Exceptions;
 using System.Linq.Expressions;
+using LibraryServer.Application.Validators;
+using FluentValidation;
+using System.Text;
 
 namespace LibraryServer.Application.Services;
 
@@ -13,12 +16,14 @@ internal class BookService : IBookService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly BookValidator _validator;
     private readonly int _maxPageSize = 21;
 
     public BookService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _validator = new BookValidator();
     }
 
     public async Task<DataListModel<BookDTO>> ListAsync(string? genreNormalizedName, 
@@ -123,5 +128,20 @@ internal class BookService : IBookService
 
         await _unitOfWork.BookRepository.DeleteAsync(book);
         await _unitOfWork.SaveAllAsync();
+    }
+
+    private void Validate(Book book)
+    {
+        var validationResult = _validator.Validate(book);
+
+        if (!validationResult.IsValid)
+        {
+            var sb = new StringBuilder();
+            foreach (var failure in validationResult.Errors)
+            {
+                sb.AppendLine(failure.ErrorMessage);
+            }
+            throw new ValidationException(sb.ToString());
+        }
     }
 }

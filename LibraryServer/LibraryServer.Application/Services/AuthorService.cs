@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using LibraryServer.Application.DTO;
 using LibraryServer.Application.Services.Interfaces;
 using LibraryServer.Domain.Entities;
 using LibraryServer.DataAccess.Repositories.Interfaces;
 using LibraryServer.Domain.Common.Exceptions;
+using LibraryServer.Application.Validators;
+using System.Text;
 
 namespace LibraryServer.Application.Services;
 
@@ -11,11 +14,12 @@ internal class AuthorService : IAuthorService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-
+    private readonly AuthorValidator _validator;
     public AuthorService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _validator = new AuthorValidator();
     }
 
     public async Task<List<AuthorDTO>> ListAllAsync()
@@ -54,6 +58,9 @@ internal class AuthorService : IAuthorService
     public async Task<AuthorDTO> AddAsync(AuthorDTO author)
     {
         var authorDb = _mapper.Map<Author>(author);
+
+        Validate(authorDb);
+
         authorDb = await _unitOfWork.AuthorRepository.AddAsync(authorDb);
         await _unitOfWork.SaveAllAsync();
 
@@ -69,6 +76,8 @@ internal class AuthorService : IAuthorService
         {
             return;
         }
+
+        Validate(authorDb);
 
         authorDb.Name = author.Name;
         authorDb.Surname = author.Surname;
@@ -89,5 +98,20 @@ internal class AuthorService : IAuthorService
 
         await _unitOfWork.AuthorRepository.DeleteAsync(author);
         await _unitOfWork.SaveAllAsync();
+    }
+
+    private void Validate(Author author)
+    {
+        var validationResult = _validator.Validate(author);
+
+        if (!validationResult.IsValid)
+        {
+            var sb = new StringBuilder();
+            foreach (var failure in validationResult.Errors)
+            {
+                sb.AppendLine(failure.ErrorMessage);
+            }
+            throw new ValidationException(sb.ToString());
+        }
     }
 }

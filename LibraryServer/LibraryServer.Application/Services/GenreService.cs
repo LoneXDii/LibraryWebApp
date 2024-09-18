@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using LibraryServer.Application.DTO;
 using LibraryServer.Application.Services.Interfaces;
 using LibraryServer.Domain.Entities;
 using LibraryServer.DataAccess.Repositories.Interfaces;
 using LibraryServer.Domain.Common.Exceptions;
+using LibraryServer.Application.Validators;
+using System.Text;
 
 namespace LibraryServer.Application.Services;
 
@@ -11,11 +14,13 @@ internal class GenreService : IGenreService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly GenreValidator _validator;
 
     public GenreService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _validator = new GenreValidator();
     }
 
     public async Task<List<GenreDTO>> ListAllAsync()
@@ -42,6 +47,9 @@ internal class GenreService : IGenreService
     public async Task<GenreDTO> AddAsync(GenreDTO genre)
     {
         var genreDb = _mapper.Map<Genre>(genre);
+
+        Validate(genreDb);
+
         genreDb = await _unitOfWork.GenreRepository.AddAsync(genreDb);
         await _unitOfWork.SaveAllAsync();
 
@@ -56,6 +64,8 @@ internal class GenreService : IGenreService
         {
             return;
         }
+
+        Validate(genreDb);
 
         genreDb.Name = genre.Name;
         genreDb.NormalizedName = genre.NormalizedName;
@@ -74,5 +84,20 @@ internal class GenreService : IGenreService
 
         await _unitOfWork.GenreRepository.DeleteAsync(genre);
         await _unitOfWork.SaveAllAsync();
+    }
+
+    private void Validate(Genre genre)
+    {
+        var validationResult = _validator.Validate(genre);
+
+        if (!validationResult.IsValid)
+        {
+            var sb = new StringBuilder();
+            foreach (var failure in validationResult.Errors)
+            {
+                sb.AppendLine(failure.ErrorMessage);
+            }
+            throw new ValidationException(sb.ToString());
+        }
     }
 }
