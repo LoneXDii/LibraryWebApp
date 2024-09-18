@@ -52,6 +52,10 @@ internal class GenreService : IGenreService
     public async Task UpdateAsync(int id, GenreDTO genre)
     {
         var genreDb = await _unitOfWork.GenreRepository.GetByIdAsync(id);
+        if(genreDb is null)
+        {
+            return;
+        }
 
         genreDb.Name = genre.Name;
 

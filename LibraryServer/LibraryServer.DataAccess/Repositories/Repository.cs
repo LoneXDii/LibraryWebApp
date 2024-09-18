@@ -17,7 +17,7 @@ internal class Repository<T> : IRepository<T> where T : Entity
         _entities = _dbContext.Set<T>();
     }
 
-    public async Task<T> GetByIdAsync(int id, params Expression<Func<T, object>>[] includedProperties)
+    public async Task<T?> GetByIdAsync(int id, params Expression<Func<T, object>>[] includedProperties)
     {
         IQueryable<T>? query = _entities.AsQueryable();
         if (includedProperties.Any())
@@ -28,7 +28,7 @@ internal class Repository<T> : IRepository<T> where T : Entity
             }
         }
 
-        return await query.ElementAtAsync(id);
+        return await query.FirstOrDefaultAsync(e => e.Id == id);
     }
 
     public async Task<IEnumerable<T>> ListAllAsync()

@@ -3,7 +3,7 @@ using LibraryServer.Application.Models;
 
 namespace LibraryServer.Application.Services.Interfaces;
 
-internal interface IGenreService
+public interface IGenreService
 {
     Task<ResponseData<List<GenreDTO>>> ListAllAsync();
     Task<ResponseData<GenreDTO>> GetByIdAsync(int id);
