@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LibraryServer.Application.Services.Interfaces;
 using LibraryServer.Application.DTO;
-using LibraryServer.Application.Models;
 
 namespace LibraryServer.API.Controllers;
 
@@ -17,20 +16,15 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ResponseData<List<AuthorDTO>>>> GetAuthors()
+    public async Task<ActionResult<AuthorDTO>> GetAuthors()
     {
         return Ok(await _authorService.ListAllAsync());
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<ResponseData<AuthorDTO>>> GetAuthor(int id)
+    public async Task<ActionResult<AuthorDTO>> GetAuthor(int id)
     {
-        var response = await _authorService.GetByIdAsync(id);
-        if (!response.Successfull)
-        {
-            return NotFound(response);
-        }
-        return Ok(response);
+        return Ok(await _authorService.GetByIdAsync(id));
     }
 
     [HttpPut("{id:int}")]
@@ -41,14 +35,9 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<ResponseData<AuthorDTO>>> PostGenre(AuthorDTO author)
+    public async Task<ActionResult<AuthorDTO>> PostGenre(AuthorDTO author)
     {
-        var response = await _authorService.AddAsync(author);
-        if (!response.Successfull)
-        {
-            return BadRequest(response);
-        }
-        return Ok(response);
+        return Ok(await _authorService.AddAsync(author));
     }
 
     [HttpDelete("{id:int}")]
@@ -60,13 +49,8 @@ public class AuthorsController : ControllerBase
 
     [HttpGet]
     [Route("{id:int}/books")]
-    public async Task<ActionResult<ResponseData<List<BookDTO>>>> GetAuthorBooks(int id)
+    public async Task<ActionResult<List<BookDTO>>> GetAuthorBooks(int id)
     {
-        var response = await _authorService.ListAuthorsBooksAsync(id);
-        if (!response.Successfull)
-        {
-            return BadRequest(response);
-        }
-        return Ok(response);
+        return Ok(await _authorService.ListAuthorsBooksAsync(id));
     }
 }

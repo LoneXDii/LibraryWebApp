@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using LibraryServer.Application.DTO;
-using LibraryServer.Application.Models;
 using LibraryServer.Application.Services.Interfaces;
-using LibraryServer.DataAccess.Entities;
+using LibraryServer.Domain.Entities;
 using LibraryServer.DataAccess.Repositories.Interfaces;
+using LibraryServer.Domain.Common.Exceptions;
 
 namespace LibraryServer.Application.Services;
 
@@ -18,48 +18,47 @@ internal class AuthorService : IAuthorService
         _mapper = mapper;
     }
 
-    public async Task<ResponseData<List<AuthorDTO>>> ListAllAsync()
+    public async Task<List<AuthorDTO>> ListAllAsync()
     {
         var authors = (await _unitOfWork.AuthorRepository.ListAllAsync()).ToList();
         var authorsDto = _mapper.Map<List<AuthorDTO>>(authors);
-
-        return ResponseData<List<AuthorDTO>>.Success(authorsDto);
+        return authorsDto;
     }
 
-    public async Task<ResponseData<List<BookDTO>>> ListAuthorsBooksAsync(int id)
+    public async Task<List<BookDTO>> ListAuthorsBooksAsync(int id)
     {
         var author = await _unitOfWork.AuthorRepository.GetByIdAsync(id, a => a.Books);
 
         if (author is null)
         {
-            return ResponseData<List<BookDTO>>.Error($"No author with id={id}");
+            throw new NotFoundException($"No author with id={id}");
         }
 
         var books = _mapper.Map<List<BookDTO>>(author.Books);
-        return ResponseData<List<BookDTO>>.Success(books);
+        return books;
     }
 
-    public async Task<ResponseData<AuthorDTO>> GetByIdAsync(int id)
+    public async Task<AuthorDTO> GetByIdAsync(int id)
     {
         var author = await _unitOfWork.AuthorRepository.GetByIdAsync(id);
 
         if (author is null)
         {
-            return ResponseData<AuthorDTO>.Error($"No author with id={id}");
+            throw new NotFoundException($"No author with id={id}");
         }
 
         var authorDto = _mapper.Map<AuthorDTO>(author);
-        return ResponseData<AuthorDTO>.Success(authorDto);
+        return authorDto;
     }
 
-    public async Task<ResponseData<AuthorDTO>> AddAsync(AuthorDTO author)
+    public async Task<AuthorDTO> AddAsync(AuthorDTO author)
     {
         var authorDb = _mapper.Map<Author>(author);
         authorDb = await _unitOfWork.AuthorRepository.AddAsync(authorDb);
         await _unitOfWork.SaveAllAsync();
 
         author = _mapper.Map<AuthorDTO>(authorDb);
-        return ResponseData<AuthorDTO>.Success(author);
+        return author;
     }
 
     public async Task UpdateAsync(int id, AuthorDTO author)

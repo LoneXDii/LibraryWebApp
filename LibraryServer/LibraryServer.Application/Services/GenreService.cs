@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using LibraryServer.Application.DTO;
-using LibraryServer.Application.Models;
 using LibraryServer.Application.Services.Interfaces;
-using LibraryServer.DataAccess.Entities;
+using LibraryServer.Domain.Entities;
 using LibraryServer.DataAccess.Repositories.Interfaces;
+using LibraryServer.Domain.Common.Exceptions;
 
 namespace LibraryServer.Application.Services;
 
@@ -18,35 +18,35 @@ internal class GenreService : IGenreService
         _mapper = mapper;
     }
 
-    public async Task<ResponseData<List<GenreDTO>>> ListAllAsync()
+    public async Task<List<GenreDTO>> ListAllAsync()
     {
         var genres = (await _unitOfWork.GenreRepository.ListAllAsync()).ToList();
         var genresDto = _mapper.Map<List<GenreDTO>>(genres);
 
-        return ResponseData<List<GenreDTO>>.Success(genresDto);
+        return genresDto;
     }
 
-    public async Task<ResponseData<GenreDTO>> GetByIdAsync(int id)
+    public async Task<GenreDTO> GetByIdAsync(int id)
     {
         var genre = await _unitOfWork.GenreRepository.GetByIdAsync(id);
 
         if (genre is null)
         {
-            return ResponseData<GenreDTO>.Error($"No genre with id={id}");
+            throw new NotFoundException($"No genre with id={id}");
         }
 
         var genreDto = _mapper.Map<GenreDTO>(genre);
-        return ResponseData<GenreDTO>.Success(genreDto);
+        return genreDto;
     }
 
-    public async Task<ResponseData<GenreDTO>> AddAsync(GenreDTO genre)
+    public async Task<GenreDTO> AddAsync(GenreDTO genre)
     {
         var genreDb = _mapper.Map<Genre>(genre);
         genreDb = await _unitOfWork.GenreRepository.AddAsync(genreDb);
         await _unitOfWork.SaveAllAsync();
 
         genre = _mapper.Map<GenreDTO>(genreDb);
-        return ResponseData<GenreDTO>.Success(genre);
+        return genre;
     }
 
     public async Task UpdateAsync(int id, GenreDTO genre)

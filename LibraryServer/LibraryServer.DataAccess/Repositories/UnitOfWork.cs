@@ -1,27 +1,25 @@
 ﻿using LibraryServer.DataAccess.Data;
 using LibraryServer.DataAccess.Repositories.Interfaces;
-using LibraryServer.DataAccess.Entities;
+using LibraryServer.Domain.Entities;
 
 namespace LibraryServer.DataAccess.Repositories;
 
 internal class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext _dbContext;
-    private readonly Lazy<IRepository<Book>> _bookRepository;
-    private readonly Lazy<IRepository<Author>> _authorRepository;
-    private readonly Lazy<IRepository<Genre>> _genreRepository;
 
-    public UnitOfWork(AppDbContext dbContext)
+    public UnitOfWork(AppDbContext dbContext, IRepository<Book> bookRepository, 
+                      IRepository<Author> authorRepository, IRepository<Genre> genreRepository)
     {
         _dbContext = dbContext;
-        _bookRepository = new Lazy<IRepository<Book>>(() => new Repository<Book>(_dbContext));
-        _authorRepository = new Lazy<IRepository<Author>>(() => new Repository<Author>(_dbContext));
-        _genreRepository = new Lazy<IRepository<Genre>>(() => new Repository<Genre>(_dbContext));
+        BookRepository = bookRepository;
+        AuthorRepository = authorRepository;
+        GenreRepository = genreRepository;
     }
 
-    public IRepository<Book> BookRepository => _bookRepository.Value;
-    public IRepository<Author> AuthorRepository => _authorRepository.Value;
-    public IRepository<Genre> GenreRepository => _genreRepository.Value;
+    public IRepository<Book> BookRepository { get; private set; }
+    public IRepository<Author> AuthorRepository { get; private set; }
+    public IRepository<Genre> GenreRepository { get; private set; }
 
     public async Task CreateDataBaseAsync() => await _dbContext.Database.EnsureCreatedAsync();
     public async Task DeleteDataBaseAsync() => await _dbContext.Database.EnsureDeletedAsync();

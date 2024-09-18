@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using LibraryServer.Application.DTO;
-using LibraryServer.DataAccess.Entities;
+using LibraryServer.Domain.Entities;
 
 namespace LibraryServer.Application.Mapping;
 

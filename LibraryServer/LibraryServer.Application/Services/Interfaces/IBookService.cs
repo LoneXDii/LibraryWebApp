@@ -6,10 +6,10 @@ namespace LibraryServer.Application.Services.Interfaces;
 
 public interface IBookService
 {
-    Task<ResponseData<DataListModel<BookDTO>>> ListAsync(string? genreName, int pageNo = 1, int pageSize = 9);
-    Task<ResponseData<BookDTO>> GetByIdAsync(int id);
-    Task<ResponseData<BookDTO>> FirstOrDefaultAsync(Expression<Func<BookDTO, bool>> filter);
-    Task<ResponseData<BookDTO>> AddAsync(BookDTO book);
+    Task<DataListModel<BookDTO>> ListAsync(string? genreName, int pageNo = 1, int pageSize = 9);
+    Task<BookDTO> GetByIdAsync(int id);
+    Task<BookDTO> FirstOrDefaultAsync(Expression<Func<BookDTO, bool>> filter);
+    Task<BookDTO> AddAsync(BookDTO book);
     Task UpdateAsync(int id, BookDTO book);
     Task DeleteAsync(int id);
 

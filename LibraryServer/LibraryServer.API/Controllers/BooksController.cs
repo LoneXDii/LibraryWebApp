@@ -1,5 +1,4 @@
 ﻿using LibraryServer.Application.DTO;
-using LibraryServer.Application.Models;
 using LibraryServer.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,14 +17,9 @@ public class BooksController : ControllerBase
 
     [HttpGet]
     [Route("{genre?}")]
-    public async Task<ActionResult<ResponseData<List<BookDTO>>>> GetBooks(string? genre, int pageNo = 1,
-                                                                          int pageSize = 9)
+    public async Task<ActionResult<List<BookDTO>>> GetBooks(string? genre, int pageNo = 1,
+                                                            int pageSize = 9)
     {
-        var response = await _booksService.ListAsync(genre, pageNo, pageSize);
-        if (!response.Successfull)
-        {
-            return NotFound(response);
-        }
-        return Ok(response);
+        return Ok(await _booksService.ListAsync(genre, pageNo, pageSize));
     }
 }

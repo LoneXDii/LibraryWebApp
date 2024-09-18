@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LibraryServer.Application.Services.Interfaces;
 using LibraryServer.Application.DTO;
-using LibraryServer.Application.Models;
 
 namespace LibraryServer.API.Controllers;
 
@@ -17,20 +16,15 @@ public class GenresController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ResponseData<List<GenreDTO>>>> GetGenres()
+    public async Task<ActionResult<List<GenreDTO>>> GetGenres()
     {
         return Ok(await _genreService.ListAllAsync());
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<ResponseData<GenreDTO>>> GetGenre(int id)
+    public async Task<ActionResult<GenreDTO>> GetGenre(int id)
     {
-        var response = await _genreService.GetByIdAsync(id);
-        if (!response.Successfull)
-        {
-            return NotFound(response);
-        }
-        return Ok(response);
+        return Ok(await _genreService.GetByIdAsync(id));
     }
 
     [HttpPut("{id:int}")]
@@ -41,14 +35,9 @@ public class GenresController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<ResponseData<GenreDTO>>> PostGenre(GenreDTO genre)
+    public async Task<ActionResult<GenreDTO>> PostGenre(GenreDTO genre)
     {
-        var response = await _genreService.AddAsync(genre);
-        if (!response.Successfull)
-        {
-            return BadRequest(response);
-        }
-        return Ok(response);
+        return Ok(await _genreService.AddAsync(genre));
     }
 
     [HttpDelete("{id:int}")]

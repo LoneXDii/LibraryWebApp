@@ -1,5 +1,5 @@
 ﻿using LibraryServer.DataAccess.Data;
-using LibraryServer.DataAccess.Entities;
+using LibraryServer.Domain.Entities;
 
 namespace LibraryServer.API.Temp;
 

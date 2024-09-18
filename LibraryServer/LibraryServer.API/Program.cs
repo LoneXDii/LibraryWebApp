@@ -1,3 +1,4 @@
+using LibraryServer.API.Middleware;
 using LibraryServer.API.Temp;
 using LibraryServer.Application;
 
@@ -15,6 +16,7 @@ builder.Services.AddApplication(connStr);
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
 //await DbInitializer.SeedData(app);
 
 // Configure the HTTP request pipeline.

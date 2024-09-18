@@ -3,9 +3,9 @@ using LibraryServer.Application.DTO;
 using LibraryServer.Application.Models;
 using LibraryServer.Application.Services.Interfaces;
 using LibraryServer.DataAccess.Repositories.Interfaces;
-using LibraryServer.DataAccess.Entities;
+using LibraryServer.Domain.Entities;
+using LibraryServer.Domain.Common.Exceptions;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LibraryServer.Application.Services;
 
@@ -21,13 +21,13 @@ internal class BookService : IBookService
         _mapper = mapper;
     }
 
-    public async Task<ResponseData<DataListModel<BookDTO>>> ListAsync(string? genreNormalizedName, 
-                                                                      int pageNo = 1, int pageSize = 9)
+    public async Task<DataListModel<BookDTO>> ListAsync(string? genreNormalizedName, 
+                                                        int pageNo = 1, int pageSize = 9)
     {
         if (pageSize > _maxPageSize)
             pageSize = _maxPageSize;
 
-        List<Book> books;
+        (IEnumerable<Book>, int) data;
         var dataList = new DataListModel<BookDTO>();
 
         if(genreNormalizedName is not null)
@@ -35,74 +35,58 @@ internal class BookService : IBookService
             var genre = await _unitOfWork.GenreRepository.FirstOrDefaultAsync(g => g.NormalizedName == genreNormalizedName);
             if (genre is null)
             {
-                return ResponseData<DataListModel<BookDTO>>.Error("No such genre");
+                throw new NotFoundException("No such genre");
             }
-            books = (await _unitOfWork.BookRepository.ListAsync(b => b.GenreId == genre.Id)).ToList();
+            data = (await _unitOfWork.BookRepository.ListWithPaginationAsync(pageNo, pageSize,
+                                                                             b => b.GenreId == genre.Id));
         }
         else
         {
-            books = (await _unitOfWork.BookRepository.ListAllAsync()).ToList();
+            data = (await _unitOfWork.BookRepository.ListWithPaginationAsync(pageNo, pageSize));
         }
 
-        var count = books.Count;
-        if(count == 0)
-        {
-            return ResponseData<DataListModel<BookDTO>>.Success(dataList);
-        }
-
-        int totalPages = (int)Math.Ceiling(count / (double)pageSize);
-        if (pageNo > totalPages)
-        {
-            return ResponseData<DataListModel<BookDTO>>.Error("No such page");
-        }
-
-        books = books.OrderBy(b => b.Id)
-                     .Skip((pageNo - 1) * pageSize)
-                     .Take(pageSize)
-                     .ToList();
-
-        dataList.Items = _mapper.Map<List<BookDTO>>(books);
+        dataList.Items = _mapper.Map<List<BookDTO>>(data.Item1.ToList());
         dataList.CurrentPage = pageNo;
-        dataList.TotalPages = totalPages;
+        dataList.TotalPages = data.Item2;
 
-        return ResponseData<DataListModel<BookDTO>>.Success(dataList);
+        return dataList;
     }
 
-    public async Task<ResponseData<BookDTO>> GetByIdAsync(int id)
+    public async Task<BookDTO> GetByIdAsync(int id)
     {
         var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
 
         if (book is null)
         {
-            return ResponseData<BookDTO>.Error($"No book with id={id}");
+            throw new NotFoundException($"No book with id={id}");
         }
 
         var bookDto = _mapper.Map<BookDTO>(book);
-        return ResponseData<BookDTO>.Success(bookDto);
+        return bookDto;
     }
 
-    public async Task<ResponseData<BookDTO>> FirstOrDefaultAsync(Expression<Func<BookDTO, bool>> filter)
+    public async Task<BookDTO> FirstOrDefaultAsync(Expression<Func<BookDTO, bool>> filter)
     {
         var bookFilter = _mapper.Map<Expression<Func<Book, bool>>>(filter);
         var book = await _unitOfWork.BookRepository.FirstOrDefaultAsync(bookFilter);
 
         if (book is null)
         {
-            return ResponseData<BookDTO>.Error("No such book");
+            throw new NotFoundException("No such book");
         }
 
         var bookDto = _mapper.Map<BookDTO>(book);
-        return ResponseData<BookDTO>.Success(bookDto);
+        return bookDto;
     }
 
-    public async Task<ResponseData<BookDTO>> AddAsync(BookDTO book)
+    public async Task<BookDTO> AddAsync(BookDTO book)
     {
         var bookDb = _mapper.Map<Book>(book);
         bookDb = await _unitOfWork.BookRepository.AddAsync(bookDb);
         await _unitOfWork.SaveAllAsync();
 
         book = _mapper.Map<BookDTO>(bookDb);
-        return ResponseData<BookDTO>.Success(book);
+        return book;
     }
 
     public async Task UpdateAsync(int id, BookDTO book)

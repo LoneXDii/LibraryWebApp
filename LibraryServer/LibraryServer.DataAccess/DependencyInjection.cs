@@ -14,6 +14,7 @@ public static class DependencyInjection
                     opt.UseMySql(connStr, new MySqlServerVersion(new Version(8, 0, 36)),
                                  opt => opt.EnableRetryOnFailure()),
                     ServiceLifetime.Scoped)
+                .AddScoped(typeof(IRepository<>), typeof(Repository<>))
                 .AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;

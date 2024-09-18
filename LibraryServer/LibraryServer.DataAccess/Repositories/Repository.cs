@@ -1,8 +1,9 @@
 ﻿using LibraryServer.DataAccess.Data;
-using LibraryServer.DataAccess.Entities.Abstractions;
+using LibraryServer.Domain.Entities.Abstractions;
 using LibraryServer.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using LibraryServer.Domain.Common.Exceptions;
 
 namespace LibraryServer.DataAccess.Repositories;
 
@@ -27,14 +28,12 @@ internal class Repository<T> : IRepository<T> where T : Entity
                 query = query.Include(property);
             }
         }
-        try
+        if(id > query.Count() || id <= 0)
         {
-            return query.ElementAt(id - 1);
+            throw new NotFoundException($"No entity with id={id}");
         }
-        catch (Exception ex)
-        {
-            return null;
-        }
+
+        return query.ElementAt(id - 1);
     }
 
     public async Task<IEnumerable<T>> ListAllAsync()
@@ -60,6 +59,41 @@ internal class Repository<T> : IRepository<T> where T : Entity
         }
 
         return await query.ToListAsync();
+    }
+
+    public async Task<(IEnumerable<T>, int)> ListWithPaginationAsync(int pageNo, int pageSize,
+                                                                     Expression<Func<T, bool>>? filter = null,
+                                                                     params Expression<Func<T, object>>[] includedProperties)
+    {
+        var query = _entities.AsQueryable();
+
+        if (includedProperties.Any())
+        {
+            foreach (var property in includedProperties)
+            {
+                query = query.Include(property);
+            }
+        }
+
+        if (filter != null)
+        {
+            query = query.Where(filter);
+        }
+
+        int count = await query.CountAsync();
+
+        int totalPages = (int)Math.Ceiling(count / (double)pageSize);
+        if (pageNo > totalPages)
+        {
+            throw new NotFoundException("No such page");
+        }
+
+        var data = await query.OrderBy(e => e.Id)
+                              .Skip((pageNo - 1) * pageSize)
+                              .Take(pageSize)
+                              .ToListAsync();
+
+        return (data, totalPages);
     }
 
     public async Task<T> AddAsync(T entity)
