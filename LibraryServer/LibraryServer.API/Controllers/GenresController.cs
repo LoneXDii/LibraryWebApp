@@ -33,7 +33,7 @@ public class GenresController : ControllerBase
         return Ok(response);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> PutGenre(int id, GenreDTO genre)
     {
         await _genreService.UpdateAsync(id, genre);
@@ -51,7 +51,7 @@ public class GenresController : ControllerBase
         return Ok(response);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteGenre(int id)
     {
         await _genreService.DeleteAsync(id);

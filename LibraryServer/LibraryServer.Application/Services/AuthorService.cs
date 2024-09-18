@@ -4,7 +4,6 @@ using LibraryServer.Application.Models;
 using LibraryServer.Application.Services.Interfaces;
 using LibraryServer.DataAccess.Entities;
 using LibraryServer.DataAccess.Repositories.Interfaces;
-using System.Linq.Expressions;
 
 namespace LibraryServer.Application.Services;
 
@@ -27,9 +26,17 @@ internal class AuthorService : IAuthorService
         return ResponseData<List<AuthorDTO>>.Success(authorsDto);
     }
 
-    public Task<ResponseData<List<AuthorDTO>>> ListAsync(Expression<Func<AuthorDTO, bool>> filter)
+    public async Task<ResponseData<List<BookDTO>>> ListAuthorsBooksAsync(int id)
     {
-        throw new NotImplementedException();
+        var author = await _unitOfWork.AuthorRepository.GetByIdAsync(id, a => a.Books);
+
+        if (author is null)
+        {
+            return ResponseData<List<BookDTO>>.Error($"No author with id={id}");
+        }
+
+        var books = _mapper.Map<List<BookDTO>>(author.Books);
+        return ResponseData<List<BookDTO>>.Success(books);
     }
 
     public async Task<ResponseData<AuthorDTO>> GetByIdAsync(int id)

@@ -27,8 +27,14 @@ internal class Repository<T> : IRepository<T> where T : Entity
                 query = query.Include(property);
             }
         }
-
-        return await query.FirstOrDefaultAsync(e => e.Id == id);
+        try
+        {
+            return query.ElementAt(id - 1);
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
     }
 
     public async Task<IEnumerable<T>> ListAllAsync()
