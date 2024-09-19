@@ -51,7 +51,7 @@ public class BooksController : ControllerBase
     public async Task<ActionResult<BookDTO>> PostBook(BookDTO book)
     {
         var response = await _bookService.AddAsync(book);
-        return Ok();
+        return Ok(response);
     }
 
     [HttpDelete("{id:int}")]

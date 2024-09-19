@@ -55,6 +55,6 @@ public class AuthorsController : ControllerBase
     public async Task<ActionResult<List<BookDTO>>> GetAuthorBooks(int id)
     {
         var response = await _authorService.ListAuthorsBooksAsync(id);
-        return Ok();
+        return Ok(response);
     }
 }
