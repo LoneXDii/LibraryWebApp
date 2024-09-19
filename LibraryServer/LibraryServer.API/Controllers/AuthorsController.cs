@@ -18,30 +18,33 @@ public class AuthorsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<AuthorDTO>> GetAuthors()
     {
-        return Ok(await _authorService.ListAllAsync());
+        var response = await _authorService.ListAllAsync();
+        return Ok(response);
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<AuthorDTO>> GetAuthor(int id)
     {
-        return Ok(await _authorService.GetByIdAsync(id));
+        var response = await _authorService.GetByIdAsync(id);
+        return Ok(response);
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> PutGenre(int id, AuthorDTO author)
+    public async Task<IActionResult> PutAuthor(int id, AuthorDTO author)
     {
         await _authorService.UpdateAsync(id, author);
         return Ok();
     }
 
     [HttpPost]
-    public async Task<ActionResult<AuthorDTO>> PostGenre(AuthorDTO author)
+    public async Task<ActionResult<AuthorDTO>> PostAuthor(AuthorDTO author)
     {
-        return Ok(await _authorService.AddAsync(author));
+        var response = await _authorService.AddAsync(author);
+        return Ok(response);
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteGenre(int id)
+    public async Task<IActionResult> DeleteAuthor(int id)
     {
         await _authorService.DeleteAsync(id);
         return Ok();
@@ -51,6 +54,7 @@ public class AuthorsController : ControllerBase
     [Route("{id:int}/books")]
     public async Task<ActionResult<List<BookDTO>>> GetAuthorBooks(int id)
     {
-        return Ok(await _authorService.ListAuthorsBooksAsync(id));
+        var response = await _authorService.ListAuthorsBooksAsync(id);
+        return Ok();
     }
 }

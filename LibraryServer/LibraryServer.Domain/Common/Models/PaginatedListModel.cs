@@ -1,6 +1,6 @@
-﻿namespace LibraryServer.Application.Models;
+﻿namespace LibraryServer.Domain.Common.Models;
 
-public class DataListModel<T>
+public class PaginatedListModel<T>
 {
     public List<T> Items { get; set; } = new();
     public int CurrentPage { get; set; } = 1;

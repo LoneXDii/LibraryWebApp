@@ -4,10 +4,11 @@ using LibraryServer.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using LibraryServer.Domain.Common.Exceptions;
+using LibraryServer.Domain.Common.Models;
 
 namespace LibraryServer.DataAccess.Repositories;
 
-internal class Repository<T> : IRepository<T> where T : Entity
+internal class Repository<T> : IRepository<T> where T : class, IEntity
 {
     private readonly AppDbContext _dbContext;
     private readonly DbSet<T> _entities;
@@ -29,12 +30,14 @@ internal class Repository<T> : IRepository<T> where T : Entity
             }
         }
 
-        return await query.FirstOrDefaultAsync(e => e.Id == id);
+        var entity = await query.FirstOrDefaultAsync(e => e.Id == id);
+        return entity;
     }
 
     public async Task<IEnumerable<T>> ListAllAsync()
     {
-        return await _entities.AsQueryable().ToListAsync();
+        var entities = await _entities.AsQueryable().ToListAsync();
+        return entities;
     }
 
     public async Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> filter, 
@@ -54,10 +57,11 @@ internal class Repository<T> : IRepository<T> where T : Entity
             query = query.Where(filter);
         }
 
-        return await query.ToListAsync();
+        var entities = await query.ToListAsync();
+        return entities;
     }
 
-    public async Task<(IEnumerable<T>, int)> ListWithPaginationAsync(int pageNo, int pageSize,
+    public async Task<PaginatedListModel<T>> ListWithPaginationAsync(int pageNo, int pageSize,
                                                                      Expression<Func<T, bool>>? filter = null,
                                                                      params Expression<Func<T, object>>[] includedProperties)
     {
@@ -84,12 +88,19 @@ internal class Repository<T> : IRepository<T> where T : Entity
             throw new NotFoundException("No such page");
         }
 
-        var data = await query.OrderBy(e => e.Id)
-                              .Skip((pageNo - 1) * pageSize)
-                              .Take(pageSize)
-                              .ToListAsync();
+        var entities = await query.OrderBy(e => e.Id)
+                                  .Skip((pageNo - 1) * pageSize)
+                                  .Take(pageSize)
+                                  .ToListAsync();
 
-        return (data, totalPages);
+        var data = new PaginatedListModel<T>
+        {
+            Items = entities,
+            CurrentPage = pageNo,
+            TotalPages = totalPages
+        };
+
+        return data;
     }
 
     public async Task<T> AddAsync(T entity)
@@ -112,6 +123,7 @@ internal class Repository<T> : IRepository<T> where T : Entity
 
     public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> filter)
     {
-        return await _entities.FirstOrDefaultAsync(filter);
+        var entity = await _entities.FirstOrDefaultAsync(filter);
+        return entity;
     } 
 }

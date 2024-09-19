@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using LibraryServer.Application.DTO;
-using LibraryServer.Application.Models;
+using LibraryServer.Domain.Common.Models;
 using LibraryServer.Application.Services.Interfaces;
 using LibraryServer.DataAccess.Repositories.Interfaces;
 using LibraryServer.Domain.Entities;
@@ -26,14 +26,13 @@ internal class BookService : IBookService
         _validator = new BookValidator();
     }
 
-    public async Task<DataListModel<BookDTO>> ListAsync(string? genreNormalizedName, 
+    public async Task<PaginatedListModel<BookDTO>> ListAsync(string? genreNormalizedName, 
                                                         int pageNo = 1, int pageSize = 9)
     {
         if (pageSize > _maxPageSize)
             pageSize = _maxPageSize;
 
-        (IEnumerable<Book>, int) data;
-        var dataList = new DataListModel<BookDTO>();
+        var dataList = new PaginatedListModel<Book>();
 
         if(genreNormalizedName is not null)
         {
@@ -42,19 +41,16 @@ internal class BookService : IBookService
             {
                 throw new NotFoundException("No such genre");
             }
-            data = (await _unitOfWork.BookRepository.ListWithPaginationAsync(pageNo, pageSize,
-                                                                             b => b.GenreId == genre.Id));
+            dataList = await _unitOfWork.BookRepository.ListWithPaginationAsync(pageNo, pageSize,
+                                                                             b => b.GenreId == genre.Id);
         }
         else
         {
-            data = (await _unitOfWork.BookRepository.ListWithPaginationAsync(pageNo, pageSize));
+            dataList = (await _unitOfWork.BookRepository.ListWithPaginationAsync(pageNo, pageSize));
         }
 
-        dataList.Items = _mapper.Map<List<BookDTO>>(data.Item1.ToList());
-        dataList.CurrentPage = pageNo;
-        dataList.TotalPages = data.Item2;
-
-        return dataList;
+        var data = _mapper.Map<PaginatedListModel<BookDTO>>(dataList);
+        return data;
     }
 
     public async Task<BookDTO> GetByIdAsync(int id)
@@ -88,6 +84,9 @@ internal class BookService : IBookService
     public async Task<BookDTO> AddAsync(BookDTO book)
     {
         var bookDb = _mapper.Map<Book>(book);
+
+        Validate(bookDb);
+
         bookDb = await _unitOfWork.BookRepository.AddAsync(bookDb);
         await _unitOfWork.SaveAllAsync();
 
@@ -101,7 +100,7 @@ internal class BookService : IBookService
 
         if (bookDb is null)
         {
-            return;
+            throw new NotFoundException($"No book with id={id}");
         }
 
         bookDb.AuthorId = book.AuthorId;
@@ -114,6 +113,8 @@ internal class BookService : IBookService
         bookDb.TimeOfTake = book.TimeOfTake;
         bookDb.TimeToReturn = book.TimeToReturn;
 
+        Validate(bookDb);
+
         await _unitOfWork.BookRepository.UpdateAsync(bookDb);
         await _unitOfWork.SaveAllAsync();
     }
@@ -123,7 +124,7 @@ internal class BookService : IBookService
         var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
         if (book is null)
         {
-            return;
+            throw new NotFoundException($"No book with id={id}");
         }
 
         await _unitOfWork.BookRepository.DeleteAsync(book);

@@ -1,5 +1,6 @@
 ﻿using LibraryServer.Application.DTO;
 using LibraryServer.Application.Services.Interfaces;
+using LibraryServer.Domain.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryServer.API.Controllers;
@@ -17,40 +18,44 @@ public class BooksController : ControllerBase
 
     [HttpGet]
     [Route("{genre?}")]
-    public async Task<ActionResult<List<BookDTO>>> GetBooks(string? genre, int pageNo = 1,
-                                                            int pageSize = 9)
+    public async Task<ActionResult<List<PaginatedListModel<BookDTO>>>> GetBooks(string? genre, int pageNo = 1,
+                                                                                int pageSize = 9)
     {
-        return Ok(await _bookService.ListAsync(genre, pageNo, pageSize));
+        var resposne = await _bookService.ListAsync(genre, pageNo, pageSize);
+        return Ok(resposne);
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<BookDTO>> GetBookById(int id)
     {
-        return Ok(await _bookService.GetByIdAsync(id));
+        var response = await _bookService.GetByIdAsync(id);
+        return Ok(response);
     }
 
     [HttpGet]
     [Route("isbn/{isbn}")]
     public async Task<ActionResult<BookDTO>> GetBookByISBN(string isbn)
     {
-        return Ok(await _bookService.FirstOrDefaultAsync(b => b.ISBN == isbn));
+        var response = await _bookService.FirstOrDefaultAsync(b => b.ISBN == isbn);
+        return Ok(response);
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> PutGenre(int id, BookDTO genre)
+    public async Task<IActionResult> PutBook(int id, BookDTO book)
     {
-        await _bookService.UpdateAsync(id, genre);
+        await _bookService.UpdateAsync(id, book);
         return Ok();
     }
 
     [HttpPost]
-    public async Task<ActionResult<BookDTO>> PostGenre(BookDTO genre)
+    public async Task<ActionResult<BookDTO>> PostBook(BookDTO book)
     {
-        return Ok(await _bookService.AddAsync(genre));
+        var response = await _bookService.AddAsync(book);
+        return Ok();
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteGenre(int id)
+    public async Task<IActionResult> DeleteBook(int id)
     {
         await _bookService.DeleteAsync(id);
         return Ok();

@@ -1,15 +1,16 @@
 ﻿using LibraryServer.Domain.Entities.Abstractions;
+using LibraryServer.Domain.Common.Models;
 using System.Linq.Expressions;
 
 namespace LibraryServer.DataAccess.Repositories.Interfaces;
 
-public interface IRepository<T> where T : Entity
+public interface IRepository<T> where T : IEntity
 {
     Task<T?> GetByIdAsync(int id, params Expression<Func<T, object>>[] includedProperties);
     Task<IEnumerable<T>> ListAllAsync();
     Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> filter,
                                    params Expression<Func<T, object>>[] includedProperties);
-    Task<(IEnumerable<T>, int)> ListWithPaginationAsync(int pageNo, int pageSize,
+    Task<PaginatedListModel<T>> ListWithPaginationAsync(int pageNo, int pageSize,
                                                         Expression<Func<T, bool>>? filter = null,
                                                         params Expression<Func<T, object>>[] includedProperties);
     Task<T> AddAsync(T entity);

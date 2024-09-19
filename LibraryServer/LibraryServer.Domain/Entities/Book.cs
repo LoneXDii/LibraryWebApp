@@ -2,8 +2,9 @@
 
 namespace LibraryServer.Domain.Entities;
 
-public class Book : Entity
+public class Book : IEntity
 {
+    public int Id { get; set; }
     public string ISBN { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;

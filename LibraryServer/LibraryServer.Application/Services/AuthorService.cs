@@ -74,15 +74,15 @@ internal class AuthorService : IAuthorService
 
         if (authorDb is null)
         {
-            return;
+            throw new NotFoundException($"No author with id={id}");
         }
-
-        Validate(authorDb);
 
         authorDb.Name = author.Name;
         authorDb.Surname = author.Surname;
         authorDb.Country = author.Country;
         authorDb.DateOfBirth = author.DateOfBirth;
+
+        Validate(authorDb);
 
         await _unitOfWork.AuthorRepository.UpdateAsync(authorDb);
         await _unitOfWork.SaveAllAsync();
@@ -93,7 +93,7 @@ internal class AuthorService : IAuthorService
         var author = await _unitOfWork.AuthorRepository.GetByIdAsync(id);
         if (author is null)
         {
-            return;
+            throw new NotFoundException($"No author with id={id}");
         }
 
         await _unitOfWork.AuthorRepository.DeleteAsync(author);

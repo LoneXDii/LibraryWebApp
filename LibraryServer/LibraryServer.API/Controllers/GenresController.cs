@@ -18,13 +18,15 @@ public class GenresController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<GenreDTO>>> GetGenres()
     {
-        return Ok(await _genreService.ListAllAsync());
+        var response = await _genreService.ListAllAsync();
+        return Ok(response);
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<GenreDTO>> GetGenre(int id)
     {
-        return Ok(await _genreService.GetByIdAsync(id));
+        var response = await _genreService.GetByIdAsync(id);
+        return Ok(response);
     }
 
     [HttpPut("{id:int}")]
@@ -37,7 +39,8 @@ public class GenresController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<GenreDTO>> PostGenre(GenreDTO genre)
     {
-        return Ok(await _genreService.AddAsync(genre));
+        var response = await _genreService.AddAsync(genre);
+        return Ok(response);
     }
 
     [HttpDelete("{id:int}")]

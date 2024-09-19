@@ -62,13 +62,13 @@ internal class GenreService : IGenreService
         var genreDb = await _unitOfWork.GenreRepository.GetByIdAsync(id);
         if(genreDb is null)
         {
-            return;
+            throw new NotFoundException($"No genre with id={id}");
         }
-
-        Validate(genreDb);
 
         genreDb.Name = genre.Name;
         genreDb.NormalizedName = genre.NormalizedName;
+
+        Validate(genreDb);
 
         await _unitOfWork.GenreRepository.UpdateAsync(genreDb);
         await _unitOfWork.SaveAllAsync();
@@ -79,7 +79,7 @@ internal class GenreService : IGenreService
         var genre = await _unitOfWork.GenreRepository.GetByIdAsync(id);
         if (genre is null)
         {
-            return;
+            throw new NotFoundException($"No genre with id={id}");
         }
 
         await _unitOfWork.GenreRepository.DeleteAsync(genre);
