@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryServer.Application",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryServer.API", "LibraryServer.API\LibraryServer.API.csproj", "{6916A05A-9068-46A5-B54F-E3DBEDC3E7C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryServer.Domain", "LibraryServer.Domain\LibraryServer.Domain.csproj", "{CDC7DCFB-3A81-4AF3-A506-F7B161F66930}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryServer.Domain", "LibraryServer.Domain\LibraryServer.Domain.csproj", "{CDC7DCFB-3A81-4AF3-A506-F7B161F66930}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryServer.Identity", "LibraryServer.Identity\LibraryServer.Identity.csproj", "{7D698312-392D-4F73-A91B-6CC57A36429C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{CDC7DCFB-3A81-4AF3-A506-F7B161F66930}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDC7DCFB-3A81-4AF3-A506-F7B161F66930}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDC7DCFB-3A81-4AF3-A506-F7B161F66930}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D698312-392D-4F73-A91B-6CC57A36429C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D698312-392D-4F73-A91B-6CC57A36429C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D698312-392D-4F73-A91B-6CC57A36429C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D698312-392D-4F73-A91B-6CC57A36429C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
