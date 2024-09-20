@@ -1,6 +1,10 @@
 using LibraryServer.API.Middleware;
-using LibraryServer.API.Temp;
 using LibraryServer.Application;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +17,24 @@ builder.Services.AddSwaggerGen();
 
 var connStr = builder.Configuration.GetConnectionString("MySQLConnection");
 builder.Services.AddApplication(connStr);
+
+var key = builder.Configuration.GetValue<string>("Kestrel:Secret");
+builder.Services.AddAuthentication(opt =>
+                {
+                    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(opt =>
+                {
+                    opt.Authority = "https://localhost:7002";
+                    opt.RequireHttpsMetadata = true;
+                    opt.Audience = "https://localhost:7002/resources";
+                });
+
+//builder.Services.AddAuthorization(opt =>
+//                {
+//                    opt.AddPolicy("admin", p => p.RequireRole("admin"));
+//                });
 
 var app = builder.Build();
 
@@ -28,8 +50,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("identity", (ClaimsPrincipal user) =>
+            user.Claims.Select(c => new { c.Type, c.Value}))
+   .RequireAuthorization();
 
 app.Run();

@@ -1,5 +1,6 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
+using IdentityModel;
 
 namespace LibraryIdentityServer.Web.IdentityData;
 
@@ -13,7 +14,7 @@ public static class StaticData
         { 
             new IdentityResources.OpenId(),
             new IdentityResources.Email(),
-            new IdentityResources.Profile()
+            new IdentityResources.Profile(),
         };
 
     public static IEnumerable<ApiScope> ApiScopes =>
@@ -30,14 +31,13 @@ public static class StaticData
             {
                 ClientId = "library",
                 ClientSecrets = { new Secret("secret".Sha256()) },
-                AllowedGrantTypes = GrantTypes.Code,
-                AllowedScopes = { 
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                AllowedScopes = {
                     "library",
-                    IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Profile,
-                    IdentityServerConstants.StandardScopes.Email
-                }
+                },
                 //add client uris
+                //RedirectUris={ "https://localhost:7002/signin-oidc" },
+                //PostLogoutRedirectUris={"https://localhost:7002/signout-callback-oidc" },
             }
         };
 }

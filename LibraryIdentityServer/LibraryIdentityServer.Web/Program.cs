@@ -1,3 +1,4 @@
+using Duende.IdentityServer.Models;
 using LibraryIdentityServer.Web.Data;
 using LibraryIdentityServer.Web.IdentityData;
 using LibraryIdentityServer.Web.Models;
@@ -25,13 +26,13 @@ builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddRazorPages();
 
 builder.Services.AddIdentityServer(opt =>
-{
-    opt.Events.RaiseErrorEvents = true;
-    opt.Events.RaiseInformationEvents = true;
-    opt.Events.RaiseFailureEvents = true;
-    opt.Events.RaiseSuccessEvents = true;
-    opt.EmitStaticAudienceClaim = true;
-})
+                {
+                    opt.Events.RaiseErrorEvents = true;
+                    opt.Events.RaiseInformationEvents = true;
+                    opt.Events.RaiseFailureEvents = true;
+                    opt.Events.RaiseSuccessEvents = true;
+                    opt.EmitStaticAudienceClaim = true;
+                })
                 .AddInMemoryIdentityResources(StaticData.IdentityResources)
                 .AddInMemoryApiScopes(StaticData.ApiScopes)
                 .AddInMemoryClients(StaticData.Clients)
@@ -39,6 +40,8 @@ builder.Services.AddIdentityServer(opt =>
                 .AddDeveloperSigningCredential();
 
 var app = builder.Build();
+
+app.UseIdentityServer();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -54,8 +57,6 @@ app.UseStaticFiles();
 await SeedDatabase();
 
 app.UseRouting();
-
-app.UseIdentityServer();
 
 app.UseAuthorization();
 
