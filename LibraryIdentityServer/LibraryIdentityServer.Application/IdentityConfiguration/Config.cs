@@ -22,7 +22,6 @@ public static class Config
             new ApiScope("library", "Library Server"),
         };
 
-
     public static IEnumerable<Client> Clients =>
         new List<Client>
         {

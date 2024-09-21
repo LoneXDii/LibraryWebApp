@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LibraryServer.Application.Services.Interfaces;
 using LibraryServer.Application.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryServer.API.Controllers;
 
@@ -30,6 +31,7 @@ public class GenresController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Policy = "admin")]
     public async Task<IActionResult> PutGenre(int id, GenreDTO genre)
     {
         await _genreService.UpdateAsync(id, genre);
@@ -37,6 +39,7 @@ public class GenresController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "admin")]
     public async Task<ActionResult<GenreDTO>> PostGenre(GenreDTO genre)
     {
         var response = await _genreService.AddAsync(genre);
@@ -44,6 +47,7 @@ public class GenresController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Policy = "admin")]
     public async Task<IActionResult> DeleteGenre(int id)
     {
         await _genreService.DeleteAsync(id);

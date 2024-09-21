@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LibraryServer.Application.Services.Interfaces;
 using LibraryServer.Application.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryServer.API.Controllers;
 
@@ -30,6 +31,7 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Policy = "admin")]
     public async Task<IActionResult> PutAuthor(int id, AuthorDTO author)
     {
         await _authorService.UpdateAsync(id, author);
@@ -37,6 +39,7 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "admin")]
     public async Task<ActionResult<AuthorDTO>> PostAuthor(AuthorDTO author)
     {
         var response = await _authorService.AddAsync(author);
@@ -44,6 +47,7 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Policy = "admin")]
     public async Task<IActionResult> DeleteAuthor(int id)
     {
         await _authorService.DeleteAsync(id);

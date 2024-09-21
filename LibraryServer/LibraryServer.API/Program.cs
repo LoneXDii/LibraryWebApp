@@ -55,8 +55,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("identity", (ClaimsPrincipal user) =>
-            user.Claims.Select(c => new { c.Type, c.Value}))
-   .RequireAuthorization();
-
 app.Run();

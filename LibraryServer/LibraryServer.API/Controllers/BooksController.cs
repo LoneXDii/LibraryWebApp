@@ -1,6 +1,7 @@
 ﻿using LibraryServer.Application.DTO;
 using LibraryServer.Application.Services.Interfaces;
 using LibraryServer.Domain.Common.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryServer.API.Controllers;
@@ -41,6 +42,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Policy = "admin")]
     public async Task<IActionResult> PutBook(int id, BookDTO book)
     {
         await _bookService.UpdateAsync(id, book);
@@ -48,6 +50,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "admin")]
     public async Task<ActionResult<BookDTO>> PostBook(BookDTO book)
     {
         var response = await _bookService.AddAsync(book);
@@ -55,6 +58,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Policy = "admin")]
     public async Task<IActionResult> DeleteBook(int id)
     {
         await _bookService.DeleteAsync(id);

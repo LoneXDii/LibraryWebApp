@@ -6,9 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
 var connStr = builder.Configuration.GetConnectionString("MySQLConnection");
 
 builder.Services.AddApplication(connStr);
@@ -19,6 +16,8 @@ builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
