@@ -31,12 +31,15 @@ public static class StaticData
             {
                 ClientId = "library",
                 ClientSecrets = { new Secret("secret".Sha256()) },
-                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                 AllowedScopes = {
                     "library",
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
                 },
+                AllowOfflineAccess = true,
                 //add client uris
-                //RedirectUris={ "https://localhost:7002/signin-oidc" },
+                RedirectUris={ "https://localhost:7002/signin-oidc" },
                 //PostLogoutRedirectUris={"https://localhost:7002/signout-callback-oidc" },
             }
         };

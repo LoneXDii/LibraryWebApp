@@ -31,10 +31,10 @@ builder.Services.AddAuthentication(opt =>
                     opt.Audience = "https://localhost:7002/resources";
                 });
 
-//builder.Services.AddAuthorization(opt =>
-//                {
-//                    opt.AddPolicy("admin", p => p.RequireRole("admin"));
-//                });
+builder.Services.AddAuthorization(opt =>
+                {
+                    opt.AddPolicy("admin", p => p.RequireRole("admin"));
+                });
 
 var app = builder.Build();
 
