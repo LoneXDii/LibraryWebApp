@@ -10,8 +10,6 @@ public class BookDTO
     public string Description { get; set; } = string.Empty;
     public int GenreId { get; set; }
     public int AuthorId { get; set; }
-    public DateTime TimeOfTake { get; set; }
-    public DateTime TimeToReturn { get; set; }
     public int Quantity { get; set; }
     public string? Image { get; set; }
 }

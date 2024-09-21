@@ -1,6 +1,7 @@
 ﻿using Duende.IdentityServer.Services;
 using LibraryIdentityServer.Application.IdentityConfiguration;
 using LibraryIdentityServer.Application.Services;
+using LibraryIdentityServer.Application.Services.Interfaces;
 using LibraryIdentityServer.DataAcess;
 using LibraryIdentityServer.Domain.Common.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +28,8 @@ public static class DependencyInjection
                 .AddDeveloperSigningCredential()
                 .AddProfileService<ProfileService>();
 
-        services.AddScoped<IProfileService, ProfileService>();
+        services.AddScoped<IProfileService, ProfileService>()
+                .AddScoped<IUserService, UserService>();
 
         return services;
     }

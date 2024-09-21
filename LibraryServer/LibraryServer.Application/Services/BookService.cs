@@ -110,8 +110,6 @@ internal class BookService : IBookService
         bookDb.Description = book.Description;
         bookDb.Quantity = book.Quantity;
         bookDb.Image = book.Image;
-        bookDb.TimeOfTake = book.TimeOfTake;
-        bookDb.TimeToReturn = book.TimeToReturn;
 
         Validate(bookDb);
 
@@ -129,6 +127,63 @@ internal class BookService : IBookService
 
         await _unitOfWork.BookRepository.DeleteAsync(book);
         await _unitOfWork.SaveAllAsync();
+    }
+
+    public async Task GiveToUser(int id, string userId)
+    {
+        var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
+        if (book is null)
+        {
+            throw new NotFoundException($"No book with id={id}");
+        }
+
+        if (book.Quantity <= 0)
+        {
+            throw new BadRequestException($"Book with id={id} is out of stock");
+        }
+
+        book.Quantity--;
+        await _unitOfWork.BookRepository.UpdateAsync(book);
+
+        var takenBook = new TakenBook
+        {
+            BookId = book.Id,
+            UserId = userId,
+            TimeOfTake = DateTime.Now,
+            TimeToReturn = DateTime.Now.AddDays(14)
+        };
+
+        await _unitOfWork.TakenBookRepository.AddAsync(takenBook);
+        await _unitOfWork.SaveAllAsync();
+    }
+
+    public async Task TakeFromUser(int id, string userId)
+    {
+        var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
+        if (book is null)
+        {
+            throw new NotFoundException($"No book with id={id}");
+        }
+
+        var takenBook = await _unitOfWork.TakenBookRepository.FirstOrDefaultAsync(b => b.Id == id && b.UserId == userId);
+        if (takenBook is null)
+        {
+            throw new BadRequestException($"No such order in library");
+        }
+
+        book.Quantity++;
+        await _unitOfWork.BookRepository.UpdateAsync(book);
+        await _unitOfWork.TakenBookRepository.DeleteAsync(takenBook);
+        await _unitOfWork.SaveAllAsync();
+    }
+
+    public async Task<List<TakenBookDTO>> GetUserBooks(string userId)
+    {
+        var books = await _unitOfWork.TakenBookRepository.ListAsync(tb => tb.UserId == userId,
+                                                                    tb => tb.Book);
+
+        var response = _mapper.Map<List<TakenBookDTO>>(books.ToList());
+        return response;
     }
 
     private void Validate(Book book)

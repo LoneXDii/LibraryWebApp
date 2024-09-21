@@ -1,5 +1,4 @@
-﻿using LibraryIdentityServer.DataAcess.Data;
-using LibraryIdentityServer.Domain.Common.Models;
+﻿using LibraryIdentityServer.Domain.Common.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using IdentityModel;
@@ -10,13 +9,11 @@ namespace LibraryIdentityServer.API.Temp;
 
 public class DbInitializer : IDbInitializer
 {
-    private readonly AppDbContext _dbContext;
     private readonly UserManager<AppUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
 
-    public DbInitializer(AppDbContext dbContext, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+    public DbInitializer(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
     {
-        _dbContext = dbContext;
         _userManager = userManager;
         _roleManager = roleManager;
     }
@@ -63,7 +60,7 @@ public class DbInitializer : IDbInitializer
 
         var claims2 = await _userManager.AddClaimsAsync(customerUser, new Claim[]
         {
-            new Claim(JwtClaimTypes.Name, adminUser.Name),
+            new Claim(JwtClaimTypes.Name, customerUser.Name),
             new Claim(JwtClaimTypes.Role, Config.Customer)
         });
     }

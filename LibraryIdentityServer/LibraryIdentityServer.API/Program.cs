@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
+
 var connStr = builder.Configuration.GetConnectionString("MySQLConnection");
 
 builder.Services.AddApplication(connStr);
@@ -30,11 +32,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 
 await SeedDatabase();
 
-app.UseRouting();
+app.MapControllers();
 
 app.UseAuthorization();
 

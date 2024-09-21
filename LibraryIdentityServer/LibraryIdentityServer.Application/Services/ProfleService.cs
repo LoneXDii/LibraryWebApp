@@ -13,8 +13,8 @@ public class ProfileService : IProfileService
     private readonly IUserClaimsPrincipalFactory<AppUser> _userClaimsPrincipalFactory;
     private readonly UserManager<AppUser> _userMgr;
 
-    public ProfileService(
-        UserManager<AppUser> userMgr, IUserClaimsPrincipalFactory<AppUser> userClaimsPrincipalFactory)
+    public ProfileService(UserManager<AppUser> userMgr, 
+                          IUserClaimsPrincipalFactory<AppUser> userClaimsPrincipalFactory)
     {
         _userMgr = userMgr;
         _userClaimsPrincipalFactory = userClaimsPrincipalFactory;

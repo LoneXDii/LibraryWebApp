@@ -12,6 +12,7 @@ internal class AppMappingProfile : Profile
         CreateMap<Book, BookDTO>().ReverseMap();
         CreateMap<Author, AuthorDTO>().ReverseMap();
         CreateMap<Genre, GenreDTO>().ReverseMap();
+        CreateMap<TakenBook, TakenBookDTO>().ReverseMap();
         CreateMap<PaginatedListModel<Book>, PaginatedListModel<BookDTO>>().ReverseMap();
     }
 }

@@ -12,11 +12,6 @@ public class Book : IEntity
     public Genre? Genre { get; set; }
     public int? AuthorId { get; set; }
     public Author? Author { get; set; }
-    public DateTime TimeOfTake { get; set; }
-    public DateTime TimeToReturn { get; set;}
     public int Quantity { get; set; }
     public string? Image { get; set; }
-    //implement give to user method
 }
-
-//BookUser for many to many with TimeOfTake and TimeToReturn
