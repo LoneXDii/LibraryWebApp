@@ -129,7 +129,7 @@ internal class BookService : IBookService
         await _unitOfWork.SaveAllAsync();
     }
 
-    public async Task GiveToUser(int id, string userId)
+    public async Task GiveToUserAsync(int id, string userId)
     {
         var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
         if (book is null)
@@ -157,7 +157,7 @@ internal class BookService : IBookService
         await _unitOfWork.SaveAllAsync();
     }
 
-    public async Task TakeFromUser(int id, string userId)
+    public async Task TakeFromUserAsync(int id, string userId)
     {
         var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
         if (book is null)
@@ -177,7 +177,7 @@ internal class BookService : IBookService
         await _unitOfWork.SaveAllAsync();
     }
 
-    public async Task<List<TakenBookDTO>> GetUserBooks(string userId)
+    public async Task<List<TakenBookDTO>> GetUserBooksAsync(string userId)
     {
         var books = await _unitOfWork.TakenBookRepository.ListAsync(tb => tb.UserId == userId,
                                                                     tb => tb.Book);

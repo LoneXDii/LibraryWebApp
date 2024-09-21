@@ -12,8 +12,8 @@ public interface IBookService
     Task<BookDTO> AddAsync(BookDTO book);
     Task UpdateAsync(int id, BookDTO book);
     Task DeleteAsync(int id);
-    Task GiveToUser(int id, string userId);
-    Task TakeFromUser(int id, string userId);
-    Task<List<TakenBookDTO>> GetUserBooks(string userId);
+    Task GiveToUserAsync(int id, string userId);
+    Task TakeFromUserAsync(int id, string userId);
+    Task<List<TakenBookDTO>> GetUserBooksAsync(string userId);
     //add image method
 }
