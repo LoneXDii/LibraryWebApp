@@ -1,11 +1,12 @@
-﻿using LibraryIdentityServer.Web.IdentityData;
-using LibraryIdentityServer.Web.Data;
-using LibraryIdentityServer.Web.Models;
+﻿using LibraryIdentityServer.DataAcess.Data;
+using LibraryIdentityServer.Domain.Common.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using IdentityModel;
+using LibraryIdentityServer.Application.IdentityConfiguration;
 
-namespace LibraryIdentityServer.Web.Temp;
+
+namespace LibraryIdentityServer.API.Temp;
 
 public class DbInitializer : IDbInitializer
 {
@@ -22,10 +23,10 @@ public class DbInitializer : IDbInitializer
 
     public async Task SeedData()
     {
-        if (await _roleManager.FindByNameAsync(StaticData.Admin) is null)
+        if (await _roleManager.FindByNameAsync(Config.Admin) is null)
         {
-            await _roleManager.CreateAsync(new IdentityRole(StaticData.Admin));
-            await _roleManager.CreateAsync(new IdentityRole(StaticData.Customer));
+            await _roleManager.CreateAsync(new IdentityRole(Config.Admin));
+            await _roleManager.CreateAsync(new IdentityRole(Config.Customer));
         }
         else
         {
@@ -41,12 +42,12 @@ public class DbInitializer : IDbInitializer
             Name = "Test Admin"
         };
         await _userManager.CreateAsync(adminUser, "Admin123*");
-        await _userManager.AddToRoleAsync(adminUser, StaticData.Admin);
+        await _userManager.AddToRoleAsync(adminUser, Config.Admin);
 
-        var claims1 = await _userManager.AddClaimsAsync(adminUser, new Claim[] 
+        var claims1 = await _userManager.AddClaimsAsync(adminUser, new Claim[]
         {
             new Claim(JwtClaimTypes.Name, adminUser.Name),
-            new Claim(JwtClaimTypes.Role, StaticData.Admin)
+            new Claim(JwtClaimTypes.Role, Config.Admin)
         });
 
         AppUser customerUser = new()
@@ -58,12 +59,12 @@ public class DbInitializer : IDbInitializer
             Name = "Test Customer"
         };
         await _userManager.CreateAsync(customerUser, "Client123*");
-        await _userManager.AddToRoleAsync(customerUser, StaticData.Customer);
+        await _userManager.AddToRoleAsync(customerUser, Config.Customer);
 
         var claims2 = await _userManager.AddClaimsAsync(customerUser, new Claim[]
         {
             new Claim(JwtClaimTypes.Name, adminUser.Name),
-            new Claim(JwtClaimTypes.Role, StaticData.Customer)
+            new Claim(JwtClaimTypes.Role, Config.Customer)
         });
     }
 }

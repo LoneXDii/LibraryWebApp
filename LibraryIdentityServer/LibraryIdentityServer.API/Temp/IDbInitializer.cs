@@ -1,4 +1,4 @@
-﻿namespace LibraryIdentityServer.Web.Temp;
+﻿namespace LibraryIdentityServer.API.Temp;
 
 public interface IDbInitializer
 {

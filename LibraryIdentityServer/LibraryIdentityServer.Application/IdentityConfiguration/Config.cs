@@ -1,17 +1,16 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
-using IdentityModel;
 
-namespace LibraryIdentityServer.Web.IdentityData;
+namespace LibraryIdentityServer.Application.IdentityConfiguration;
 
-public static class StaticData
+public static class Config
 {
     public const string Admin = "admin";
     public const string Customer = "customer";
 
     public static IEnumerable<IdentityResource> IdentityResources =>
-        new List<IdentityResource> 
-        { 
+        new List<IdentityResource>
+        {
             new IdentityResources.OpenId(),
             new IdentityResources.Email(),
             new IdentityResources.Profile(),
@@ -22,7 +21,7 @@ public static class StaticData
         {
             new ApiScope("library", "Library Server"),
         };
-    
+
 
     public static IEnumerable<Client> Clients =>
         new List<Client>

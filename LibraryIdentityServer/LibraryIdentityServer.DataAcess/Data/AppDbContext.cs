@@ -1,8 +1,8 @@
-﻿using LibraryIdentityServer.Web.Models;
+﻿using LibraryIdentityServer.Domain.Common.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace LibraryIdentityServer.Web.Data;
+namespace LibraryIdentityServer.DataAcess.Data;
 
 public class AppDbContext : IdentityDbContext<AppUser>
 {
