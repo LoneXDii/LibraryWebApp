@@ -10,10 +10,12 @@ namespace LibraryServer.API.Controllers;
 public class LibraryController : ControllerBase
 {
     private readonly IBookService _bookService;
+    private readonly IUserValidationService _userValidationService;
 
-    public LibraryController(IBookService bookService)
+    public LibraryController(IBookService bookService, IUserValidationService userValidationService)
     {
         _bookService = bookService;
+        _userValidationService = userValidationService;
     }
 
     [HttpPost]
@@ -21,6 +23,7 @@ public class LibraryController : ControllerBase
     [Route("take")]
     public async Task<IActionResult> TakeBook(TakeBookDTO request)
     {
+        _userValidationService.ValidateUser(request.UserId);
         await _bookService.GiveToUserAsync(request.BookId, request.UserId);
         return Ok();
     }
@@ -30,6 +33,7 @@ public class LibraryController : ControllerBase
     [Route("user-books/{id}")]
     public async Task<ActionResult<List<TakenBookDTO>>> GetUserBooks(string id)
     {
+        _userValidationService.ValidateUser(id);
         var response = await _bookService.GetUserBooksAsync(id);
         return Ok(response);
     }

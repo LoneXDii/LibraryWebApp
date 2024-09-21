@@ -12,6 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddHttpContextAccessor();
+
 var connStr = builder.Configuration.GetConnectionString("MySQLConnection");
 builder.Services.AddApplication(connStr);
 

@@ -18,7 +18,8 @@ public static class DependencyInjection
                     }, typeof(AppMappingProfile))
                 .AddScoped<IBookService, BookService>()
                 .AddScoped<IAuthorService, AuthorService>()
-                .AddScoped<IGenreService, GenreService>();
+                .AddScoped<IGenreService, GenreService>()
+                .AddScoped<IUserValidationService, UserValidationService>();
 
         return services;
     }
