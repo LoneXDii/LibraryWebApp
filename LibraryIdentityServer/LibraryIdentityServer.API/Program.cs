@@ -27,6 +27,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 app.UseIdentityServer();
@@ -37,11 +39,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 await SeedDatabase();
 
+app.MapHealthChecks("/health");
 app.MapControllers();
+
 
 app.UseAuthorization();
 

@@ -37,7 +37,7 @@ public static class Config
                 },
                 AllowOfflineAccess = true,
                 //add client uris
-                RedirectUris={ "https://localhost:7002/signin-oidc" },
+                //RedirectUris={ "https://localhost:7002/signin-oidc" },
                 //PostLogoutRedirectUris={"https://localhost:7002/signout-callback-oidc" },
             }
         };

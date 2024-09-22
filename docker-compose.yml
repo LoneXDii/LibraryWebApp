@@ -3,6 +3,9 @@ version: "3.8"
 volumes: 
   library_data:
 
+networks:
+  network-backend:
+
 services:
   database:
     image: mysql:8.0.36
@@ -23,21 +26,10 @@ services:
       retries: 5
     ports:
       - "3307:3306"
+    networks: 
+     - network-backend
   
-  api:
-    build: ./LibraryServer
-    depends_on:
-      database:
-        condition: service_healthy
-    ports:
-      - "7001:7001"
-    environment: 
-      DBHOST: database
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: https://+:7001
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/mycert.pfx
-      ASPNETCORE_Kestrel__Certificates__Default__Password: mypass 
-
+  
   identity_api:
     build: ./LibraryIdentityServer
     depends_on:
@@ -48,6 +40,31 @@ services:
     environment: 
       DBHOST: database
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: https://+:7002
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/mycert.pfx
-      ASPNETCORE_Kestrel__Certificates__Default__Password: mypass
+      ASPNETCORE_URLS: http://+:7002
+      #ASPNETCORE_Kestrel__Certificates__Default__Path: /https/mycert.pfx
+      #ASPNETCORE_Kestrel__Certificates__Default__Password: mypass
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:7002/.well-known/openid-configuration/jwks"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+    networks: 
+     - network-backend
+
+  api:
+    build: ./LibraryServer
+    depends_on:
+      database:
+        condition: service_healthy
+      identity_api:
+        condition: service_healthy
+    ports:
+      - "7001:7001"
+    environment: 
+      DBHOST: database
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:7001
+      #ASPNETCORE_Kestrel__Certificates__Default__Path: /https/mycert.pfx
+      #ASPNETCORE_Kestrel__Certificates__Default__Password: mypass 
+    networks: 
+     - network-backend

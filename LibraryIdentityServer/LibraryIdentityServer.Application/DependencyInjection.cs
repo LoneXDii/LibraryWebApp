@@ -20,6 +20,8 @@ public static class DependencyInjection
                     opt.Events.RaiseFailureEvents = true;
                     opt.Events.RaiseSuccessEvents = true;
                     opt.EmitStaticAudienceClaim = true;
+                    //for docker, make it depends on ENV VARIABLES
+                    opt.IssuerUri = "http://identity_api:7002";
                 })
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
