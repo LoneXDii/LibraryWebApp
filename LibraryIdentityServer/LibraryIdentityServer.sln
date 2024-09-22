@@ -5,11 +5,11 @@ VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryIdentityServer.API", "LibraryIdentityServer.API\LibraryIdentityServer.API.csproj", "{79D4BD74-4331-42E3-BB60-F1E1DAD010EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryIdentityServer.DataAcess", "LibraryIdentityServer.DataAcess\LibraryIdentityServer.DataAcess.csproj", "{4C473B92-71F6-4720-AD89-3FF1A22F7803}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryIdentityServer.Application", "LibraryIdentityServer.Application\LibraryIdentityServer.Application.csproj", "{980127EC-BE4C-4CF2-8878-2918AACCB87C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryIdentityServer.Application", "LibraryIdentityServer.Application\LibraryIdentityServer.Application.csproj", "{980127EC-BE4C-4CF2-8878-2918AACCB87C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryIdentityServer.Domain", "LibraryIdentityServer.Domain\LibraryIdentityServer.Domain.csproj", "{8756D8B8-0BC2-4B5F-9B69-C8012F7F95B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryIdentityServer.Domain", "LibraryIdentityServer.Domain\LibraryIdentityServer.Domain.csproj", "{8756D8B8-0BC2-4B5F-9B69-C8012F7F95B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryIdentityServer.DataAccess", "LibraryIdentityServer.DataAccess\LibraryIdentityServer.DataAccess.csproj", "{F729096C-11EE-48CC-BF4B-CDF14713683D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		{79D4BD74-4331-42E3-BB60-F1E1DAD010EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79D4BD74-4331-42E3-BB60-F1E1DAD010EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79D4BD74-4331-42E3-BB60-F1E1DAD010EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C473B92-71F6-4720-AD89-3FF1A22F7803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C473B92-71F6-4720-AD89-3FF1A22F7803}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C473B92-71F6-4720-AD89-3FF1A22F7803}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C473B92-71F6-4720-AD89-3FF1A22F7803}.Release|Any CPU.Build.0 = Release|Any CPU
 		{980127EC-BE4C-4CF2-8878-2918AACCB87C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{980127EC-BE4C-4CF2-8878-2918AACCB87C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{980127EC-BE4C-4CF2-8878-2918AACCB87C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{8756D8B8-0BC2-4B5F-9B69-C8012F7F95B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8756D8B8-0BC2-4B5F-9B69-C8012F7F95B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8756D8B8-0BC2-4B5F-9B69-C8012F7F95B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F729096C-11EE-48CC-BF4B-CDF14713683D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F729096C-11EE-48CC-BF4B-CDF14713683D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F729096C-11EE-48CC-BF4B-CDF14713683D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F729096C-11EE-48CC-BF4B-CDF14713683D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

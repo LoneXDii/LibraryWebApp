@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LibraryIdentityServer.Application\LibraryIdentityServer.Application.csproj" />
+    <ProjectReference Include="..\LibraryIdentityServer.DataAccess\LibraryIdentityServer.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

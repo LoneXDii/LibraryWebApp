@@ -332,9 +332,11 @@ public class DbInitializer
                 }
         };
 
-
-        await dbContext.Database.EnsureDeletedAsync();
         await dbContext.Database.EnsureCreatedAsync();
+        if (dbContext.Authors.Any())
+        {
+            return;
+        }
         await dbContext.Genres.AddRangeAsync(genres);
         await dbContext.Authors.AddRangeAsync(authors);
         await dbContext.SaveChangesAsync();

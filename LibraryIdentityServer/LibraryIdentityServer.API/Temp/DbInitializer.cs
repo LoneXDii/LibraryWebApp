@@ -3,23 +3,26 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using IdentityModel;
 using LibraryIdentityServer.Application.IdentityConfiguration;
-
+using LibraryIdentityServer.DataAcess.Data;
 
 namespace LibraryIdentityServer.API.Temp;
 
 public class DbInitializer : IDbInitializer
 {
+    private readonly AppDbContext _dbContext;
     private readonly UserManager<AppUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
 
-    public DbInitializer(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+    public DbInitializer(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, AppDbContext dbContext)
     {
         _userManager = userManager;
         _roleManager = roleManager;
+        _dbContext = dbContext;
     }
 
     public async Task SeedData()
     {
+        _dbContext.Database.EnsureCreated();
         if (await _roleManager.FindByNameAsync(Config.Admin) is null)
         {
             await _roleManager.CreateAsync(new IdentityRole(Config.Admin));

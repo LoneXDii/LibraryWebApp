@@ -8,7 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-var connStr = builder.Configuration.GetConnectionString("MySQLConnection");
+var host = builder.Configuration["DBHOST"] ?? "localhost";
+var port = builder.Configuration["DBPORT"] ?? "3306";
+var password = builder.Configuration["MYSQL_PASSWORD"] ?? builder.Configuration.GetConnectionString("MYSQL_PASSWORD");
+var user = builder.Configuration["MYSQL_USER"] ?? builder.Configuration.GetConnectionString("MYSQL_USER");
+var usersDataBase = builder.Configuration["MYSQL_DATABASE2"] ?? builder.Configuration.GetConnectionString("MYSQL_DATABASE");
+
+var connStr = $"server={host};user={user};password={password};port={port};database={usersDataBase}";
 
 builder.Services.AddApplication(connStr);
 

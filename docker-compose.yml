@@ -1,0 +1,53 @@
+version: "3.8"
+
+volumes: 
+  library_data:
+
+services:
+  database:
+    image: mysql:8.0.36
+    restart: always
+    volumes: 
+      - library_data:/data/db
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    environment: 
+      MYSQL_ROOT_PASSWORD: Root0++
+      MYSQL_USER: user
+      MYSQL_PASSWORD: Qwerty123
+      MYSQL_DATABASE: librarydb
+      MYSQL_DATABASE2: libraryidentitydb
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 15s
+      timeout: 15s
+      retries: 5
+    ports:
+      - "3307:3306"
+  
+  api:
+    build: ./LibraryServer
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - "7001:7001"
+    environment: 
+      DBHOST: database
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:7001
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/mycert.pfx
+      ASPNETCORE_Kestrel__Certificates__Default__Password: mypass 
+
+  identity_api:
+    build: ./LibraryIdentityServer
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - "7002:7002"
+    environment: 
+      DBHOST: database
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:7002
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/mycert.pfx
+      ASPNETCORE_Kestrel__Certificates__Default__Password: mypass
