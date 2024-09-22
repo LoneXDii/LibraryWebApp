@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using LibraryServer.Application.Services.StorageServices.Interfaces;
 
 namespace LibraryServer.API.Controllers;
 
@@ -6,47 +7,33 @@ namespace LibraryServer.API.Controllers;
 [ApiController]
 public class FilesController : ControllerBase
 {
-    private readonly string _imagePath;
+    private readonly IBlobService _blobService;
 
-    public FilesController(IWebHostEnvironment webHost)
+    public FilesController(IBlobService blobService)
     {
-        _imagePath = Path.Combine(webHost.WebRootPath, "Images");
+        _blobService = blobService;
     }
 
     [HttpPost]
-    public async Task<IActionResult> SaveFile(IFormFile file)
+    public async Task<ActionResult<Guid>> SaveFile(IFormFile file)
     {
-        if (file is null)
-        {
-            return BadRequest();
-        }
+        using Stream stream = file.OpenReadStream();
 
-        var filePath = Path.Combine(_imagePath, file.FileName);
-        var fileInfo = new FileInfo(filePath);
-
-        if (fileInfo.Exists)
-        {
-            fileInfo.Delete();
-        }
-
-        using var fileStream = fileInfo.Create();
-        await file.CopyToAsync(fileStream);
-
-        var host = HttpContext.Request.Host;
-        var fileUrl = $"Https://{host}/Images/{file.FileName}";
-        return Ok(fileUrl);
+        Guid fileId = await _blobService.UploadAsync(stream, file.ContentType);
+        return Ok(fileId);
     }
 
-    [HttpDelete("{fileName}")]
-    public IActionResult DeleteFile(string fileName)
+    [HttpGet("{fileId}")]
+    public async Task<FileStreamResult> GetFile(Guid fileId)
     {
-        var filePath = Path.Combine(_imagePath, fileName);
-        var fileInfo = new FileInfo(filePath);
+        var response = await _blobService.DownloadAsync(fileId);
+        return File(response.Stream, response.ContentType);
+    }
 
-        if (fileInfo.Exists)
-        {
-            fileInfo.Delete();
-        }
+    [HttpDelete("{fileId}")]
+    public async Task<IActionResult> DeleteFile(Guid fileId)
+    {
+        await _blobService.DeleteAsync(fileId);
         return Ok();
     }
 }

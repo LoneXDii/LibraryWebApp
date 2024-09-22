@@ -16,7 +16,7 @@ var usersDataBase = builder.Configuration["MYSQL_DATABASE2"] ?? builder.Configur
 
 var connStr = $"server={host};user={user};password={password};port={port};database={usersDataBase}";
 
-builder.Services.AddApplication(connStr);
+builder.Services.AddApplication(connStr, builder.Configuration);
 
 builder.Services.AddScoped<IProfileService, ProfileService>();
 

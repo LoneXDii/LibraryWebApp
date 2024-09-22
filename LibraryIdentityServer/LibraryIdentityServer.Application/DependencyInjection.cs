@@ -4,13 +4,14 @@ using LibraryIdentityServer.Application.Services;
 using LibraryIdentityServer.Application.Services.Interfaces;
 using LibraryIdentityServer.DataAcess;
 using LibraryIdentityServer.Domain.Common.Models;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LibraryIdentityServer.Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services, string? connStr)
+    public static IServiceCollection AddApplication(this IServiceCollection services, string? connStr, IConfiguration cfg)
     {
         services.AddDataAcess(connStr)
                 .AddIdentityServer(opt =>
@@ -20,8 +21,7 @@ public static class DependencyInjection
                     opt.Events.RaiseFailureEvents = true;
                     opt.Events.RaiseSuccessEvents = true;
                     opt.EmitStaticAudienceClaim = true;
-                    //for docker, make it depends on ENV VARIABLES
-                    opt.IssuerUri = "http://identity_api:7002";
+                    opt.IssuerUri = cfg["ISSUER_BASE"] ?? "http://localhost:7002";
                 })
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)

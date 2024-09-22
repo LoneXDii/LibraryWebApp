@@ -17,5 +17,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /App/LibraryServer
 COPY --from=build-env /App/LibraryServer/out .
 EXPOSE 7001
-COPY mycert.pfx /https/mycert.pfx 
 ENTRYPOINT ["dotnet", "LibraryServer.API.dll"]

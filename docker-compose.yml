@@ -2,14 +2,26 @@ version: "3.8"
 
 volumes: 
   library_data:
+  azurite_data:
 
 networks:
   network-backend:
 
 services:
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:latest
+    volumes:
+      - azurite_data:/data
+    ports:
+      - "10000:10000"
+    networks: 
+     - network-backend
+
   database:
     image: mysql:8.0.36
     restart: always
+    depends_on:
+     - azurite
     volumes: 
       - library_data:/data/db
       - ./init-scripts:/docker-entrypoint-initdb.d
@@ -18,7 +30,6 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: Qwerty123
       MYSQL_DATABASE: librarydb
-      MYSQL_DATABASE2: libraryidentitydb
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 15s
@@ -28,7 +39,6 @@ services:
       - "3307:3306"
     networks: 
      - network-backend
-  
   
   identity_api:
     build: ./LibraryIdentityServer
@@ -41,8 +51,7 @@ services:
       DBHOST: database
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:7002
-      #ASPNETCORE_Kestrel__Certificates__Default__Path: /https/mycert.pfx
-      #ASPNETCORE_Kestrel__Certificates__Default__Password: mypass
+      ISSUER_BASE: http://identity_api:7002
     healthcheck:
       test: ["CMD", "curl", "http://localhost:7002/.well-known/openid-configuration/jwks"]
       interval: 5s
@@ -64,7 +73,7 @@ services:
       DBHOST: database
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:7001
-      #ASPNETCORE_Kestrel__Certificates__Default__Path: /https/mycert.pfx
-      #ASPNETCORE_Kestrel__Certificates__Default__Password: mypass 
+      IDENTITY_BASE: http://identity_api:7002
+      AZURE_CONNECTION: UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite;
     networks: 
      - network-backend

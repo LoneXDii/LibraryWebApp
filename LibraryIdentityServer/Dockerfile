@@ -19,5 +19,4 @@ RUN apt-get update
 RUN apt-get --yes install curl
 COPY --from=build-env /App/LibraryIdentityServer/out .
 EXPOSE 7002
-COPY mycert.pfx /https/mycert.pfx 
 ENTRYPOINT ["dotnet", "LibraryIdentityServer.API.dll"]
