@@ -12,11 +12,13 @@ internal class BlobService : IBlobService
     public BlobService(BlobServiceClient blobServiceClient)
     {
         _blobServiceClient = blobServiceClient;
+        _blobServiceClient.
     }
 
     public async Task<Guid> UploadAsync(Stream stream, string contentType)
     {
         var containerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
+        await containerClient.CreateIfNotExistsAsync(PublicAccessType.Blob);
 
         var fileId = Guid.NewGuid();
         var blobClient = containerClient.GetBlobClient(fileId.ToString());
@@ -30,6 +32,7 @@ internal class BlobService : IBlobService
     public async Task<FileResponse> DownloadAsync(Guid fileId)
     {
         var containerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
+        await containerClient.CreateIfNotExistsAsync(PublicAccessType.Blob);
 
         var blobClient = containerClient.GetBlobClient(fileId.ToString());
 
@@ -41,6 +44,7 @@ internal class BlobService : IBlobService
     public async Task DeleteAsync(Guid fileId)
     {
         var containerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
+        await containerClient.CreateIfNotExistsAsync(PublicAccessType.Blob);
 
         var blobClient = containerClient.GetBlobClient(fileId.ToString());
 
