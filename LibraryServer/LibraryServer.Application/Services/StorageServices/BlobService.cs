@@ -12,7 +12,6 @@ internal class BlobService : IBlobService
     public BlobService(BlobServiceClient blobServiceClient)
     {
         _blobServiceClient = blobServiceClient;
-        _blobServiceClient.
     }
 
     public async Task<Guid> UploadAsync(Stream stream, string contentType)
