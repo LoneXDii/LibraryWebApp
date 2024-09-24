@@ -4,7 +4,7 @@ using LibraryServer.Domain.Entities;
 
 namespace LibraryServer.DataAccess.Repositories;
 
-internal class UnitOfWork : IUnitOfWork
+public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext _dbContext;
 

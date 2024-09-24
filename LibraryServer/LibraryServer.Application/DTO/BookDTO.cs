@@ -4,7 +4,7 @@ namespace LibraryServer.Application.DTO;
 
 public class BookDTO
 {
-    public int Id { get; set; }
+    public int Id { get; set; } = 0;
     public string ISBN { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;

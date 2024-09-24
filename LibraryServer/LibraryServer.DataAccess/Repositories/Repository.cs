@@ -8,7 +8,7 @@ using LibraryServer.Domain.Common.Models;
 
 namespace LibraryServer.DataAccess.Repositories;
 
-internal class Repository<T> : IRepository<T> where T : class, IEntity
+public class Repository<T> : IRepository<T> where T : class, IEntity
 {
     private readonly AppDbContext _dbContext;
     private readonly DbSet<T> _entities;

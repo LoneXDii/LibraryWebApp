@@ -12,7 +12,7 @@ using System.Text;
 
 namespace LibraryServer.Application.Services;
 
-internal class BookService : IBookService
+public class BookService : IBookService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;

@@ -5,7 +5,7 @@ using LibraryServer.Domain.Entities;
 
 namespace LibraryServer.Application.Mapping;
 
-internal class AppMappingProfile : Profile
+public class AppMappingProfile : Profile
 {
     public AppMappingProfile()
     {
