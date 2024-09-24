@@ -36,9 +36,6 @@ public static class Config
                     IdentityServerConstants.StandardScopes.Profile,
                 },
                 AllowOfflineAccess = true,
-                //add client uris
-                //RedirectUris={ "https://localhost:7002/signin-oidc" },
-                //PostLogoutRedirectUris={"https://localhost:7002/signout-callback-oidc" },
             }
         };
 }

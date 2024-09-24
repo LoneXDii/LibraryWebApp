@@ -21,8 +21,7 @@ internal class BookValidator : AbstractValidator<Book>
             .WithMessage("Book's description is required");
 
         RuleFor(b => b.Quantity)
-            .GreaterThan(0)
+            .GreaterThan(-1)
             .WithMessage("Incorrect quantity");
     }
-
 }

@@ -2,10 +2,7 @@ using LibraryServer.API.Middleware;
 using LibraryServer.API.Temp;
 using LibraryServer.Application;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.Net;
-using static System.Net.WebRequestMethods;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

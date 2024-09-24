@@ -15,4 +15,8 @@
     <ProjectReference Include="..\LibraryServer.Application\LibraryServer.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

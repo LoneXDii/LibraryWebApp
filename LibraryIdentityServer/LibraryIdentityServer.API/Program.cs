@@ -1,7 +1,6 @@
-using Duende.IdentityServer.Services;
+using LibraryIdentityServer.API.Middleware;
 using LibraryIdentityServer.API.Temp;
 using LibraryIdentityServer.Application;
-using LibraryIdentityServer.Application.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +17,6 @@ var connStr = $"server={host};user={user};password={password};port={port};databa
 
 builder.Services.AddApplication(connStr, builder.Configuration);
 
-builder.Services.AddScoped<IProfileService, ProfileService>();
-
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -31,6 +28,8 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 app.UseIdentityServer();
 
 if (app.Environment.IsDevelopment())
@@ -41,7 +40,7 @@ if (app.Environment.IsDevelopment())
 
 //app.UseHttpsRedirection();
 
-await SeedDatabase();
+await SeedDatabaseAsync();
 
 app.MapHealthChecks("/health");
 app.MapControllers();
@@ -52,7 +51,7 @@ app.UseAuthorization();
 app.Run();
 
 
-async Task SeedDatabase()
+async Task SeedDatabaseAsync()
 {
     using (var scope = app.Services.CreateScope())
     {

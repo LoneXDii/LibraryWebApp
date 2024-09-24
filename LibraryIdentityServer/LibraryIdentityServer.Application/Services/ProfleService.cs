@@ -33,7 +33,6 @@ public class ProfileService : IProfileService
                        .ToList();
 
         claims.Add(new Claim(JwtClaimTypes.Name, user.Name));
-        claims.Add(new Claim(JwtClaimTypes.Id, user.Id));
         if (_userMgr.SupportsUserRole)
         {
             IList<string> roles = await _userMgr.GetRolesAsync(user);
