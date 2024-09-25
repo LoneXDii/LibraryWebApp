@@ -1,4 +1,5 @@
-﻿using LibraryServer.DataAccess.Data;
+﻿using LibraryServer.Application.Services.StorageServices.Interfaces;
+using LibraryServer.DataAccess.Data;
 using LibraryServer.Domain.Entities;
 
 namespace LibraryServer.API.Temp;
@@ -9,7 +10,25 @@ public class DbInitializer
     {
         using var scope = app.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        if (dbContext.Authors.Any())
+        {
+            return;
+        }
 
+        var blobService = scope.ServiceProvider.GetRequiredService<IBlobService>();
+        var appUri = "https://localhost:7001/api/files/";
+
+        var imagePaths = new List<string>();
+
+        string basePath = Directory.GetCurrentDirectory() + "\\wwwroot\\StartupImages\\";
+
+        for (int i = 1; i <= 10; i++)
+        {
+            using Stream stream = File.OpenRead(basePath + $"{i}.jpg");
+            var guid = await blobService.UploadAsync(stream, "image/jpeg");
+            imagePaths.Add(appUri + guid.ToString());
+        }
+        
         List<Genre> genres = new List<Genre>
         {
             new Genre 
@@ -148,7 +167,7 @@ public class DbInitializer
                 GenreId = 1,
                 AuthorId = 1,
                 Quantity = 5,
-                Image = null
+                Image = imagePaths[0]
             },
                 new Book
                 {
@@ -158,7 +177,7 @@ public class DbInitializer
                     GenreId = 5,
                     AuthorId = 2,
                     Quantity = 3,
-                    Image = null
+                    Image = imagePaths[1]
                 },
                 new Book
                 {
@@ -168,7 +187,7 @@ public class DbInitializer
                     GenreId = 3,
                     AuthorId = 3,
                     Quantity = 4,
-                    Image = null
+                    Image = imagePaths[2]
                 },
                 new Book
                 {
@@ -178,7 +197,7 @@ public class DbInitializer
                     GenreId = 5,
                     AuthorId = 4,
                     Quantity = 6,
-                    Image = null
+                    Image = imagePaths[3]
                 },
                 new Book
                 {
@@ -188,7 +207,7 @@ public class DbInitializer
                     GenreId = 7,
                     AuthorId = 5,
                     Quantity = 7,
-                    Image = null
+                    Image = imagePaths[4]
                 },
                 new Book
                 {
@@ -198,7 +217,7 @@ public class DbInitializer
                     GenreId = 7,
                     AuthorId = 6,
                     Quantity = 2,
-                    Image = null
+                    Image = imagePaths[5]
                 },
                 new Book
                 {
@@ -208,7 +227,7 @@ public class DbInitializer
                     GenreId = 2,
                     AuthorId = 7,
                     Quantity = 10,
-                    Image = null
+                    Image = imagePaths[6]
                 },
                 new Book
                 {
@@ -218,7 +237,7 @@ public class DbInitializer
                     GenreId = 3,
                     AuthorId = 8,
                     Quantity = 8,
-                    Image = null
+                    Image = imagePaths[7]
                 },
                 new Book
                 {
@@ -228,7 +247,7 @@ public class DbInitializer
                     GenreId = 4,
                     AuthorId = 9,
                     Quantity = 5,
-                    Image = null
+                    Image = imagePaths[8]
                 },
                 new Book
                 {
@@ -238,7 +257,7 @@ public class DbInitializer
                     GenreId = 7,
                     AuthorId = 10,
                     Quantity = 4,
-                    Image = null
+                    Image = imagePaths[9]
                 },
                 new Book
                 {
@@ -332,11 +351,8 @@ public class DbInitializer
                 }
         };
 
+        await dbContext.Database.EnsureDeletedAsync();
         await dbContext.Database.EnsureCreatedAsync();
-        if (dbContext.Authors.Any())
-        {
-            return;
-        }
         await dbContext.Genres.AddRangeAsync(genres);
         await dbContext.Authors.AddRangeAsync(authors);
         await dbContext.SaveChangesAsync();

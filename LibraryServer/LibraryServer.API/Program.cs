@@ -42,6 +42,11 @@ builder.Services.AddAuthorization(opt =>
                     opt.AddPolicy("admin", p => p.RequireRole("admin"));
                 });
 
+builder.Services.AddCors(opt => opt.AddPolicy("CorsPolicy",
+    builder => builder.WithOrigins("http://localhost:3000")
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()));
+
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
@@ -58,6 +63,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors("CorsPolicy");
 
 app.MapControllers();
 
