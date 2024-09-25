@@ -1,4 +1,4 @@
-export default function BookCard({title, description, quantity, image}){
+export default function BookCard({title, description, author, quantity, image}){
     return(
     <>
         <div className="col-md-3 p-2">
@@ -12,9 +12,10 @@ export default function BookCard({title, description, quantity, image}){
                     />
                 </div>
                 <div className="card-body d-flex flex-column">
-                    <h5 className="card-title flex-grow-1">{title}</h5>
+                    <h4 className="card-title flex-grow-1">{title}</h4>
+                    <h5 className="card-text mb2 flex-grow-1">{author}</h5>
                     <p className="card-text mb2 flex-grow-1">{description}</p>
-                    <h4 className="card-text flex-grow-1">{quantity} books left</h4>
+                    <h5 className="card-text flex-grow-1">{quantity} books left</h5>
                 </div>
                 <div className="card-footer text-center">
                     <a className="btn btn-outline-primary">

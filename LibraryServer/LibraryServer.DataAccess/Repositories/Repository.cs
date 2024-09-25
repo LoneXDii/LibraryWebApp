@@ -83,6 +83,10 @@ public class Repository<T> : IRepository<T> where T : class, IEntity
         int count = await query.CountAsync();
 
         int totalPages = (int)Math.Ceiling(count / (double)pageSize);
+        if (totalPages == 0)
+        {
+            totalPages = 1;
+        }
         if (pageNo > totalPages)
         {
             throw new NotFoundException("No such page");

@@ -42,11 +42,12 @@ public class BookService : IBookService
                 throw new NotFoundException("No such genre");
             }
             dataList = await _unitOfWork.BookRepository.ListWithPaginationAsync(pageNo, pageSize,
-                                                                             b => b.GenreId == genre.Id);
+                                                                             b => b.GenreId == genre.Id,
+                                                                             b => b.Author);
         }
         else
         {
-            dataList = (await _unitOfWork.BookRepository.ListWithPaginationAsync(pageNo, pageSize));
+            dataList = await _unitOfWork.BookRepository.ListWithPaginationAsync(pageNo, pageSize, null, b => b.Author);
         }
 
         var data = _mapper.Map<PaginatedListModel<BookDTO>>(dataList);

@@ -9,7 +9,9 @@ public class AppMappingProfile : Profile
 {
     public AppMappingProfile()
     {
-        CreateMap<Book, BookDTO>().ReverseMap();
+        CreateMap<Book, BookDTO>().ForMember(dest => dest.Author, 
+                                             opt => opt.MapFrom(src => src.Author == null ? "" : $"{src.Author.Name} {src.Author.Surname}"))
+                                  .ReverseMap();
         CreateMap<Author, AuthorDTO>().ReverseMap();
         CreateMap<Genre, GenreDTO>().ReverseMap();
         CreateMap<TakenBook, TakenBookDTO>().ReverseMap();
