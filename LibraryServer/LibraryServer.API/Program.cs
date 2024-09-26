@@ -42,10 +42,14 @@ builder.Services.AddAuthorization(opt =>
                     opt.AddPolicy("admin", p => p.RequireRole("admin"));
                 });
 
+
+var client_uri = builder.Configuration["CLIENT_URI"] ?? "http://localhost:3000";
 builder.Services.AddCors(opt => opt.AddPolicy("CorsPolicy",
-    builder => builder.WithOrigins("http://localhost:3000")
+    builder => builder.WithOrigins(client_uri)
                       .AllowAnyMethod()
                       .AllowAnyHeader()));
+
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -65,6 +69,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors("CorsPolicy");
 
+app.MapHealthChecks("/health");
 app.MapControllers();
 
 app.Run();

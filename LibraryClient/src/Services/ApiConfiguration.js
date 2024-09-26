@@ -1,4 +1,4 @@
 export default class ApiConfiguration{
-    static apiBaseUri = 'https://localhost:7001/'
-    static identityApiBaseUri = 'https://localhost:7002/'
+    static apiBaseUri = process.env.REACT_APP_API_URI
+    static identityApiBaseUri = process.env.REACT_APP_IDENTITY_API_URI
 }

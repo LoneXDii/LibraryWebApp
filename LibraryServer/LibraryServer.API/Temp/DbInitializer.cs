@@ -15,16 +15,19 @@ public class DbInitializer
             return;
         }
 
+        
+
         var blobService = scope.ServiceProvider.GetRequiredService<IBlobService>();
-        var appUri = "https://localhost:7001/api/files/";
+        var appUri =  app.Configuration["IMAGE_PATH"] ?? "https://localhost:7001/api/files/";
 
         var imagePaths = new List<string>();
 
-        string basePath = Directory.GetCurrentDirectory() + "\\wwwroot\\StartupImages\\";
+        string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "StartupImages");
 
         for (int i = 1; i <= 10; i++)
         {
-            using Stream stream = File.OpenRead(basePath + $"{i}.jpg");
+            var filePath = Path.Combine(basePath, $"{i}.jpg");
+            using Stream stream = File.OpenRead(filePath);
             var guid = await blobService.UploadAsync(stream, "image/jpeg");
             imagePaths.Add(appUri + guid.ToString());
         }

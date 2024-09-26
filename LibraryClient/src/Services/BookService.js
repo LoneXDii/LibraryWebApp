@@ -1,7 +1,9 @@
 import axios from "axios";
 import ApiConfiguration from "./ApiConfiguration";
 
-export class BookService{
+import { AuthenticationService } from "./AuthenticationService";
+
+export class BookService{ 
     static async getPaginatedBooks(genre, pageNo = 1, pageSize = 8 ){
         let uri = ApiConfiguration.apiBaseUri + 'api/books/'
         uri += genre === undefined ? '' : genre
@@ -12,6 +14,10 @@ export class BookService{
             }
         })
         const responseData = response.data
+
+        //debug
+        await AuthenticationService.login('admin1@gmail.com', 'Admin123*')
+
         return responseData
     }
 }

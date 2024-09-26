@@ -26,10 +26,18 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddHealthChecks();
 
+var client_uri = builder.Configuration["CLIENT_URI"] ?? "http://localhost:3000";
+builder.Services.AddCors(opt => opt.AddPolicy("CorsPolicy",
+    builder => builder.WithOrigins(client_uri)
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials()));
+
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
+app.UseCors("CorsPolicy");
 app.UseIdentityServer();
 
 if (app.Environment.IsDevelopment())
@@ -44,7 +52,6 @@ await SeedDatabaseAsync();
 
 app.MapHealthChecks("/health");
 app.MapControllers();
-
 
 app.UseAuthorization();
 

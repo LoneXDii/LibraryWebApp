@@ -19,7 +19,6 @@ services:
 
   database:
     image: mysql:8.0.36
-    restart: always
     depends_on:
      - azurite
     volumes: 
@@ -52,19 +51,18 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:7002
       ISSUER_BASE: http://identity_api:7002
+      CLIENT_URI: http://localhost:3000
     healthcheck:
       test: ["CMD", "curl", "http://localhost:7002/.well-known/openid-configuration/jwks"]
       interval: 5s
       timeout: 10s
-      retries: 3
+      retries: 5
     networks: 
      - network-backend
 
   api:
     build: ./LibraryServer
     depends_on:
-      database:
-        condition: service_healthy
       identity_api:
         condition: service_healthy
     ports:
@@ -75,5 +73,26 @@ services:
       ASPNETCORE_URLS: http://+:7001
       IDENTITY_BASE: http://identity_api:7002
       AZURE_CONNECTION: UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://azurite;
+      CLIENT_URI: http://localhost:3000
+      IMAGE_PATH: http://localhost:7001/api/files/
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:7001/health"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
     networks: 
      - network-backend
+
+  frontend:
+    build: ./LibraryClient
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URI: http://localhost:7001/
+      REACT_APP_IDENTITY_API_URI: http://localhost:7002/
+    networks:
+      - network-backend

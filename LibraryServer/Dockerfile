@@ -15,6 +15,8 @@ RUN dotnet publish ./LibraryServer.API/LibraryServer.API.csproj -c Release -o ou
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /App/LibraryServer
+RUN apt-get update 
+RUN apt-get --yes install curl
 COPY --from=build-env /App/LibraryServer/out .
 EXPOSE 7001
 ENTRYPOINT ["dotnet", "LibraryServer.API.dll"]
