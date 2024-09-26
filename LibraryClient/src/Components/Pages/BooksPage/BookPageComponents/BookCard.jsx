@@ -5,7 +5,7 @@ export default function BookCard({title, description, author, quantity, image}){
             <div className="card h-100">
                 <div className="image-container" style={{ width: '100%', height: '200px' }}>
                     <img 
-                        src={image} 
+                        src={image === null ? "/noimage.jfif" : image} 
                         className="card-img-top mt-2"
                         style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                         alt="Book Cover"

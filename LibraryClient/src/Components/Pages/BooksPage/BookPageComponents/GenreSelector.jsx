@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 import { GenreServcie } from "../../../../Services/GenreService"
 
-export default function GenreSelector({setValue}){
+export default function GenreSelector({setValue, resetPage}){
     const [genres, setGenres] = useState([])
     const [loading, setLoading] = useState(false)
     let selectItems = null
@@ -28,15 +28,18 @@ export default function GenreSelector({setValue}){
 
     return(
         <>
-        <label htmlFor="genreSelector" className="mb-2 ml-2">Genres</label>
-        <select 
-            className="form-select ml-2" 
-            name="genreSelector"
-            onChange={(e) => setValue(e.target.value)}
-        >
-            <option selected value={""}>All</option>
-            {selectItems}
-        </select>
+            <label htmlFor="genreSelector" className="mb-2 ml-2">Genres</label>
+            <select 
+                className="form-select ml-2" 
+                name="genreSelector"
+                onChange={(e) => {
+                    setValue(e.target.value)
+                    resetPage(1)
+                }}
+            >
+                <option selected value={""}>All</option>
+                {selectItems}
+            </select>
         </>
     )
 }
