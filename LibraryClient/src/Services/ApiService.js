@@ -4,6 +4,8 @@ import ApiConfiguration from "./ApiConfiguration";
 
 export const apiService = axios.create()
 
+apiService.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
+
 apiService.interceptors.request.use(
     (cfg) => {
         cfg.headers.Authorization = `Bearer ${TokenAcessor.accessToken}`
@@ -22,7 +24,7 @@ apiService.interceptors.response.use(
         if ( error.response.status === 401 && error.config && !error.config._isRetry ){
             try{
                 let uri = ApiConfiguration.identityApiBaseUri + 'connect/token'
-                const response = await apiService.postpost(uri, {
+                const response = await apiService.post(uri, {
                     client_id: 'library',
                     client_secret: 'secret',
                     grant_type: 'refresh_token',
@@ -34,6 +36,8 @@ apiService.interceptors.response.use(
                     }
                 })
                 TokenAcessor.accessToken = response.data.access_token
+                localStorage.removeItem('accessToken')
+                localStorage.setItem('accessToken', TokenAcessor.accessToken)
                 return apiService.request(originalRequest);
             } catch (error) {
                 console.log("AUTH ERROR");

@@ -8,6 +8,11 @@ import HomePage from './Components/Pages/HomePage';
 import BooksPage from './Components/Pages/BooksPage/BooksPage';
 import ProfilePage from './Components/Pages/ProfilePages/ProfilePage';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import LoginAndSingupPage from './Components/Pages/ProfilePages/LoginAndSignupPage/LoginAndSignupPage';
+import { AuthenticationService } from './Services/AuthenticationService';
+import LogoutPage from './Components/Pages/ProfilePages/LogoutPage';
+
+AuthenticationService.loadUserFromStorage();
 
 const router = createBrowserRouter([
   {
@@ -25,6 +30,14 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <ProfilePage />,
+  },
+  {
+    path: "/login",
+    element: <LoginAndSingupPage/>,
+  },
+  {
+    path: "/logout",
+    element: <LogoutPage/>,
   },
 ]);
 

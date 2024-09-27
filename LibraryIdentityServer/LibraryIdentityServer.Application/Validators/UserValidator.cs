@@ -22,7 +22,7 @@ internal class UserValidator : AbstractValidator<RegisterModel>
 
         RuleFor(u => u.Password)
             .NotEmpty()
-            .Matches(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$")
+            .Matches(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$")
             .WithMessage("Password must contains lower and uppercase letters, at least 1 digit and special symbol");
 
         RuleFor(u => u.Phone)

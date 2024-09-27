@@ -6,11 +6,7 @@ export class BookService{
         let uri = ApiConfiguration.apiBaseUri + 'api/books/'
         uri += genre === undefined ? '' : genre
         uri += `?pageNo=${pageNo}&pageSize=${pageSize}`
-        let response = await apiService.get(uri,{
-            headers :{
-                'Access-Control-Allow-Origin': '*'
-            }
-        })
+        let response = await apiService.get(uri)
         const responseData = response.data
         return responseData
     }
