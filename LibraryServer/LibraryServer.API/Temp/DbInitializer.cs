@@ -15,8 +15,6 @@ public class DbInitializer
             return;
         }
 
-        
-
         var blobService = scope.ServiceProvider.GetRequiredService<IBlobService>();
         var appUri =  app.Configuration["IMAGE_PATH"] ?? "https://localhost:7001/api/files/";
 

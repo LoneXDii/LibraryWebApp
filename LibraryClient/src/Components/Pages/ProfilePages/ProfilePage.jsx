@@ -1,4 +1,4 @@
-import Header from "../Common/Header";
+import Header from "../../Common/Header"
 
 export default function ProfilePage(){
     return(

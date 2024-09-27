@@ -1,4 +1,4 @@
-import axios from "axios";
+import { apiService } from "./ApiService";
 import ApiConfiguration from "./ApiConfiguration";
 import { TokenAcessor } from "./TokenAcessor";
 
@@ -9,7 +9,7 @@ export class AuthenticationService{
 
     static async login(email, password){
         let uri = ApiConfiguration.identityApiBaseUri + 'connect/token'
-        let response = await axios.post(uri, {
+        let response = await apiService.post(uri, {
             client_id: 'library',
             client_secret: 'secret',
             username: email,
@@ -34,5 +34,13 @@ export class AuthenticationService{
         console.log(this.userId)
         console.log(this.userName)
         console.log(this.userRole)
+    }
+
+    static logout(){
+        this.userId = null
+        this.userName = null
+        this.userRole = null
+        TokenAcessor.accessToken = null
+        TokenAcessor.refreshToken = null
     }
 }

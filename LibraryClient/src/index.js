@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from './Components/Pages/HomePage';
 import BooksPage from './Components/Pages/BooksPage/BooksPage';
-import ProfilePage from './Components/Pages/ProfilePage';
+import ProfilePage from './Components/Pages/ProfilePages/ProfilePage';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const router = createBrowserRouter([

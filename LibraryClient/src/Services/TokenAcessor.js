@@ -1,4 +1,4 @@
 export class TokenAcessor{
-    static accessToken
-    static refreshToken
+    static accessToken = null
+    static refreshToken = null
 }
