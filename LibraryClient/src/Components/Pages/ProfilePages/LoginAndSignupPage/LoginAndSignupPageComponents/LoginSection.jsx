@@ -15,7 +15,7 @@ export default function LoginSection(){
 
     const [isLoginError, setIsLoginError] = useState(false)
 
-    console.log(AuthenticationService.userId)
+    //console.log(AuthenticationService.userId)
     if (AuthenticationService.userId){
         return (<Navigate to="/profile"/>)
     }

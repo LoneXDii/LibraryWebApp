@@ -34,7 +34,7 @@ internal class UserService : IUserService
             Email = userModel.Email,
             EmailConfirmed = true,
             PhoneNumber = userModel.Phone,
-            Name = userModel.Name,
+            Name = $"{userModel.Name} {userModel.Surname}",
             Surname = userModel.Surname
         };
 

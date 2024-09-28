@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { Navigate } from "react-router-dom";
+import { AuthenticationService } from "../../../../../Services/AuthenticationService";
 
 export default function SignupSection(){
     const [nameError, setNameError] = useState(false)
@@ -19,6 +21,12 @@ export default function SignupSection(){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
+
+    const [isRedirrectToProfile, setRedirrectToProfile] = useState(false)
+
+    if (AuthenticationService.userId){
+        return (<Navigate to="/profile"/>)
+    }
 
     function handleNameChange(event){
         let newName = event.target.value
@@ -92,58 +100,63 @@ export default function SignupSection(){
         }
     }    
 
+    async function handleButtonClick(){
+        try{
+            await AuthenticationService.register(name, surname, email, password, phone)
+            await AuthenticationService.login(email, password)
+            setRedirrectToProfile(true)
+        } catch(error) {
+            console.log("login error")
+        }
+    }
+
+    if (isRedirrectToProfile){
+        return <Navigate to="/profile"/>
+    }
+
     return(
-        <form>
+        <>
             <div className="nav mb-2">
-                <div className="form-group nav-item w-50">
+                <div className="nav-item w-50">
                     <label>First name</label>
                     <input name="" className="form-control" placeholder="name" type="text"
-                           value={name} onChange={handleNameChange}
-                           style={{border: nameError ? '2px solid red' : null}}
+                            value={name} onChange={handleNameChange}
+                            style={{border: nameError ? '2px solid red' : null}}
                     />   
                 </div>
-                <div className="form-group nav-item w-50">
+                <div className="nav-item w-50">
                     <label>Last name</label>
                     <input name="" className="form-control" placeholder="surname" type="text"
-                           value={surname} onChange={handleSurnameChange}
-                           style={{border: surnameError ? '2px solid red' : null}}
-                    />   
-                </div>
+                            value={surname} onChange={handleSurnameChange}
+                            style={{border: surnameError ? '2px solid red' : null}}
+                    />
+                </div>   
             </div>
-            <div className="form-group">
-                <label>Phone</label>
-                <input name="" className="form-control" placeholder="phone" type="phone"
-                       value={phone} onChange={handlePhoneChange}
-                       style={{border: phoneError ? '2px solid red' : null}}
-                />   
-            </div>
-            <div className="form-group">
-                <label>Email</label>
-                <input name="" className="form-control" placeholder="email" type="email"
-                       value={email} onChange={handleEmailChange}
-                       style={{border: emailError ? '2px solid red' : null}}
-                />   
-            </div>
-            <div className="form-group">
-                <label>Password</label>
-                <input className="form-control" placeholder="password" type="password"
-                       value={password} onChange={handlePasswordChange}
-                       style={{border: passwordError ? '2px solid red' : null}}
-                />
-            </div>
-            <div className="form-group">
-                <label>Repeat password</label>
-                <input className="form-control" placeholder="password" type="password"
-                       value={repeatPassword} onChange={handleRepeatPasswordChange}
-                       style={{border: repeatPasswordError ? '2px solid red' : null}}
-                />
-            </div>
-            <div className="form-group">
-                <button className="btn btn-primary mt-2" disabled={!isButtonActive}     
-                >
+            <label>Phone</label>
+            <input name="" className="form-control" placeholder="phone" type="phone"
+                    value={phone} onChange={handlePhoneChange}
+                    style={{border: phoneError ? '2px solid red' : null}}
+            />   
+            <label>Email</label>
+            <input name="" className="form-control" placeholder="email" type="email"
+                    value={email} onChange={handleEmailChange}
+                    style={{border: emailError ? '2px solid red' : null}}
+            />   
+            <label>Password</label>
+            <input className="form-control" placeholder="password" type="password"
+                    value={password} onChange={handlePasswordChange}
+                    style={{border: passwordError ? '2px solid red' : null}}
+            />
+            <label>Repeat password</label>
+            <input className="form-control" placeholder="password" type="password"
+                    value={repeatPassword} onChange={handleRepeatPasswordChange}
+                    style={{border: repeatPasswordError ? '2px solid red' : null}}
+            />
+            <button className="btn btn-primary mt-2" disabled={!isButtonActive} 
+                    onClick={() => handleButtonClick()}    
+            >
                 Sign Up
-                </button>
-            </div>
-        </form>
+            </button>
+        </>
     )
 }
