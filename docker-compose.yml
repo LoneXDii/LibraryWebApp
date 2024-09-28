@@ -94,5 +94,3 @@ services:
     environment:
       REACT_APP_API_URI: http://localhost:7001/
       REACT_APP_IDENTITY_API_URI: http://localhost:7002/
-    networks:
-      - network-backend
