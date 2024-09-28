@@ -30,6 +30,8 @@ export default function LoginSection(){
         setEmailError(!isOk)
         if (isOk && !passwordError){
             setIsButtonActive(true)
+        } else {
+            setIsButtonActive(false)
         }
     }
 
@@ -40,6 +42,8 @@ export default function LoginSection(){
         setPasswordError(!isOk)
         if (isOk && !emailError){
             setIsButtonActive(true)
+        } else {
+            setIsButtonActive(false)
         }
     }
 

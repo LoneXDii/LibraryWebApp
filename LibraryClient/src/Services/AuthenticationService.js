@@ -38,6 +38,23 @@ export class AuthenticationService{
         localStorage.setItem('userRole', this.userRole);
     }
 
+    static async register(name, surname, email, password, phone){
+        let uri = ApiConfiguration.identityApiBaseUri + 'api/users/register'
+        let response = await apiService.post(uri, {
+            name: name,
+            surname: surname,
+            email: email,
+            phone: phone,
+            password: password
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+
+        await this.login(email, password)
+    }
+
     static logout(){
         this.userId = null
         this.userName = null
