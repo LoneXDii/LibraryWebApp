@@ -32,6 +32,7 @@ export default function AdminBooksSection(){
 
     return(
         <Container>
+            <a className="btn btn-primary" href="/books/create">Add book</a>
             <table className="table">
                 <thead>
                     <tr>

@@ -2,7 +2,7 @@ export default function BookInfoComponent({title, isbn, description, author, gen
     return(
         <div className="row">
             <div className="col-sm-2">
-                <img src={image} style={{maxWidth: '200px'}}/>
+                <img src={image === null ? "/noimage.jfif" : image} style={{maxWidth: '200px'}}/>
             </div>
             <div className="col-sm-10">
                 <h1>{title}</h1>

@@ -14,6 +14,7 @@ import LogoutPage from './Components/Pages/ProfilePages/LogoutPage';
 import AdminPage from './Components/Pages/Admin/AdminPage';
 import BookInfoPage from './Components/Pages/BookInfoPage/BookInfoPage';
 import UpdateBookPage from './Components/Pages/Admin/BooksPages/UpdateBookPage/UpdateBookPage';
+import CreateBookPage from './Components/Pages/Admin/BooksPages/CreateBookPage/CreateBookPage';
 
 AuthenticationService.loadUserFromStorage();
 
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/books/edit/:id",
     element: <UpdateBookPage />,
+  },
+  {
+    path: "/books/create",
+    element: <CreateBookPage />
   },
   {
     path: "/profile",

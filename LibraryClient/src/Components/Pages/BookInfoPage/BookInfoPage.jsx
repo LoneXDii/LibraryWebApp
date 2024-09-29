@@ -5,11 +5,17 @@ import { BookService } from "../../../Services/BookService";
 import { useCallback, useEffect, useState } from "react";
 import BookInfoComponent from "./Components/BookInfoComponent";
 import { AuthenticationService } from "../../../Services/AuthenticationService";
+import DeleteBookModal from "../Admin/BooksPages/DeleteBookModal";
 
 export default function BookInfoPage(){
     const { id } = useParams()
     const [book, setBook] = useState(null)
     const [loading, setLoading] = useState(false)
+
+    const [show, setShow] = useState(false)
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
     const fetchBook = useCallback(async () => {
         setLoading(true)
@@ -41,12 +47,13 @@ export default function BookInfoPage(){
             <h1>Book info</h1>
             <Container>
                 {bookInfo}
-                <button className="btn btn-primary my-2 mx-1">Take</button>
+                <button className="btn btn-primary my-2 mx-1" disabled={book?.quantity === 0}>Take</button>
                 {AuthenticationService.userRole === 'admin' && (<>
                     <a className="btn btn-success my-2 mx-1" href={`/books/edit/${id}`}>Edit</a>
-                    <button className="btn btn-danger my-2 mx-1">Delete</button>
+                    <button className="btn btn-danger my-2 mx-1" onClick={handleShow}>Delete</button>
                 </>)}
             </Container> 
+            <DeleteBookModal id={id} show={show} handleClose={handleClose}/>
         </>
     )
 }

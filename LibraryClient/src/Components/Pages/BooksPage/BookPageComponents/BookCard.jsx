@@ -19,9 +19,9 @@ export default function BookCard({id, title, description, author, quantity, imag
                         <h5 className="card-text flex-grow-1">{quantity} books left</h5>
                     </div>
                     <div className="card-footer text-center">
-                        <a className="btn btn-outline-primary">
+                        <button className="btn btn-outline-primary" disabled={quantity === 0}>
                             Take book
-                        </a>
+                        </button>
                     </div>
                 </div>
             </a>

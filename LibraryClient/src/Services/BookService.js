@@ -45,6 +45,26 @@ export class BookService{
         
     }
 
+    static async CreateBook(book, image){
+        if(image){
+            const imageGuid = await this.saveImage(image)
+            if (imageGuid){
+                book.image = ApiConfiguration.apiBaseUri + `api/files/${imageGuid}`
+            }
+        }
+        let uri = ApiConfiguration.apiBaseUri + 'api/books'
+        const response = await apiService.post(uri, JSON.stringify(book),{
+            headers:{
+                'Content-Type': 'application/json',
+            }
+        })
+    }
+
+    static async deleteBook(id){
+        let uri = ApiConfiguration.apiBaseUri + `api/books/${id}`
+        let response = await apiService.delete(uri)
+    }
+
     static async saveImage(image){
         let uriSave = ApiConfiguration.apiBaseUri + 'api/files'
         const formData = new FormData();

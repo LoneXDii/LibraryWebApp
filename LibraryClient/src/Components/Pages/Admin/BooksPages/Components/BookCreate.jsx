@@ -4,19 +4,18 @@ import AuthorSelector from "./AuthorSelector";
 import { BookService } from "../../../../../Services/BookService";
 import { useNavigate } from "react-router-dom";
 
-export default function BookEdit({id, isbn, title, genre, author, quantity, image, description, genreId, authorId}){
+export default function BookCreate(){
     const navigate = useNavigate()
 
     const [imageFile, setImageFile] = useState(null)
     const [book, setBook] = useState({
-        id: id ? id : 0,
-        isbn: isbn ? isbn : '',
-        title: title ? title : '',
-        description: description ? description : '',
-        genreId: genreId ? genreId : 0,
-        authorId: authorId ? authorId : 0,
-        quantity: quantity ? quantity : 0, 
-        image: image ? image : null
+        isbn: '',
+        title: '',
+        description: '',
+        genreId: 1,
+        authorId: 1,
+        quantity: 0, 
+        image: null
     });
 
     const [titleError, setTitleError] = useState(false)
@@ -60,7 +59,7 @@ export default function BookEdit({id, isbn, title, genre, author, quantity, imag
             return
         }
 
-        let response = await BookService.updateBook(book, imageFile)
+        let response = await BookService.CreateBook(book, imageFile)
         handleGoBack()
     }
 
@@ -92,10 +91,10 @@ export default function BookEdit({id, isbn, title, genre, author, quantity, imag
                 />
             </div>
             <div>
-                <GenreSelector onChange={changeGenre} genreId={genreId}/>
+                <GenreSelector onChange={changeGenre}/>
             </div>
             <div>
-                <AuthorSelector onChange={changeAuthor} authorId={authorId}/>
+                <AuthorSelector onChange={changeAuthor}/>
             </div>
             <div>
                 <label>Quantity:</label>
@@ -110,7 +109,7 @@ export default function BookEdit({id, isbn, title, genre, author, quantity, imag
                        accept="image/*" onChange={handleImageSelect} 
                 />
             </div>
-            <button className="btn btn-success my-2 mx-1" onClick={handleSubmit}>Edit</button>
+            <button className="btn btn-success my-2 mx-1" onClick={handleSubmit}>Create</button>
             <button className="btn btn-primary my-2 mx-1" onClick={handleGoBack}>Cancel</button>
         </>
     )
