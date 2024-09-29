@@ -36,8 +36,8 @@ export default function BooksPage(){
     return(
         <>
             <Header/>
-            <h1>Books page</h1>
             <Container className="row">
+                <h1>Books page</h1>
                 <Container className="col-2 border-2 md-3">
                     <GenreSelector setValue={setGenre} resetPage={setCurrentPage}/>
                 </Container>

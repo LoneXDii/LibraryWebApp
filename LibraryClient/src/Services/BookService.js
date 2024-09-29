@@ -1,5 +1,7 @@
 import { apiService } from "./ApiService";
 import ApiConfiguration from "./ApiConfiguration";
+import { AuthenticationService } from "./AuthenticationService";
+import { TokenAcessor } from "./TokenAcessor";
 
 export class BookService{ 
     static async getPaginatedBooks(genre, pageNo = 1, pageSize = 8 ){
@@ -83,5 +85,25 @@ export class BookService{
         catch(error){
             console.log('Error in saving file')
         }
+    }
+
+    static async takeBook(bookId){
+        let uri = ApiConfiguration.apiBaseUri + 'api/library/take'
+        console.log(TokenAcessor.accessToken)
+
+        let response = await apiService.post(uri, {
+            bookId: bookId,
+            userId: AuthenticationService.userId
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+    }
+
+    static async getTakenBooks(){
+        let uri = ApiConfiguration.apiBaseUri + `api/library/user-books/${AuthenticationService.userId}`
+        let response = await apiService.get(uri)
+        return response.data
     }
 }

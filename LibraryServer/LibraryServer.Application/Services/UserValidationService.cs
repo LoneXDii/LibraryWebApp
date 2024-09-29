@@ -17,7 +17,7 @@ internal class UserValidationService : IUserValidationService
 
     public void ValidateUser(string userId)
     {
-        var tokenUserId = _context.User.FindFirst("sub")?.Value;
+        var tokenUserId = _context.User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
         var role = _context.User.FindFirst("role")?.Value;
         if (role == "admin")
         {

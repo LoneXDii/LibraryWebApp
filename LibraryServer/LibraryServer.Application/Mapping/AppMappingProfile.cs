@@ -17,7 +17,9 @@ public class AppMappingProfile : Profile
                                   .ForMember(dest => dest.Genre, opt => opt.Ignore());
         CreateMap<Author, AuthorDTO>().ReverseMap();
         CreateMap<Genre, GenreDTO>().ReverseMap();
-        CreateMap<TakenBook, TakenBookDTO>().ReverseMap();
+        CreateMap<TakenBook, TakenBookDTO>().ForMember(dest => dest.Book,
+                                             opt => opt.MapFrom(src => src.Book))
+                                            .ReverseMap();
         CreateMap<PaginatedListModel<Book>, PaginatedListModel<BookDTO>>().ReverseMap();
     }
 }

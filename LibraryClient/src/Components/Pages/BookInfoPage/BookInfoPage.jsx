@@ -41,13 +41,21 @@ export default function BookInfoPage(){
         bookInfo = <BookInfoComponent {... book}/>
     }
 
+    async function handleTakeClick(){
+        await BookService.takeBook(id)
+    }
+
     return (
         <>
             <Header/>
             <h1>Book info</h1>
             <Container>
                 {bookInfo}
-                <button className="btn btn-primary my-2 mx-1" disabled={book?.quantity === 0}>Take</button>
+                <button className="btn btn-primary my-2 mx-1" disabled={book?.quantity === 0}
+                        onClick={handleTakeClick}
+                >
+                    Take
+                </button>
                 {AuthenticationService.userRole === 'admin' && (<>
                     <a className="btn btn-success my-2 mx-1" href={`/books/edit/${id}`}>Edit</a>
                     <button className="btn btn-danger my-2 mx-1" onClick={handleShow}>Delete</button>

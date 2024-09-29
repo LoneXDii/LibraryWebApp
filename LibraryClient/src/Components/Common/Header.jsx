@@ -10,7 +10,7 @@ export default function Header(){
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand>
-          <Link to={"/home"} className='nav-link'>React-Bootstrap</Link>
+          <Link to={"/home"} className='nav-link'>Library</Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -26,9 +26,18 @@ export default function Header(){
                 <Link to={"/admin"} className='nav-link'>Admin</Link>
               </Nav.Link>
             )}
-            <Nav.Link>
-              <Link to={"/profile"} className='nav-link'>Profile</Link>
-            </Nav.Link>
+            <NavDropdown title="Profile" className='nav-link'>
+              {!AuthenticationService.userName && (
+                <NavDropdown.Item href='/login'>Login</NavDropdown.Item>
+              )}
+              {AuthenticationService.userName && (
+                <>
+                  <NavDropdown.Item href='/profile'>{AuthenticationService.userName}</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href='/logout'>Logout</NavDropdown.Item>
+                </>
+              )}
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
