@@ -43,7 +43,7 @@ export default function BookInfoPage(){
                 {bookInfo}
                 <button className="btn btn-primary my-2 mx-1">Take</button>
                 {AuthenticationService.userRole === 'admin' && (<>
-                    <button className="btn btn-success my-2 mx-1">Edit</button>
+                    <a className="btn btn-success my-2 mx-1" href={`/books/edit/${id}`}>Edit</a>
                     <button className="btn btn-danger my-2 mx-1">Delete</button>
                 </>)}
             </Container> 

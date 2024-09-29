@@ -20,7 +20,7 @@ export default function BookListObject({id, isbn, title, genre, author, quantity
                 {quantity}
             </td>
             <td>
-                <a className="btn btn-success mx-1">
+                <a className="btn btn-success mx-1" href={`/books/edit/${id}`}>
                     Edit
                 </a>
 

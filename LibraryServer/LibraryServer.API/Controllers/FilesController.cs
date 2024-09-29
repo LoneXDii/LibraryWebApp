@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LibraryServer.Application.Services.StorageServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryServer.API.Controllers;
 
@@ -15,6 +16,7 @@ public class FilesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "admin")]
     public async Task<ActionResult<Guid>> SaveFile(IFormFile file)
     {
         using Stream stream = file.OpenReadStream();
@@ -31,6 +33,7 @@ public class FilesController : ControllerBase
     }
 
     [HttpDelete("{fileId}")]
+    [Authorize(Policy = "admin")]
     public async Task<IActionResult> DeleteFile(Guid fileId)
     {
         await _blobService.DeleteAsync(fileId);

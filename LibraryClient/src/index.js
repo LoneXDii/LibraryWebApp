@@ -13,6 +13,7 @@ import { AuthenticationService } from './Services/AuthenticationService';
 import LogoutPage from './Components/Pages/ProfilePages/LogoutPage';
 import AdminPage from './Components/Pages/Admin/AdminPage';
 import BookInfoPage from './Components/Pages/BookInfoPage/BookInfoPage';
+import UpdateBookPage from './Components/Pages/Admin/BooksPages/UpdateBookPage/UpdateBookPage';
 
 AuthenticationService.loadUserFromStorage();
 
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: "/books/:id",
     element: <BookInfoPage />,
+  },
+  {
+    path: "/books/edit/:id",
+    element: <UpdateBookPage />,
   },
   {
     path: "/profile",
