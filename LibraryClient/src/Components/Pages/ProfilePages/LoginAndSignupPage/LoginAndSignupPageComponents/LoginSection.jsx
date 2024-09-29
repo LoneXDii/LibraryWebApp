@@ -10,45 +10,39 @@ export default function LoginSection(){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const [isButtonActive, setIsButtonActive] = useState(false)
     const [isRedirrectToProfile, setRedirrectToProfile] = useState(false)
 
     const [isLoginError, setIsLoginError] = useState(false)
 
-    //console.log(AuthenticationService.userId)
     if (AuthenticationService.userId){
         return (<Navigate to="/profile"/>)
     }
 
     let emailPattern = /^\S+@\S+\.\S+$/
-    let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
 
     function handleEmailChange(event){
         let newEmail = event.target.value
         setEmail(newEmail)
-        let isOk = emailPattern.test(newEmail)
-        setEmailError(!isOk)
-        if (isOk && !passwordError){
-            setIsButtonActive(true)
-        } else {
-            setIsButtonActive(false)
-        }
     }
 
     function handlePasswordChange(event){
         let newPass = event.target.value
         setPassword(newPass)
-        let isOk = passwordPattern.test(newPass)
-        setPasswordError(!isOk)
-        if (isOk && !emailError){
-            setIsButtonActive(true)
-        } else {
-            setIsButtonActive(false)
-        }
     }
 
     async function handleButtonClick(){
         try{
+            let isEmailOk = emailPattern.test(email)
+            let isPasswordOk = !(password === "")
+            
+            setIsLoginError(false)
+            setEmailError(!isEmailOk)
+            setPasswordError(!isPasswordOk)
+
+            if(!(isEmailOk && isPasswordOk)){
+                return
+            }
+
             await AuthenticationService.login(email, password)
             setRedirrectToProfile(true)
         }
@@ -65,23 +59,29 @@ export default function LoginSection(){
     return(
         <>
             {isLoginError && (<div className="alert alert-danger" role="alert">
-                Incorrect email or password
-            </div>)}
+                                  Incorrect email or password
+                              </div>)}
+                              
             <label>Email</label>
+            {emailError && (<div className="alert alert-danger" role="alert">
+                                Please, enter a valid email
+                            </div>)}
             <input name="" className="form-control" placeholder="email" type="email"
                    value={email} onChange={handleEmailChange}
                    style={{border: emailError ? '2px solid red' : null}}
             />   
+
             <label>Password</label>
+            {passwordError && (<div className="alert alert-danger" role="alert">
+                                    Please, enter a password
+                                </div>)}
             <a className="float-end" href="#">Forgot?</a>
             <input className="form-control" placeholder="password" type="password"
                    value={password} onChange={handlePasswordChange}
                    style={{border: passwordError ? '2px solid red' : null}}
             />
             
-            <button className="btn btn-primary mt-2" disabled={!isButtonActive}
-                    onClick={() => handleButtonClick()}        
-            >
+            <button className="btn btn-primary mt-2" onClick={() => handleButtonClick()}>
                Sign In
             </button>
         </>

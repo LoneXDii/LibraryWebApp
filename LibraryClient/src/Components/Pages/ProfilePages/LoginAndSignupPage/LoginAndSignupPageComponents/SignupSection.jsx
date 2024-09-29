@@ -9,8 +9,8 @@ export default function SignupSection(){
     const [emailError, setEmailError] = useState(false)
     const [passwordError, setPasswordError] = useState(false)
     const [repeatPasswordError, setRepeatPasswordError] = useState(false)
-    const [isButtonActive, setIsButtonActive] = useState(false)
 
+    let namePattern = /^[a-zA-Z]+$/
     let phonePattern = /^[\+][(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
     let emailPattern = /^\S+@\S+\.\S+$/
     let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
@@ -31,25 +31,11 @@ export default function SignupSection(){
     function handleNameChange(event){
         let newName = event.target.value
         setName(newName)
-        let isOk = newName !== ""
-        setNameError(!isOk)
-        if (isOk && !surnameError && !phoneError && !emailError && !passwordError && !repeatPasswordError){
-            setIsButtonActive(true)
-        } else {
-            setIsButtonActive(false)
-        }
     }
 
     function handleSurnameChange(event){
         let newSurname = event.target.value
         setSurname(newSurname)
-        let isOk = newSurname !== ""
-        setSurnameError(!isOk)
-        if (isOk && !nameError && !phoneError && !emailError && !passwordError && !repeatPasswordError){
-            setIsButtonActive(true)
-        } else {
-            setIsButtonActive(false)
-        }
     }
 
     function handlePhoneChange(event){
@@ -57,23 +43,11 @@ export default function SignupSection(){
         setPhone(newPhone)
         let isOk = phonePattern.test(newPhone)
         setPhoneError(!isOk)
-        if (isOk && !nameError && !surnameError && !emailError && !passwordError && !repeatPasswordError){
-            setIsButtonActive(true)
-        } else {
-            setIsButtonActive(false)
-        }
     }
 
     function handleEmailChange(event){
         let newEmail = event.target.value
         setEmail(newEmail)
-        let isOk = emailPattern.test(newEmail)
-        setEmailError(!isOk)
-        if (isOk && !nameError && !surnameError && !phoneError && !passwordError && !repeatPasswordError){
-            setIsButtonActive(true)
-        } else {
-            setIsButtonActive(false)
-        }
     }
 
     function handlePasswordChange(event){
@@ -81,11 +55,6 @@ export default function SignupSection(){
         setPassword(newPass)
         let isOk = passwordPattern.test(newPass)
         setPasswordError(!isOk)
-        if (isOk && !nameError && !surnameError && !phoneError && !emailError && !repeatPasswordError){
-            setIsButtonActive(true)
-        } else {
-            setIsButtonActive(false)
-        }
     }
 
     function handleRepeatPasswordChange(event){
@@ -93,20 +62,33 @@ export default function SignupSection(){
         setRepeatPassword(newRepPass)
         let isOk = newRepPass === password
         setRepeatPasswordError(!isOk)
-        if (isOk && !nameError && !surnameError && !phoneError && !emailError && !passwordError){
-            setIsButtonActive(true)
-        } else {
-            setIsButtonActive(false)
-        }
     }    
 
     async function handleButtonClick(){
         try{
+            let isNameOk = namePattern.test(name)
+            let isSurnameOk = namePattern.test(surname)
+            let isEmailOk = emailPattern.test(email)
+            let isPhoneOk = phonePattern.test(phone)
+            let isPasswordOk = passwordPattern.test(password)
+            let isRepeatPasswordOk = password === repeatPassword
+
+            setNameError(!isNameOk)
+            setSurnameError(!isSurnameOk)
+            setEmailError(!isEmailOk)
+            setPhoneError(!isPhoneOk)
+            setPasswordError(!isPasswordOk)
+            setRepeatPasswordError(!isRepeatPasswordOk)
+
+            if (!(isNameOk && isSurnameOk && isEmailOk && isPasswordOk && isRepeatPasswordOk && isPhoneOk)){
+                return
+            }
+
             await AuthenticationService.register(name, surname, email, password, phone)
             await AuthenticationService.login(email, password)
             setRedirrectToProfile(true)
         } catch(error) {
-            console.log("login error")
+            console.log(error.response.status)
         }
     }
 
@@ -124,6 +106,7 @@ export default function SignupSection(){
                             style={{border: nameError ? '2px solid red' : null}}
                     />   
                 </div>
+
                 <div className="nav-item w-50">
                     <label>Last name</label>
                     <input name="" className="form-control" placeholder="surname" type="text"
@@ -132,29 +115,38 @@ export default function SignupSection(){
                     />
                 </div>   
             </div>
+
             <label>Phone</label>
             <input name="" className="form-control" placeholder="phone" type="phone"
                     value={phone} onChange={handlePhoneChange}
                     style={{border: phoneError ? '2px solid red' : null}}
             />   
+
             <label>Email</label>
+            {emailError && (<div className="alert alert-danger" role="alert">
+                                Please, enter a valid email
+                            </div>)}
             <input name="" className="form-control" placeholder="email" type="email"
                     value={email} onChange={handleEmailChange}
                     style={{border: emailError ? '2px solid red' : null}}
             />   
+
             <label>Password</label>
+            {passwordError && (<div className="alert alert-danger" role="alert">
+                                    Password must be at least 8 characters long and must contain at least one uppercase and lowercase letters, digid and special character
+                                </div>)}
             <input className="form-control" placeholder="password" type="password"
                     value={password} onChange={handlePasswordChange}
                     style={{border: passwordError ? '2px solid red' : null}}
             />
+
             <label>Repeat password</label>
             <input className="form-control" placeholder="password" type="password"
                     value={repeatPassword} onChange={handleRepeatPasswordChange}
                     style={{border: repeatPasswordError ? '2px solid red' : null}}
             />
-            <button className="btn btn-primary mt-2" disabled={!isButtonActive} 
-                    onClick={() => handleButtonClick()}    
-            >
+
+            <button className="btn btn-primary mt-2" onClick={() => handleButtonClick()}>
                 Sign Up
             </button>
         </>

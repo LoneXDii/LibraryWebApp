@@ -18,8 +18,8 @@ export default function LoginAndSingupPage(){
                                 <TabsSection active={tab} onChage={(current) => setTab(current)}/>
                             </div>
                             <div className="card-body">
-                            {tab === 'login' && <LoginSection/>}
-                            {tab === 'signup' && <SignupSection/>}
+                                {tab === 'login' && <LoginSection/>}
+                                {tab === 'signup' && <SignupSection/>}
                             </div>
                         </div>
                     </div>
