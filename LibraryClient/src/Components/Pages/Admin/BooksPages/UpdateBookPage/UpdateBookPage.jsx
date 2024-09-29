@@ -3,8 +3,8 @@ import { Navigate, useParams } from "react-router-dom"
 import { AuthenticationService } from "../../../../../Services/AuthenticationService"
 import Header from "../../../../Common/Header"
 import { Container } from "react-bootstrap"
-import BookInput from "../Components/BookInputEdit"
 import { BookService } from "../../../../../Services/BookService"
+import BookEdit from "../Components/BookEdit"
 
 export default function UpdateBookPage(){
 
@@ -40,7 +40,7 @@ export default function UpdateBookPage(){
     }
     else{
         console.log(book)
-        bookInput = <BookInput {... book}/>
+        bookInput = <BookEdit {... book}/>
     }
 
     return(

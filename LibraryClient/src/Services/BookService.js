@@ -1,8 +1,5 @@
 import { apiService } from "./ApiService";
 import ApiConfiguration from "./ApiConfiguration";
-import { json } from "react-router-dom";
-import { AuthenticationService } from "./AuthenticationService";
-import { TokenAcessor } from "./TokenAcessor";
 
 export class BookService{ 
     static async getPaginatedBooks(genre, pageNo = 1, pageSize = 8 ){
