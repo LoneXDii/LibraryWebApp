@@ -15,9 +15,15 @@ Then you can access the web application at http://localhost:3000.
 To test the API, you can access Swagger for the API at http://localhost:7001/swagger and for the Identity API at http://localhost:7002/swagger.
 
 There are 2 default users for testing: 
-###Customer: 
+
+### Customer: 
+
 email: customer1@gmail.com 
+
 password: Client123*  
-###Admin: 
+
+### Admin: 
+
 email: admin1@gmail.com
+
 password: Admin123*
