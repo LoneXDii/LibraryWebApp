@@ -11,6 +11,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import LoginAndSingupPage from './Components/Pages/ProfilePages/LoginAndSignupPage/LoginAndSignupPage';
 import { AuthenticationService } from './Services/AuthenticationService';
 import LogoutPage from './Components/Pages/ProfilePages/LogoutPage';
+import AdminPage from './Components/Pages/Admin/AdminPage';
+import BookInfoPage from './Components/Pages/BookInfoPage/BookInfoPage';
 
 AuthenticationService.loadUserFromStorage();
 
@@ -28,6 +30,10 @@ const router = createBrowserRouter([
     element: <BooksPage />,
   },
   {
+    path: "/books/:id",
+    element: <BookInfoPage />,
+  },
+  {
     path: "/profile",
     element: <ProfilePage />,
   },
@@ -39,6 +45,10 @@ const router = createBrowserRouter([
     path: "/logout",
     element: <LogoutPage/>,
   },
+  {
+    path: "/admin",
+    element: <AdminPage/>,
+  }
 ]);
 
 

@@ -10,4 +10,10 @@ export class BookService{
         const responseData = response.data
         return responseData
     }
+
+    static async getBookById(id){
+        let uri = ApiConfiguration.apiBaseUri + `api/books/${id}`
+        let response = await apiService.get(uri)
+        return response.data
+    }
 }

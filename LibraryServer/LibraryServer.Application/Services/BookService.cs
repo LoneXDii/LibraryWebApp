@@ -43,11 +43,11 @@ public class BookService : IBookService
             }
             dataList = await _unitOfWork.BookRepository.ListWithPaginationAsync(pageNo, pageSize,
                                                                              b => b.GenreId == genre.Id,
-                                                                             b => b.Author);
+                                                                             b => b.Author, b => b.Genre);
         }
         else
         {
-            dataList = await _unitOfWork.BookRepository.ListWithPaginationAsync(pageNo, pageSize, null, b => b.Author);
+            dataList = await _unitOfWork.BookRepository.ListWithPaginationAsync(pageNo, pageSize, null, b => b.Author, b => b.Genre);
         }
 
         var data = _mapper.Map<PaginatedListModel<BookDTO>>(dataList);
@@ -56,7 +56,7 @@ public class BookService : IBookService
 
     public async Task<BookDTO> GetByIdAsync(int id)
     {
-        var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
+        var book = await _unitOfWork.BookRepository.GetByIdAsync(id, b => b.Author, b => b.Genre);
 
         if (book is null)
         {

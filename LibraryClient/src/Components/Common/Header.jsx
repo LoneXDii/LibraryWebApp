@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
+import { AuthenticationService } from '../../Services/AuthenticationService';
 
 export default function Header(){
     return(
@@ -20,6 +21,11 @@ export default function Header(){
             <Nav.Link>
               <Link to={"/books"} className='nav-link'>Books</Link>
             </Nav.Link>
+            {AuthenticationService.userRole === "admin" &&(
+              <Nav.Link>
+                <Link to={"/admin"} className='nav-link'>Admin</Link>
+              </Nav.Link>
+            )}
             <Nav.Link>
               <Link to={"/profile"} className='nav-link'>Profile</Link>
             </Nav.Link>
