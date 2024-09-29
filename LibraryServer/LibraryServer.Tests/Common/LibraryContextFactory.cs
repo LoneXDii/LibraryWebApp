@@ -154,186 +154,186 @@ internal class LibraryContextFactory
                 Quantity = 5,
                 Image = null
             },
-                new Book
-                {
-                    ISBN = "978-1-56619-910-0",
-                    Title = "Pride and Prejudice",
-                    Description = "Romantic novel",
-                    GenreId = 5,
-                    AuthorId = 2,
-                    Quantity = 3,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-911-7",
-                    Title = "Adventures of Huckleberry Finn",
-                    Description = "Adventure novel",
-                    GenreId = 3,
-                    AuthorId = 3,
-                    Quantity = 4,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-912-4",
-                    Title = "Norwegian Wood",
-                    Description = "Romantic drama",
-                    GenreId = 5,
-                    AuthorId = 4,
-                    Quantity = 6,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-913-1",
-                    Title = "Things Fall Apart",
-                    Description = "Historical novel",
-                    GenreId = 7,
-                    AuthorId = 5,
-                    Quantity = 7,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-914-8",
-                    Title = "One Hundred Years of Solitude",
-                    Description = "Magic realism",
-                    GenreId = 7,
-                    AuthorId = 6,
-                    Quantity = 2,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-915-5",
-                    Title = "Harry Potter and the Philosopher's Stone",
-                    Description = "Fantasy novel",
-                    GenreId = 2,
-                    AuthorId = 7,
-                    Quantity = 10,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-916-2",
-                    Title = "The Old Man and the Sea",
-                    Description = "Short novel",
-                    GenreId = 3,
-                    AuthorId = 8,
-                    Quantity = 8,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-917-9",
-                    Title = "Crime and Punishment",
-                    Description = "Psychological novel",
-                    GenreId = 4,
-                    AuthorId = 9,
-                    Quantity = 5,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-918-6",
-                    Title = "The House of the Spirits",
-                    Description = "Magical realism",
-                    GenreId = 7,
-                    AuthorId = 10,
-                    Quantity = 4,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-919-3",
-                    Title = "Sample Book 1",
-                    Description = "Sample description",
-                    GenreId = 1,
-                    AuthorId = 2,
-                    Quantity = 5,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-920-9",
-                    Title = "Sample Book 2",
-                    Description = "Sample description",
-                    GenreId = 2,
-                    AuthorId = 3,
-                    Quantity = 5,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-921-6",
-                    Title = "Sample Book 3",
-                    Description = "Sample description",
-                    GenreId = 3,
-                    AuthorId = 4,
-                    Quantity = 5,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-922-3",
-                    Title = "Sample Book 4",
-                    Description = "Sample description",
-                    GenreId = 4,
-                    AuthorId = 5,
-                    Quantity = 5,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-923-0",
-                    Title = "Sample Book 5",
-                    Description = "Sample description",
-                    GenreId = 5,
-                    AuthorId = 6,
-                    Quantity = 5,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-924-7",
-                    Title = "Sample Book 6",
-                    Description = "Sample description",
-                    GenreId = 6,
-                    AuthorId = 7,
-                    Quantity = 5,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-925-4",
-                    Title = "Sample Book 7",
-                    Description = "Sample description",
-                    GenreId = 7,
-                    AuthorId = 8,
-                    Quantity = 5,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-926-1",
-                    Title = "Sample Book 8",
-                    Description = "Sample description",
-                    GenreId = 8,
-                    AuthorId = 9,
-                    Quantity = 5,
-                    Image = null
-                },
-                new Book
-                {
-                    ISBN = "978-1-56619-927-8",
-                    Title = "Sample Book 9",
-                    Description = "Sample description",
-                    GenreId = 9,
-                    AuthorId = 10,
-                    Quantity = 5,
-                    Image = null
-                }
+            new Book
+            {
+                ISBN = "978-1-56619-910-0",
+                Title = "Pride and Prejudice",
+                Description = "Romantic novel",
+                GenreId = 5,
+                AuthorId = 2,
+                Quantity = 3,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-911-7",
+                Title = "Adventures of Huckleberry Finn",
+                Description = "Adventure novel",
+                GenreId = 3,
+                AuthorId = 3,
+                Quantity = 4,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-912-4",
+                Title = "Norwegian Wood",
+                Description = "Romantic drama",
+                GenreId = 5,
+                AuthorId = 4,
+                Quantity = 6,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-913-1",
+                Title = "Things Fall Apart",
+                Description = "Historical novel",
+                GenreId = 7,
+                AuthorId = 5,
+                Quantity = 7,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-914-8",
+                Title = "One Hundred Years of Solitude",
+                Description = "Magic realism",
+                GenreId = 7,
+                AuthorId = 6,
+                Quantity = 2,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-915-5",
+                Title = "Harry Potter and the Philosopher's Stone",
+                Description = "Fantasy novel",
+                GenreId = 2,
+                AuthorId = 7,
+                Quantity = 10,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-916-2",
+                Title = "The Old Man and the Sea",
+                Description = "Short novel",
+                GenreId = 3,
+                AuthorId = 8,
+                Quantity = 8,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-917-9",
+                Title = "Crime and Punishment",
+                Description = "Psychological novel",
+                GenreId = 4,
+                AuthorId = 9,
+                Quantity = 5,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-918-6",
+                Title = "The House of the Spirits",
+                Description = "Magical realism",
+                GenreId = 7,
+                AuthorId = 10,
+                Quantity = 4,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-919-3",
+                Title = "Sample Book 1",
+                Description = "Sample description",
+                GenreId = 1,
+                AuthorId = 2,
+                Quantity = 5,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-920-9",
+                Title = "Sample Book 2",
+                Description = "Sample description",
+                GenreId = 2,
+                AuthorId = 3,
+                Quantity = 5,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-921-6",
+                Title = "Sample Book 3",
+                Description = "Sample description",
+                GenreId = 3,
+                AuthorId = 4,
+                Quantity = 5,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-922-3",
+                Title = "Sample Book 4",
+                Description = "Sample description",
+                GenreId = 4,
+                AuthorId = 5,
+                Quantity = 5,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-923-0",
+                Title = "Sample Book 5",
+                Description = "Sample description",
+                GenreId = 5,
+                AuthorId = 6,
+                Quantity = 5,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-924-7",
+                Title = "Sample Book 6",
+                Description = "Sample description",
+                GenreId = 6,
+                AuthorId = 7,
+                Quantity = 5,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-925-4",
+                Title = "Sample Book 7",
+                Description = "Sample description",
+                GenreId = 7,
+                AuthorId = 8,
+                Quantity = 5,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-926-1",
+                Title = "Sample Book 8",
+                Description = "Sample description",
+                GenreId = 8,
+                AuthorId = 9,
+                Quantity = 5,
+                Image = null
+            },
+            new Book
+            {
+                ISBN = "978-1-56619-927-8",
+                Title = "Sample Book 9",
+                Description = "Sample description",
+                GenreId = 9,
+                AuthorId = 10,
+                Quantity = 5,
+                Image = null
+            }
         };
 
         context.Genres.AddRange(genres);

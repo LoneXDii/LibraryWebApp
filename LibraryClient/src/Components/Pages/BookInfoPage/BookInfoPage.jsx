@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
 import Header from "../../Common/Header";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BookService } from "../../../Services/BookService";
 import { useCallback, useEffect, useState } from "react";
 import BookInfoComponent from "./Components/BookInfoComponent";
@@ -11,6 +11,7 @@ export default function BookInfoPage(){
     const { id } = useParams()
     const [book, setBook] = useState(null)
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     const [show, setShow] = useState(false)
 
@@ -43,6 +44,7 @@ export default function BookInfoPage(){
 
     async function handleTakeClick(){
         await BookService.takeBook(id)
+        navigate(-1)
     }
 
     return (
