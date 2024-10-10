@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using LibraryServer.DataAccess.Common.Exceptions;
+using LibraryServer.Domain.Common.Exceptions;
 using System.Text.Json;
 
 namespace LibraryServer.API.Middleware;

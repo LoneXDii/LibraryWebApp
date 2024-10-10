@@ -4,8 +4,8 @@ using LibraryServer.Application.Mapping;
 using LibraryServer.Application.Services;
 using LibraryServer.Application.Services.Interfaces;
 using LibraryServer.Application.Services.StorageServices;
-using LibraryServer.Application.Services.StorageServices.Interfaces;
-using LibraryServer.DataAccess;
+using LibraryServer.Domain.BlobStorage;
+using LibraryServer.Domain;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +15,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services, string? connStr, IConfiguration cfg)
     {
-        services.AddDataAcess(connStr)
+        services.AddDataAcess(connStr, cfg)
                 .AddAutoMapper(cfg =>
                     {
                         cfg.AddExpressionMapping();
@@ -24,11 +24,6 @@ public static class DependencyInjection
                 .AddScoped<IAuthorService, AuthorService>()
                 .AddScoped<IGenreService, GenreService>()
                 .AddScoped<IUserValidationService, UserValidationService>();
-
-
-        var azuriteConnStr = cfg["AZURE_CONNECTION"] ?? cfg.GetConnectionString("AZURE_CONNECTION");
-        services.AddSingleton<IBlobService, BlobService>()
-                .AddSingleton(_ => new BlobServiceClient(azuriteConnStr));
 
         return services;
     }

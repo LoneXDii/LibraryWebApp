@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using LibraryServer.Application.DTO;
-using LibraryServer.DataAccess.Common.Exceptions;
-using LibraryServer.DataAccess.Entities;
+using LibraryServer.Domain.Common.Exceptions;
+using LibraryServer.Domain.Entities;
 using LibraryServer.Tests.Common;
 using Microsoft.EntityFrameworkCore;
 

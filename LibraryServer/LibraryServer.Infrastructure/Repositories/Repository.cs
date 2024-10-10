@@ -1,12 +1,12 @@
-﻿using LibraryServer.DataAccess.Data;
-using LibraryServer.DataAccess.Entities.Abstractions;
+﻿using LibraryServer.Domain.Data;
+using LibraryServer.Domain.Entities.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using LibraryServer.DataAccess.Common.Exceptions;
-using LibraryServer.DataAccess.Common.Models;
+using LibraryServer.Domain.Common.Exceptions;
+using LibraryServer.Domain.Common.Models;
 using LibraryServer.Domain.Abstactions;
 
-namespace LibraryServer.DataAccess.Abstactions;
+namespace LibraryServer.Domain.Abstactions;
 
 public class Repository<T> : IRepository<T> where T : class, IEntity
 {

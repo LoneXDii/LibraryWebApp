@@ -1,4 +1,4 @@
-﻿namespace LibraryServer.Application.Services.StorageServices.Interfaces;
+﻿namespace LibraryServer.Domain.BlobStorage;
 
 public interface IBlobService
 {

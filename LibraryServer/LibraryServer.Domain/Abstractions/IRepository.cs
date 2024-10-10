@@ -1,5 +1,5 @@
-﻿using LibraryServer.DataAccess.Common.Models;
-using LibraryServer.DataAccess.Entities.Abstractions;
+﻿using LibraryServer.Domain.Common.Models;
+using LibraryServer.Domain.Entities.Abstractions;
 using System.Linq.Expressions;
 
 namespace LibraryServer.Domain.Abstactions;

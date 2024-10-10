@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace LibraryServer.DataAccess.Migrations
+namespace LibraryServer.Domain.Migrations
 {
     /// <inheritdoc />
     public partial class Init : Migration

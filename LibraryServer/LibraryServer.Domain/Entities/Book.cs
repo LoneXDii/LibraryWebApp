@@ -1,6 +1,6 @@
-﻿using LibraryServer.DataAccess.Entities.Abstractions;
+﻿using LibraryServer.Domain.Entities.Abstractions;
 
-namespace LibraryServer.DataAccess.Entities;
+namespace LibraryServer.Domain.Entities;
 
 public class Book : IEntity
 {

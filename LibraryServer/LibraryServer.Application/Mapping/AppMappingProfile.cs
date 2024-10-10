@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using LibraryServer.Application.DTO;
-using LibraryServer.DataAccess.Common.Models;
-using LibraryServer.DataAccess.Entities;
+using LibraryServer.Domain.Common.Models;
+using LibraryServer.Domain.Entities;
 
 namespace LibraryServer.Application.Mapping;
 

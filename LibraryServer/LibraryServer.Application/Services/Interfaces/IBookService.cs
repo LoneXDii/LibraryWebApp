@@ -1,5 +1,5 @@
 ﻿using LibraryServer.Application.DTO;
-using LibraryServer.DataAccess.Common.Models;
+using LibraryServer.Domain.Common.Models;
 using System.Linq.Expressions;
 
 namespace LibraryServer.Application.Services.Interfaces;

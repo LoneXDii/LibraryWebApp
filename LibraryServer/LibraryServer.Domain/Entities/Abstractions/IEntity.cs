@@ -1,4 +1,4 @@
-﻿namespace LibraryServer.DataAccess.Entities.Abstractions;
+﻿namespace LibraryServer.Domain.Entities.Abstractions;
 
 public interface IEntity
 {

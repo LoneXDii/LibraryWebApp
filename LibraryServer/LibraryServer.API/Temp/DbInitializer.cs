@@ -1,6 +1,6 @@
-﻿using LibraryServer.Application.Services.StorageServices.Interfaces;
-using LibraryServer.DataAccess.Data;
-using LibraryServer.DataAccess.Entities;
+﻿using LibraryServer.Domain.BlobStorage;
+using LibraryServer.Domain.Data;
+using LibraryServer.Domain.Entities;
 
 namespace LibraryServer.API.Temp;
 

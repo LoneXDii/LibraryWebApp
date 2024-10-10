@@ -1,4 +1,4 @@
-﻿namespace LibraryServer.DataAccess.Common.Exceptions;
+﻿namespace LibraryServer.Domain.Common.Exceptions;
 
 public class ApiException : Exception
 {

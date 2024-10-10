@@ -1,6 +1,6 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using LibraryServer.Application.Services.StorageServices.Interfaces;
+using LibraryServer.Domain.BlobStorage;
 
 namespace LibraryServer.Application.Services.StorageServices;
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LibraryServer.Application.Services.StorageServices.Interfaces;
+using LibraryServer.Domain.BlobStorage;
 using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryServer.API.Controllers;

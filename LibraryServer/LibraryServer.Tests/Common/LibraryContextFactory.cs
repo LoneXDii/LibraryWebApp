@@ -1,5 +1,5 @@
-﻿using LibraryServer.DataAccess.Data;
-using LibraryServer.DataAccess.Entities;
+﻿using LibraryServer.Domain.Data;
+using LibraryServer.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryServer.Tests.Common;

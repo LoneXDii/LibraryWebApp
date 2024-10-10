@@ -1,7 +1,7 @@
-﻿using LibraryServer.DataAccess.Entities;
+﻿using LibraryServer.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace LibraryServer.DataAccess.Data;
+namespace LibraryServer.Domain.Data;
 
 public class AppDbContext : DbContext
 {

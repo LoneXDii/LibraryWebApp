@@ -1,6 +1,6 @@
 ﻿using LibraryServer.Application.DTO;
 using LibraryServer.Application.Services.Interfaces;
-using LibraryServer.DataAccess.Common.Models;
+using LibraryServer.Domain.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

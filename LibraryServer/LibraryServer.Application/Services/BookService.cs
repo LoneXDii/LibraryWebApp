@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using LibraryServer.Application.DTO;
-using LibraryServer.DataAccess.Common.Models;
+using LibraryServer.Domain.Common.Models;
 using LibraryServer.Application.Services.Interfaces;
-using LibraryServer.DataAccess.Entities;
-using LibraryServer.DataAccess.Common.Exceptions;
+using LibraryServer.Domain.Entities;
+using LibraryServer.Domain.Common.Exceptions;
 using System.Linq.Expressions;
 using LibraryServer.Application.Validators;
 using FluentValidation;

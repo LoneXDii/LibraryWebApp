@@ -1,4 +1,4 @@
-﻿using LibraryServer.DataAccess.Entities;
+﻿using LibraryServer.Domain.Entities;
 
 namespace LibraryServer.Domain.Abstactions;
 
