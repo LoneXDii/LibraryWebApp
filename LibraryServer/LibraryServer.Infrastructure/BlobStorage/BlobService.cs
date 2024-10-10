@@ -1,8 +1,7 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using LibraryServer.Domain.BlobStorage;
 
-namespace LibraryServer.Application.Services.StorageServices;
+namespace LibraryServer.Infrastructure.BlobService;
 
 internal class BlobService : IBlobService
 {

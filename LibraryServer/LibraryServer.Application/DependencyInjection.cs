@@ -1,10 +1,7 @@
 ﻿using AutoMapper.Extensions.ExpressionMapping;
-using Azure.Storage.Blobs;
 using LibraryServer.Application.Mapping;
 using LibraryServer.Application.Services;
 using LibraryServer.Application.Services.Interfaces;
-using LibraryServer.Application.Services.StorageServices;
-using LibraryServer.Domain.BlobStorage;
 using LibraryServer.Domain;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

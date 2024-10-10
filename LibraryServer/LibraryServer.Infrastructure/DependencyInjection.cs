@@ -1,11 +1,8 @@
-﻿using LibraryServer.Domain.Abstactions;
-using LibraryServer.Domain.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Azure.Storage.Blobs;
-using LibraryServer.Domain.BlobStorage;
-using LibraryServer.Application.Services.StorageServices;
+using LibraryServer.Infrastructure.BlobService;
 
 namespace LibraryServer.Domain;
 

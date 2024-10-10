@@ -1,10 +1,7 @@
-﻿using LibraryServer.Domain.Data;
-using LibraryServer.Domain.Entities.Abstractions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using LibraryServer.Domain.Common.Exceptions;
 using LibraryServer.Domain.Common.Models;
-using LibraryServer.Domain.Abstactions;
 
 namespace LibraryServer.Domain.Abstactions;
 

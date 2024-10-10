@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using LibraryServer.Domain.Entities;
 
 namespace LibraryServer.Application.Validators;
 

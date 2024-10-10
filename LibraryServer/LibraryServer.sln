@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryServer.Domain", "Lib
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryServer.Tests", "LibraryServer.Tests\LibraryServer.Tests.csproj", "{2A1BE7E2-AA65-4D18-B9AB-24ABF21F2607}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryServer.Infratructure", "LibraryServer.Infrastructure\LibraryServer.Infratructure.csproj", "{4E403B44-EDEA-45AA-A47D-7C86885A0DE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryServer.Infrastructure", "LibraryServer.Infrastructure\LibraryServer.Infrastructure.csproj", "{4E403B44-EDEA-45AA-A47D-7C86885A0DE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

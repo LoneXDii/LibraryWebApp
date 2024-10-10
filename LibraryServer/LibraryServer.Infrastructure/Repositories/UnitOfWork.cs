@@ -1,8 +1,4 @@
-﻿using LibraryServer.Domain.Data;
-using LibraryServer.Domain.Entities;
-using LibraryServer.Domain.Abstactions;
-
-namespace LibraryServer.Domain.Abstactions;
+﻿namespace LibraryServer.Domain.Abstactions;
 
 public class UnitOfWork : IUnitOfWork
 {

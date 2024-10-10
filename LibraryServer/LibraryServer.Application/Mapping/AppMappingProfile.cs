@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using LibraryServer.Application.DTO;
-using LibraryServer.Domain.Common.Models;
-using LibraryServer.Domain.Entities;
 
 namespace LibraryServer.Application.Mapping;
 
