@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using LibraryServer.Application.DTO;
-using LibraryServer.Domain.Common.Models;
+using LibraryServer.DataAccess.Common.Models;
 using LibraryServer.Application.Services.Interfaces;
-using LibraryServer.DataAccess.Repositories.Interfaces;
-using LibraryServer.Domain.Entities;
-using LibraryServer.Domain.Common.Exceptions;
+using LibraryServer.DataAccess.Entities;
+using LibraryServer.DataAccess.Common.Exceptions;
 using System.Linq.Expressions;
 using LibraryServer.Application.Validators;
 using FluentValidation;
 using System.Text;
+using LibraryServer.Domain.Abstactions;
 
 namespace LibraryServer.Application.Services;
 

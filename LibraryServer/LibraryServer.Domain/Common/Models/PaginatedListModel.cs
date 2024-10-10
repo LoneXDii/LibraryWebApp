@@ -1,4 +1,4 @@
-﻿namespace LibraryServer.Domain.Common.Models;
+﻿namespace LibraryServer.DataAccess.Common.Models;
 
 public class PaginatedListModel<T>
 {

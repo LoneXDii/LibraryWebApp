@@ -1,6 +1,6 @@
-﻿using LibraryServer.DataAccess.Data;
-using LibraryServer.DataAccess.Repositories;
-using LibraryServer.DataAccess.Repositories.Interfaces;
+﻿using LibraryServer.DataAccess.Abstactions;
+using LibraryServer.DataAccess.Data;
+using LibraryServer.Domain.Abstactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

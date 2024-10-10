@@ -1,4 +1,4 @@
-﻿using LibraryServer.Domain.Common.Exceptions;
+﻿using LibraryServer.DataAccess.Common.Exceptions;
 using LibraryServer.Tests.Common;
 using Microsoft.EntityFrameworkCore;
 

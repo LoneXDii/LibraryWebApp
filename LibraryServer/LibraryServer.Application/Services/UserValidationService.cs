@@ -1,5 +1,5 @@
 ﻿using LibraryServer.Application.Services.Interfaces;
-using LibraryServer.Domain.Common.Exceptions;
+using LibraryServer.DataAccess.Common.Exceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace LibraryServer.Application.Services;

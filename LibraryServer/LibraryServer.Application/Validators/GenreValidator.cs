@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using LibraryServer.Domain.Entities;
+using LibraryServer.DataAccess.Entities;
 using System.Text.RegularExpressions;
 
 namespace LibraryServer.Application.Validators;

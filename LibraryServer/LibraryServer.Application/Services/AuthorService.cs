@@ -2,9 +2,9 @@
 using FluentValidation;
 using LibraryServer.Application.DTO;
 using LibraryServer.Application.Services.Interfaces;
-using LibraryServer.Domain.Entities;
-using LibraryServer.DataAccess.Repositories.Interfaces;
-using LibraryServer.Domain.Common.Exceptions;
+using LibraryServer.DataAccess.Entities;
+using LibraryServer.Domain.Abstactions;
+using LibraryServer.DataAccess.Common.Exceptions;
 using LibraryServer.Application.Validators;
 using System.Text;
 

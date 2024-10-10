@@ -1,6 +1,6 @@
-﻿using LibraryServer.Domain.Entities;
+﻿using LibraryServer.DataAccess.Entities;
 
-namespace LibraryServer.DataAccess.Repositories.Interfaces;
+namespace LibraryServer.Domain.Abstactions;
 
 public interface IUnitOfWork
 {

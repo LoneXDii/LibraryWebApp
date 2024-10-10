@@ -1,8 +1,8 @@
-﻿using LibraryServer.Domain.Entities.Abstractions;
-using LibraryServer.Domain.Common.Models;
+﻿using LibraryServer.DataAccess.Common.Models;
+using LibraryServer.DataAccess.Entities.Abstractions;
 using System.Linq.Expressions;
 
-namespace LibraryServer.DataAccess.Repositories.Interfaces;
+namespace LibraryServer.Domain.Abstactions;
 
 public interface IRepository<T> where T : IEntity
 {

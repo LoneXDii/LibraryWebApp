@@ -1,4 +1,4 @@
-﻿namespace LibraryServer.Domain.Common.Exceptions;
+﻿namespace LibraryServer.DataAccess.Common.Exceptions;
 
 public class ForbiddenException : Exception
 {

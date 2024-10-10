@@ -4,8 +4,8 @@ using LibraryServer.Application.Mapping;
 using LibraryServer.Application.Services;
 using LibraryServer.Application.Services.Interfaces;
 using LibraryServer.DataAccess.Data;
-using LibraryServer.DataAccess.Repositories;
-using LibraryServer.Domain.Entities;
+using LibraryServer.DataAccess.Abstactions;
+using LibraryServer.DataAccess.Entities;
 
 namespace LibraryServer.Tests.Common;
 
