@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using LibraryServer.Domain.Entities;
 
 namespace LibraryServer.Application.UseCases.GenreUseCases.Commands;
-
-public sealed record UpdateGenreRequest(int genreId, GenreDTO genre) : IRequest { }
 
 internal class UpdateGenreRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
     : IRequestHandler<UpdateGenreRequest>

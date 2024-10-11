@@ -2,8 +2,6 @@
 
 namespace LibraryServer.Application.UseCases.GenreUseCases.Queries;
 
-public sealed record GetGenreByIdRequest(int genreId) : IRequest<GenreDTO> { }
-
 internal class GetGenreByIdRequestHandler(IUnitOfWork unitOfWork, IMapper mapper) 
     : IRequestHandler<GetGenreByIdRequest, GenreDTO>
 {
@@ -20,4 +18,3 @@ internal class GetGenreByIdRequestHandler(IUnitOfWork unitOfWork, IMapper mapper
         return genreDto;
     }
 }
-

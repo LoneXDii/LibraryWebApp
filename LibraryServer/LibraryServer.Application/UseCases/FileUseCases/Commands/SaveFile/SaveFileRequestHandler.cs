@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace LibraryServer.Application.UseCases.FileUseCases.Commands;
-
-public sealed record SaveFileRequest(IFormFile file) : IRequest<Guid> { }
+﻿namespace LibraryServer.Application.UseCases.FileUseCases.Commands;
 
 internal class SaveFileRequestHandler(IBlobService blobService)
     : IRequestHandler<SaveFileRequest, Guid>

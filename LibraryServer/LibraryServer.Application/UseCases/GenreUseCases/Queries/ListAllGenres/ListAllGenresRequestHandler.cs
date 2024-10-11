@@ -2,8 +2,6 @@
 
 namespace LibraryServer.Application.UseCases.GenreUseCases.Queries;
 
-public sealed record ListAllGenresRequest() : IRequest<IEnumerable<GenreDTO>> { }
-
 internal class ListAllGenresRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
     : IRequestHandler<ListAllGenresRequest, IEnumerable<GenreDTO>>
 {

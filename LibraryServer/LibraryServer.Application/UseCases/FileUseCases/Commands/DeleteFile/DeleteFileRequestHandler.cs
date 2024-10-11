@@ -1,8 +1,4 @@
-﻿using LibraryServer.Domain.BlobStorage;
-
-namespace LibraryServer.Application.UseCases.FileUseCases.Commands;
-
-public sealed record DeleteFileRequest(Guid fileId) : IRequest { }
+﻿namespace LibraryServer.Application.UseCases.FileUseCases.Commands;
 
 internal class DeleteFileRequestHandler(IBlobService blobService)
     : IRequestHandler<DeleteFileRequest>

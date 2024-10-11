@@ -1,7 +1,5 @@
 ﻿namespace LibraryServer.Application.UseCases.GenreUseCases.Commands;
 
-public sealed record DeleteGenreRequest(int genreId) : IRequest { }
-
 internal class DeleteGenreRequestHandler(IUnitOfWork unitOfWork)
     : IRequestHandler<DeleteGenreRequest>
 {

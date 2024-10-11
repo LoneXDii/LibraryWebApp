@@ -1,7 +1,5 @@
 ﻿namespace LibraryServer.Application.UseCases.FileUseCases.Queries;
 
-public sealed record GetFileRequest(Guid fileId) : IRequest<FileResponse> { }
-
 internal class GetFileRequestHandler(IBlobService blobService)
     : IRequestHandler<GetFileRequest, FileResponse>
 {
