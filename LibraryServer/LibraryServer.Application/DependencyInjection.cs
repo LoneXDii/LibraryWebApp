@@ -19,8 +19,9 @@ public static class DependencyInjection
                     }, typeof(AppMappingProfile))
                 .AddScoped<IBookService, BookService>()
                 .AddScoped<IAuthorService, AuthorService>()
-                .AddScoped<IGenreService, GenreService>()
-                .AddScoped<IUserValidationService, UserValidationService>();
+                .AddScoped<IUserValidationService, UserValidationService>()
+                .AddMediatR(cfg =>
+                    cfg.RegisterServicesFromAssemblies(typeof(DependencyInjection).Assembly));
 
         return services;
     }
