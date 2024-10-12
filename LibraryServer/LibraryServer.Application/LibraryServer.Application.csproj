@@ -19,8 +19,4 @@
     <ProjectReference Include="..\LibraryServer.Infrastructure\LibraryServer.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UseCases\BookUseCases\Commands\" />
-  </ItemGroup>
-
 </Project>

@@ -53,9 +53,9 @@ public class BooksController : ControllerBase
 
     [HttpPost]
     [Authorize(Policy = "admin")]
-    public async Task<ActionResult<BookDTO>> PostBook(BookDTO book)
+    public async Task<ActionResult<BookDTO>> PostBook([FromForm] BookWithImageFileDTO book)
     {
-        var response = await _bookService.AddAsync(book);
+        var response = await _mediator.Send(new AddBookRequest(book));
         return Ok(response);
     }
 

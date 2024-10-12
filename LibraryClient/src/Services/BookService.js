@@ -48,18 +48,42 @@ export class BookService{
     }
 
     static async CreateBook(book, image){
-        if(image){
-            const imageGuid = await this.saveImage(image)
-            if (imageGuid){
-                book.image = ApiConfiguration.apiBaseUri + `api/files/${imageGuid}`
-            }
+        const formData = new FormData();
+    
+        formData.append('book.Book.ISBN', book.isbn);
+        formData.append('book.Book.Title', book.title);
+        formData.append('book.Book.Description', book.description);
+        formData.append('book.Book.GenreId', book.genreId);
+        formData.append('book.Book.Genre', null);
+        formData.append('book.Book.AuthorId', book.authorId);
+        formData.append('book.Book.Author', null);
+        formData.append('book.Book.Quantity', book.quantity);
+        formData.append('book.Book.Image', null)
+        
+        if (image) {
+            formData.append('book.ImageFile', image);
         }
+
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+
         let uri = ApiConfiguration.apiBaseUri + 'api/books'
-        const response = await apiService.post(uri, JSON.stringify(book),{
-            headers:{
-                'Content-Type': 'application/json',
-            }
-        })
+        console.log(uri)
+        try{
+            const response = await apiService.post(uri, formData, {
+                headers:{
+                    'Content-Type': 'multipart/form-data',
+                }
+            })
+            console.log('book saved sucessfully')
+            console.log(response.data)
+        }
+        catch(error){
+            console.log('Error in saving book')
+            console.log(formData)
+            console.log(error)
+        }
     }
 
     static async deleteBook(id){

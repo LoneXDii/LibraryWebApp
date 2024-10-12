@@ -1,6 +1,4 @@
-﻿using LibraryServer.Domain.Entities;
-
-namespace LibraryServer.Application.DTO;
+﻿namespace LibraryServer.Application.DTO;
 
 public class BookDTO
 {
