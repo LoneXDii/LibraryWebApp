@@ -2,4 +2,4 @@
 
 namespace LibraryServer.Application.UseCases.FileUseCases.Commands;
 
-public sealed record SaveFileRequest(IFormFile file) : IRequest<Guid> { }
+public sealed record SaveFileRequest(IFormFile File) : IRequest<Guid> { }

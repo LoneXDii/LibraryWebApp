@@ -7,7 +7,7 @@ internal class AddGenreRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
 {
     public async Task<GenreDTO> Handle(AddGenreRequest request, CancellationToken cancellationToken = default)
     {
-        var genreDb = mapper.Map<Genre>(request.genre);
+        var genreDb = mapper.Map<Genre>(request.Genre);
 
         //Validate(genreDb);
 

@@ -7,11 +7,11 @@ internal class GetGenreByIdRequestHandler(IUnitOfWork unitOfWork, IMapper mapper
 {
     public async Task<GenreDTO> Handle(GetGenreByIdRequest request, CancellationToken cancellationToken = default)
     {
-        var genre = await unitOfWork.GenreRepository.GetByIdAsync(request.genreId);
+        var genre = await unitOfWork.GenreRepository.GetByIdAsync(request.GenreId);
 
         if (genre is null)
         {
-            throw new NotFoundException($"No genre with id={request.genreId}");
+            throw new NotFoundException($"No genre with id={request.GenreId}");
         }
 
         var genreDto = mapper.Map<GenreDTO>(genre);

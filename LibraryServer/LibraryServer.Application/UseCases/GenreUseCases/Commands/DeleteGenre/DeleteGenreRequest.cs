@@ -1,3 +1,3 @@
 ﻿namespace LibraryServer.Application.UseCases.GenreUseCases.Commands;
 
-public sealed record DeleteGenreRequest(int genreId) : IRequest { }
+public sealed record DeleteGenreRequest(int GenreId) : IRequest { }

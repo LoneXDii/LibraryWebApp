@@ -1,3 +1,3 @@
 ﻿namespace LibraryServer.Application.UseCases.GenreUseCases.Queries;
 
-public sealed record GetGenreByIdRequest(int genreId) : IRequest<GenreDTO> { }
+public sealed record GetGenreByIdRequest(int GenreId) : IRequest<GenreDTO> { }

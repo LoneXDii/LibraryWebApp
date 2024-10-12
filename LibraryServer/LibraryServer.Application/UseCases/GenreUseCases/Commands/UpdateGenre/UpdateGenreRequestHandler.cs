@@ -7,13 +7,13 @@ internal class UpdateGenreRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
 {
     public async Task Handle(UpdateGenreRequest request, CancellationToken cancellationToken = default)
     {
-        var genreDb = await unitOfWork.GenreRepository.GetByIdAsync(request.genreId);
+        var genreDb = await unitOfWork.GenreRepository.GetByIdAsync(request.GenreId);
         if (genreDb is null)
         {
-            throw new NotFoundException($"No genre with id={request.genreId}");
+            throw new NotFoundException($"No genre with id={request.GenreId}");
         }
 
-        genreDb = mapper.Map<Genre>(request.genre);
+        genreDb = mapper.Map<Genre>(request.Genre);
         //Validate(genreDb);
 
         await unitOfWork.GenreRepository.UpdateAsync(genreDb);

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LibraryServer.Application.Services.Interfaces;
-using LibraryServer.Application.DTO;
 using Microsoft.AspNetCore.Authorization;
+using MediatR;
 
 namespace LibraryServer.API.Controllers;
 
@@ -9,24 +8,24 @@ namespace LibraryServer.API.Controllers;
 [ApiController]
 public class AuthorsController : ControllerBase
 {
-    private readonly IAuthorService _authorService;
+    private readonly IMediator _mediator;
 
-    public AuthorsController(IAuthorService authorService)
+    public AuthorsController(IMediator mediator)
     {
-        _authorService = authorService;
+        _mediator = mediator;
     }
 
     [HttpGet]
     public async Task<ActionResult<AuthorDTO>> GetAuthors()
     {
-        var response = await _authorService.ListAllAsync();
+        var response = await _mediator.Send(new ListAllAuthorsRequest());
         return Ok(response);
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<AuthorDTO>> GetAuthor(int id)
     {
-        var response = await _authorService.GetByIdAsync(id);
+        var response = await _mediator.Send(new GetAuthorByIdRequest(id));
         return Ok(response);
     }
 
@@ -34,7 +33,7 @@ public class AuthorsController : ControllerBase
     [Authorize(Policy = "admin")]
     public async Task<IActionResult> PutAuthor(int id, AuthorDTO author)
     {
-        await _authorService.UpdateAsync(id, author);
+        await _mediator.Send(new UpdateAuthorRequest(id, author));
         return Ok();
     }
 
@@ -42,7 +41,7 @@ public class AuthorsController : ControllerBase
     [Authorize(Policy = "admin")]
     public async Task<ActionResult<AuthorDTO>> PostAuthor(AuthorDTO author)
     {
-        var response = await _authorService.AddAsync(author);
+        var response = await _mediator.Send(new AddAuthorRequest(author));
         return Ok(response);
     }
 
@@ -50,7 +49,7 @@ public class AuthorsController : ControllerBase
     [Authorize(Policy = "admin")]
     public async Task<IActionResult> DeleteAuthor(int id)
     {
-        await _authorService.DeleteAsync(id);
+        await _mediator.Send(new DeleteAuthorRequest(id));
         return Ok();
     }
 
@@ -58,7 +57,7 @@ public class AuthorsController : ControllerBase
     [Route("{id:int}/books")]
     public async Task<ActionResult<List<BookDTO>>> GetAuthorBooks(int id)
     {
-        var response = await _authorService.ListAuthorsBooksAsync(id);
+        var response = await _mediator.Send(new ListAuthorsBooksRequest(id));
         return Ok(response);
     }
 }

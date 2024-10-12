@@ -5,8 +5,8 @@ internal class SaveFileRequestHandler(IBlobService blobService)
 {
     public async Task<Guid> Handle(SaveFileRequest request, CancellationToken cancellationToken = default)
     {
-        using Stream stream = request.file.OpenReadStream();
+        using Stream stream = request.File.OpenReadStream();
 
-        return await blobService.UploadAsync(stream, request.file.ContentType);
+        return await blobService.UploadAsync(stream, request.File.ContentType);
     }
 }

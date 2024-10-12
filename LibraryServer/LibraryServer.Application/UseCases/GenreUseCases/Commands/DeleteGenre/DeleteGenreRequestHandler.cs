@@ -5,10 +5,10 @@ internal class DeleteGenreRequestHandler(IUnitOfWork unitOfWork)
 {
     public async Task Handle(DeleteGenreRequest request, CancellationToken cancellationToken = default)
     {
-        var genre = await unitOfWork.GenreRepository.GetByIdAsync(request.genreId);
+        var genre = await unitOfWork.GenreRepository.GetByIdAsync(request.GenreId);
         if (genre is null)
         {
-            throw new NotFoundException($"No genre with id={request.genreId}");
+            throw new NotFoundException($"No genre with id={request.GenreId}");
         }
 
         await unitOfWork.GenreRepository.DeleteAsync(genre);

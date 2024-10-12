@@ -5,6 +5,6 @@ internal class DeleteFileRequestHandler(IBlobService blobService)
 {
     public async Task Handle(DeleteFileRequest request, CancellationToken cancellationToken = default)
     {
-        await blobService.DeleteAsync(request.fileId);
+        await blobService.DeleteAsync(request.FileId);
     }
 }

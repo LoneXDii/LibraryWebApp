@@ -5,6 +5,6 @@ internal class GetFileRequestHandler(IBlobService blobService)
 {
     public async Task<FileResponse> Handle(GetFileRequest request, CancellationToken cancellationToken = default)
     {
-        return await blobService.DownloadAsync(request.fileId);
+        return await blobService.DownloadAsync(request.FileId);
     }
 }

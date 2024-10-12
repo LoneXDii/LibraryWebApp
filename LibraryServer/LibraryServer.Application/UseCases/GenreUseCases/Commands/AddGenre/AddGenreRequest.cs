@@ -1,3 +1,3 @@
 ﻿namespace LibraryServer.Application.UseCases.GenreUseCases.Commands;
 
-public sealed record AddGenreRequest(GenreDTO genre) : IRequest<GenreDTO> { }
+public sealed record AddGenreRequest(GenreDTO Genre) : IRequest<GenreDTO> { }
