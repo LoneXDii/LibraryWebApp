@@ -45,9 +45,9 @@ public class BooksController : ControllerBase
 
     [HttpPut("{id:int}")]
     [Authorize(Policy = "admin")]
-    public async Task<IActionResult> PutBook(int id, BookDTO book)
+    public async Task<IActionResult> PutBook(int id, [FromForm] BookWithImageFileDTO book)
     {
-        await _bookService.UpdateAsync(id, book);
+        await _mediator.Send(new UpdateBookRequest(id, book));
         return Ok();
     }
 

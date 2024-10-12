@@ -13,7 +13,7 @@ internal class UpdateGenreRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
             throw new NotFoundException($"No genre with id={request.GenreId}");
         }
 
-        genreDb = mapper.Map<Genre>(request.Genre);
+        mapper.Map(request.Genre, genreDb);
         //Validate(genreDb);
 
         await unitOfWork.GenreRepository.UpdateAsync(genreDb);

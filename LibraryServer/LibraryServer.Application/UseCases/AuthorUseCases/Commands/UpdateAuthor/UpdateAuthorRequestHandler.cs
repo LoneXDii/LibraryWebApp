@@ -15,7 +15,7 @@ internal class UpdateAuthorRequestHandler(IUnitOfWork unitOfWork, IMapper mapper
             throw new NotFoundException($"No author with id={request.AuthorId}");
         }
 
-        authorDb = mapper.Map<Author>(request.Author);
+        mapper.Map(request.Author, authorDb);
 
         //Validate(authorDb);
 
