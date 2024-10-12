@@ -63,7 +63,7 @@ public class BooksController : ControllerBase
     [Authorize(Policy = "admin")]
     public async Task<IActionResult> DeleteBook(int id)
     {
-        await _bookService.DeleteAsync(id);
+        await _mediator.Send(new DeleteBookRequest(id));
         return Ok();
     }
 }

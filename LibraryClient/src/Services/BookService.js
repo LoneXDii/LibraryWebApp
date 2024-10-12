@@ -77,11 +77,9 @@ export class BookService{
                 }
             })
             console.log('book saved sucessfully')
-            console.log(response.data)
         }
         catch(error){
             console.log('Error in saving book')
-            console.log(formData)
             console.log(error)
         }
     }

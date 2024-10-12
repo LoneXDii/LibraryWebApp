@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using LibraryServer.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 
 namespace LibraryServer.Application.UseCases.BookUseCases.Commands;
