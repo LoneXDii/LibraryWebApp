@@ -17,7 +17,6 @@ public static class DependencyInjection
                     {
                         cfg.AddExpressionMapping();
                     }, typeof(AppMappingProfile))
-                .AddScoped<IBookService, BookService>()
                 .AddScoped<IUserValidationService, UserValidationService>()
                 .AddMediatR(cfg =>
                     cfg.RegisterServicesFromAssemblies(typeof(DependencyInjection).Assembly));

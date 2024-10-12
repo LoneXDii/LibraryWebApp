@@ -11,11 +11,9 @@ namespace LibraryServer.API.Controllers;
 public class BooksController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly IBookService _bookService;
 
-    public BooksController(IBookService bookService, IMediator mediator)
+    public BooksController(IMediator mediator)
     {
-        _bookService = bookService;
         _mediator = mediator;
     }
 

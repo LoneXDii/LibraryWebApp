@@ -10,23 +10,21 @@ namespace LibraryServer.API.Controllers;
 public class LibraryController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly IBookService _bookService;
     private readonly IUserValidationService _userValidationService;
 
-    public LibraryController(IMediator mediator, IBookService bookService, IUserValidationService userValidationService)
+    public LibraryController(IMediator mediator, IUserValidationService userValidationService)
     {
         _mediator = mediator;
-        _bookService = bookService;
         _userValidationService = userValidationService;
     }
 
     [HttpPost]
     [Authorize]
     [Route("take")]
-    public async Task<IActionResult> TakeBook(TakeBookDTO request)
+    public async Task<IActionResult> GiveBook(GiveOrTakeBookDTO giveBook)
     {
-        _userValidationService.ValidateUser(request.UserId);
-        await _bookService.GiveToUserAsync(request.BookId, request.UserId);
+        _userValidationService.ValidateUser(giveBook.UserId);
+        await _mediator.Send(new GiveBookToUserRequest(giveBook));
         return Ok();
     }
 
