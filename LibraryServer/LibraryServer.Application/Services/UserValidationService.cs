@@ -25,7 +25,7 @@ internal class UserValidationService : IUserValidationService
         }
         if (tokenUserId != userId)
         {
-            throw new ForbiddenException("Acess denied");
+            throw new ForbiddenException("Access denied");
         }
     }
 }

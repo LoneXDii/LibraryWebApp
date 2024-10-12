@@ -1,6 +1,6 @@
-﻿using LibraryServer.Application.DTO;
-using LibraryServer.Application.Services.Interfaces;
+﻿using LibraryServer.Application.Services.Interfaces;
 using LibraryServer.Domain.Common.Models;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,11 +10,13 @@ namespace LibraryServer.API.Controllers;
 [ApiController]
 public class BooksController : ControllerBase
 {
+    private readonly IMediator _mediator;
     private readonly IBookService _bookService;
 
-    public BooksController(IBookService bookService)
+    public BooksController(IBookService bookService, IMediator mediator)
     {
         _bookService = bookService;
+        _mediator = mediator;
     }
 
     [HttpGet]
@@ -22,14 +24,14 @@ public class BooksController : ControllerBase
     public async Task<ActionResult<List<PaginatedListModel<BookDTO>>>> GetBooks(string? genre, int pageNo = 1,
                                                                                 int pageSize = 9)
     {
-        var resposne = await _bookService.ListAsync(genre, pageNo, pageSize);
+        var resposne = await _mediator.Send(new ListBooksWithPaginationRequest(genre, pageNo, pageSize));
         return Ok(resposne);
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<BookDTO>> GetBookById(int id)
     {
-        var response = await _bookService.GetByIdAsync(id);
+        var response = await _mediator.Send(new GetBookByIdRequest(id));
         return Ok(response);
     }
 
@@ -37,7 +39,7 @@ public class BooksController : ControllerBase
     [Route("isbn/{isbn}")]
     public async Task<ActionResult<BookDTO>> GetBookByISBN(string isbn)
     {
-        var response = await _bookService.FirstOrDefaultAsync(b => b.ISBN == isbn);
+        var response = await _mediator.Send(new GetFirstOrDefaultBookRequest(b => b.ISBN == isbn));
         return Ok(response);
     }
 

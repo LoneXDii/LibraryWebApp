@@ -1,5 +1,5 @@
-﻿using LibraryServer.Application.DTO;
-using LibraryServer.Application.Services.Interfaces;
+﻿using LibraryServer.Application.Services.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,11 +9,13 @@ namespace LibraryServer.API.Controllers;
 [ApiController]
 public class LibraryController : ControllerBase
 {
+    private readonly IMediator _mediator;
     private readonly IBookService _bookService;
     private readonly IUserValidationService _userValidationService;
 
-    public LibraryController(IBookService bookService, IUserValidationService userValidationService)
+    public LibraryController(IMediator mediator, IBookService bookService, IUserValidationService userValidationService)
     {
+        _mediator = mediator;
         _bookService = bookService;
         _userValidationService = userValidationService;
     }
@@ -34,7 +36,7 @@ public class LibraryController : ControllerBase
     public async Task<ActionResult<List<TakenBookDTO>>> GetUserBooks(string id)
     {
         _userValidationService.ValidateUser(id);
-        var response = await _bookService.GetUserBooksAsync(id);
+        var response = await _mediator.Send(new ListUsersTakenBooksRequest(id));
         return Ok(response);
     }
 }
