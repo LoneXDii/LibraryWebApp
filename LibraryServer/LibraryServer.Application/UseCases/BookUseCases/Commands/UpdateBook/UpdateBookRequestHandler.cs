@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using LibraryServer.Domain.Entities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace LibraryServer.Application.UseCases.BookUseCases.Commands;
 
 internal class UpdateBookRequestHandler(IUnitOfWork unitOfWork, IMapper mapper, 
-    IBlobService blobService, IHttpContextAccessor httpContextAccessor)
+    IBlobService blobService, IConfiguration cfg)
     : IRequestHandler<UpdateBookRequest>
 {
     public async Task Handle(UpdateBookRequest request, CancellationToken cancellationToken = default)
@@ -27,8 +28,7 @@ internal class UpdateBookRequestHandler(IUnitOfWork unitOfWork, IMapper mapper,
             using Stream stream = request.BookWithImage.ImageFile.OpenReadStream();
             var imageId = await blobService.UploadAsync(stream, request.BookWithImage.ImageFile.ContentType);
 
-            var context = httpContextAccessor.HttpContext;
-            var imageUrl = $"{context.Request.Scheme}://{context.Request.Host}/api/files/{imageId}";
+            var imageUrl = cfg["IMAGE_PATH"] ?? "https://localhost:7001/api/files/";
             request.BookWithImage.Book.Image = imageUrl;
         }
 

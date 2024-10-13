@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace LibraryServer.Application.UseCases.BookUseCases.Commands;
 
 internal class AddBookRequestHandler(IUnitOfWork unitOfWork, IMapper mapper, 
-    IBlobService blobService, IHttpContextAccessor httpContextAccessor)
+    IBlobService blobService, IConfiguration cfg)
     : IRequestHandler<AddBookRequest, BookDTO>
 {
     public async Task<BookDTO> Handle(AddBookRequest request, CancellationToken cancellationToken = default)
@@ -16,8 +16,7 @@ internal class AddBookRequestHandler(IUnitOfWork unitOfWork, IMapper mapper,
             using Stream stream = request.BookWithImage.ImageFile.OpenReadStream();
             var imageId = await blobService.UploadAsync(stream, request.BookWithImage.ImageFile.ContentType);
 
-            var context = httpContextAccessor.HttpContext;
-            var imageUrl = $"{context.Request.Scheme}://{context.Request.Host}/api/files/{imageId}";
+            var imageUrl = cfg["IMAGE_PATH"] ?? "https://localhost:7001/api/files/";
             bookDb.Image = imageUrl;
         }
         //Validate(bookDb);
