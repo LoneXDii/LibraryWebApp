@@ -33,6 +33,17 @@ internal class ListBookWithPaginationRequestHandler(IUnitOfWork unitOfWork, IMap
         }
 
         var data = mapper.Map<PaginatedListModel<BookDTO>>(dataList);
+
+        if(data.TotalPages == 0)
+        {
+            data.TotalPages = 1;
+        }
+
+        if(data.CurrentPage > data.TotalPages)
+        {
+            throw new NotFoundException("No such page");
+        }
+
         return data;
     }
 }

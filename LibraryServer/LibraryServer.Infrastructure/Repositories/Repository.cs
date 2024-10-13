@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using LibraryServer.Domain.Common.Exceptions;
 using LibraryServer.Domain.Common.Models;
 
 namespace LibraryServer.Domain.Abstactions;
@@ -19,12 +18,10 @@ public class Repository<T> : IRepository<T> where T : class, IEntity
     public async Task<T?> GetByIdAsync(int id, params Expression<Func<T, object>>[] includedProperties)
     {
         IQueryable<T>? query = _entities.AsQueryable();
-        if (includedProperties.Any())
+
+        foreach (var property in includedProperties)
         {
-            foreach (var property in includedProperties)
-            {
-                query = query.Include(property);
-            }
+            query = query.Include(property);
         }
 
         var entity = await query.FirstOrDefaultAsync(e => e.Id == id);
@@ -37,19 +34,16 @@ public class Repository<T> : IRepository<T> where T : class, IEntity
         return entities;
     }
 
-    public async Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> filter, 
-                                            params Expression<Func<T, object>>[] includedProperties)
+    public async Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>>? filter = null,
+                                                params Expression<Func<T, object>>[] includedProperties)
     {
         IQueryable<T>? query = _entities.AsQueryable();
-        if (includedProperties.Any())
+        foreach (var property in includedProperties)
         {
-            foreach (var property in includedProperties)
-            {
-                query = query.Include(property);
-            }
+            query = query.Include(property);
         }
 
-        if (filter != null)
+        if (filter is not null)
         {
             query = query.Where(filter);
         }
@@ -64,30 +58,17 @@ public class Repository<T> : IRepository<T> where T : class, IEntity
     {
         var query = _entities.AsQueryable();
 
-        if (includedProperties.Any())
+        foreach (var property in includedProperties)
         {
-            foreach (var property in includedProperties)
-            {
-                query = query.Include(property);
-            }
+            query = query.Include(property);
         }
 
-        if (filter != null)
+        if (filter is not null)
         {
             query = query.Where(filter);
         }
 
         int count = await query.CountAsync();
-
-        int totalPages = (int)Math.Ceiling(count / (double)pageSize);
-        if (totalPages == 0)
-        {
-            totalPages = 1;
-        }
-        if (pageNo > totalPages)
-        {
-            throw new NotFoundException("No such page");
-        }
 
         var entities = await query.OrderBy(e => e.Id)
                                   .Skip((pageNo - 1) * pageSize)
@@ -98,7 +79,7 @@ public class Repository<T> : IRepository<T> where T : class, IEntity
         {
             Items = entities,
             CurrentPage = pageNo,
-            TotalPages = totalPages
+            TotalPages = (int)Math.Ceiling(count / (double)pageSize)
         };
 
         return data;

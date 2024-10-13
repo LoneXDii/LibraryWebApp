@@ -1,4 +1,4 @@
-﻿namespace LibraryServer.Domain.Common.Exceptions;
+﻿namespace LibraryServer.Application.Exceptions;
 
 public class BadRequestException : Exception
 {
