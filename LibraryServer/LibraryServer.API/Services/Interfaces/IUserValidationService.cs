@@ -1,4 +1,4 @@
-﻿namespace LibraryServer.Application.Services.Interfaces;
+﻿namespace LibraryServer.API.Services.Interfaces;
 
 public interface IUserValidationService
 {

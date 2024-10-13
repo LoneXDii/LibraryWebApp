@@ -20,6 +20,7 @@ internal class DbSeeder : IDbSeeder
     {
         using var scope = _serviceProvider.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        dbContext.Database.Migrate();
 
         if (dbContext.Authors.Any())
         {

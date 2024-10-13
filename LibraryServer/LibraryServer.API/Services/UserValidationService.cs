@@ -1,7 +1,7 @@
-﻿using LibraryServer.Application.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
+﻿using LibraryServer.API.Services.Interfaces;
+using LibraryServer.Application.Exceptions;
 
-namespace LibraryServer.Application.Services;
+namespace LibraryServer.API.Services;
 
 internal class UserValidationService : IUserValidationService
 {

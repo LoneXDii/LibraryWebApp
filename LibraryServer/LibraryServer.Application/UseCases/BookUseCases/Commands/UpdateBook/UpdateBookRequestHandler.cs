@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using LibraryServer.Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 
 namespace LibraryServer.Application.UseCases.BookUseCases.Commands;
@@ -32,6 +30,7 @@ internal class UpdateBookRequestHandler(IUnitOfWork unitOfWork, IMapper mapper,
             request.BookWithImage.Book.Image = imageUrl;
         }
 
+        request.BookWithImage.Book.Id = bookDb.Id;
         mapper.Map(request.BookWithImage.Book, bookDb);
 
         await unitOfWork.BookRepository.UpdateAsync(bookDb);

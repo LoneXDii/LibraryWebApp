@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using LibraryServer.Application.DTO;
-using LibraryServer.Domain.Common.Exceptions;
+using LibraryServer.Application.Exceptions;
+using LibraryServer.Application.UseCases.BookUseCases.Commands;
 using LibraryServer.Domain.Entities;
 using LibraryServer.Tests.Common;
 using Microsoft.EntityFrameworkCore;
@@ -12,51 +13,52 @@ public class UpdateBookCommandTests : TestCommandBase
     [Fact]
     public async Task UpdateBookCommand_Success()
     {
-        var book = new BookDTO
+        //Arrange
+        var book = new BookWithImageFileDTO
         {
-            ISBN = "978-1-56619-909-9",
-            Title = "1111",
-            Description = "AaaAAa",
-            GenreId = 2,
-            AuthorId = 2,
-            Quantity = 2,
-            Image = "Some img"
+            Book = new BookDTO
+            {
+                ISBN = "978-1-56619-909-9",
+                Title = "1111",
+                Description = "AaaAAa",
+                GenreId = 2,
+                AuthorId = 2,
+                Quantity = 2,
+                Image = "Some img"
+            }
         };
 
-        await _bookService.UpdateAsync(1, book);
+        var command = new UpdateBookRequest(1, book);
+        var handler = new UpdateBookRequestHandler(_unitOfWork, _mapper, _blobService, _cfg);
+
+        //Act
+        await handler.Handle(command);
+
+        //Assert
         var expBook = await _dbContext.Books.FirstOrDefaultAsync(b => b.Id == 1);
 
         Assert.NotNull(expBook);
-        Assert.Equal(expBook.Title, book.Title);
-        Assert.Equal(expBook.ISBN, book.ISBN);
-        Assert.Equal(expBook.Image, book.Image);
-        Assert.Equal(expBook.Description, book.Description);
-        Assert.Equal(expBook.GenreId, book.GenreId);
-        Assert.Equal(expBook.AuthorId, book.AuthorId);
-        Assert.Equal(expBook.Quantity, book.Quantity);
+        Assert.Equal(expBook.Title, book.Book.Title);
+        Assert.Equal(expBook.ISBN, book.Book.ISBN);
+        Assert.Equal(expBook.Image, book.Book.Image);
+        Assert.Equal(expBook.Description, book.Book.Description);
+        Assert.Equal(expBook.GenreId, book.Book.GenreId);
+        Assert.Equal(expBook.AuthorId, book.Book.AuthorId);
+        Assert.Equal(expBook.Quantity, book.Book.Quantity);
     }
 
     [Fact]
     public async Task UpdateBookCommandTest_NotFoundError()
     {
-        var book = new BookDTO();
-        var exception = await Assert.ThrowsAsync<NotFoundException>(() => _bookService.UpdateAsync(123, book));
-    }
+        //Arrange
+        var book = new BookWithImageFileDTO();
+        var command = new UpdateBookRequest(123, book);
+        var handler = new UpdateBookRequestHandler(_unitOfWork, _mapper, _blobService, _cfg);
 
-    [Fact]
-    public async Task UpdateBookCommandTest_ValidationError()
-    {
-        var book = new BookDTO
-        {
-            ISBN = "123",
-            Title = "1111",
-            Description = "AaaAAa",
-            GenreId = 2,
-            AuthorId = 2,
-            Quantity = 2,
-            Image = "Some img"
-        };
+        //Act
+        var exception = await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(command));
 
-        var exception = await Assert.ThrowsAsync<ValidationException>(() => _bookService.UpdateAsync(1, book));
+        //Assert
+        Assert.Equal("No book with id=123", exception.Message);
     }
 }
