@@ -33,7 +33,6 @@ internal class UpdateBookRequestHandler(IUnitOfWork unitOfWork, IMapper mapper,
         }
 
         mapper.Map(request.BookWithImage.Book, bookDb);
-        //Validate(bookDb);
 
         await unitOfWork.BookRepository.UpdateAsync(bookDb);
         await unitOfWork.SaveAllAsync();

@@ -9,8 +9,6 @@ internal class AddGenreRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         var genreDb = mapper.Map<Genre>(request.Genre);
 
-        //Validate(genreDb);
-
         genreDb = await unitOfWork.GenreRepository.AddAsync(genreDb);
         await unitOfWork.SaveAllAsync();
 

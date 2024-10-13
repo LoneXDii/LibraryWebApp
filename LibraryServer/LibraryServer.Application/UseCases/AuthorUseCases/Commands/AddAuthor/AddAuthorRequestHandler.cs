@@ -9,8 +9,6 @@ internal class AddAuthorRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         var authorDb = mapper.Map<Author>(request.Author);
 
-        //Validate(authorDb);
-
         authorDb = await unitOfWork.AuthorRepository.AddAsync(authorDb);
         await unitOfWork.SaveAllAsync();
 

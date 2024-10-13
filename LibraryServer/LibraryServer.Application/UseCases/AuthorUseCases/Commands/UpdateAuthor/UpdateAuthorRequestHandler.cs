@@ -17,8 +17,6 @@ internal class UpdateAuthorRequestHandler(IUnitOfWork unitOfWork, IMapper mapper
 
         mapper.Map(request.Author, authorDb);
 
-        //Validate(authorDb);
-
         await unitOfWork.AuthorRepository.UpdateAsync(authorDb);
         await unitOfWork.SaveAllAsync();
     }

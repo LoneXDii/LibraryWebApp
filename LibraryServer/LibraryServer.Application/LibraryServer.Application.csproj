@@ -11,9 +11,11 @@
     <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="7.0.2" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.22.0" />
     <PackageReference Include="FluentValidation" Version="11.10.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="SharpGrip.FluentValidation.AutoValidation.Mvc" Version="1.4.0" />
   </ItemGroup>
 
   <ItemGroup>

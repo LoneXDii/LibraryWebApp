@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using MediatR;
+using FluentValidation;
 
 namespace LibraryServer.API.Controllers;
 

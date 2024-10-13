@@ -14,7 +14,6 @@ internal class UpdateGenreRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
         }
 
         mapper.Map(request.Genre, genreDb);
-        //Validate(genreDb);
 
         await unitOfWork.GenreRepository.UpdateAsync(genreDb);
         await unitOfWork.SaveAllAsync();

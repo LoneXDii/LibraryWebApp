@@ -2,9 +2,11 @@
 using LibraryServer.Application.Mapping;
 using LibraryServer.Application.Services;
 using LibraryServer.Application.Services.Interfaces;
-using LibraryServer.Domain;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using FluentValidation;
+using LibraryServer.Application.Validators;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+using System.Reflection;
 
 namespace LibraryServer.Application;
 
@@ -18,7 +20,10 @@ public static class DependencyInjection
                     }, typeof(AppMappingProfile))
                 .AddScoped<IUserValidationService, UserValidationService>()
                 .AddMediatR(cfg =>
-                    cfg.RegisterServicesFromAssemblies(typeof(DependencyInjection).Assembly));
+                    cfg.RegisterServicesFromAssemblies(typeof(DependencyInjection).Assembly))
+                .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
+                .AddFluentValidationAutoValidation();
+
 
         return services;
     }

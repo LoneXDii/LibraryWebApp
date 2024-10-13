@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace LibraryServer.Application.Validators;
 
-internal class GenreValidator : AbstractValidator<Genre>
+public class GenreValidator : AbstractValidator<GenreDTO>
 {
     public GenreValidator()
     {

@@ -2,7 +2,7 @@
 
 namespace LibraryServer.Application.Validators;
 
-internal class AuthorValidator : AbstractValidator<Author>
+public class AuthorValidator : AbstractValidator<AuthorDTO>
 {
     public AuthorValidator()
     {

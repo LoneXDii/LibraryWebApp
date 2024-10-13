@@ -19,7 +19,6 @@ internal class AddBookRequestHandler(IUnitOfWork unitOfWork, IMapper mapper,
             var imageUrl = (cfg["IMAGE_PATH"] ?? "https://localhost:7001/api/files/") + imageId.ToString();
             bookDb.Image = imageUrl;
         }
-        //Validate(bookDb);
 
         bookDb = await unitOfWork.BookRepository.AddAsync(bookDb);
         await unitOfWork.SaveAllAsync();
