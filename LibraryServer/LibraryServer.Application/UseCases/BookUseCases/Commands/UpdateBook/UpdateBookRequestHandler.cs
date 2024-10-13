@@ -28,7 +28,7 @@ internal class UpdateBookRequestHandler(IUnitOfWork unitOfWork, IMapper mapper,
             using Stream stream = request.BookWithImage.ImageFile.OpenReadStream();
             var imageId = await blobService.UploadAsync(stream, request.BookWithImage.ImageFile.ContentType);
 
-            var imageUrl = cfg["IMAGE_PATH"] ?? "https://localhost:7001/api/files/";
+            var imageUrl = (cfg["IMAGE_PATH"] ?? "https://localhost:7001/api/files/") + imageId.ToString();
             request.BookWithImage.Book.Image = imageUrl;
         }
 

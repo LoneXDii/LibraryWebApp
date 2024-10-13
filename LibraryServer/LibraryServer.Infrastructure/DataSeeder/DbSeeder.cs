@@ -1,10 +1,12 @@
 ﻿using LibraryServer.Domain.Abstactions.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LibraryServer.Infrastructure.DataSeeder;
 
-internal class DbSeeder : IDbSeeder { 
+internal class DbSeeder : IDbSeeder 
+{ 
     private readonly IConfiguration _cfg;
     private readonly IServiceProvider _serviceProvider;
 
@@ -18,6 +20,7 @@ internal class DbSeeder : IDbSeeder {
     {
         using var scope = _serviceProvider.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
         if (dbContext.Authors.Any())
         {
             return;
@@ -360,8 +363,6 @@ internal class DbSeeder : IDbSeeder {
                 }
         };
 
-        await dbContext.Database.EnsureDeletedAsync();
-        await dbContext.Database.EnsureCreatedAsync();
         await dbContext.Genres.AddRangeAsync(genres);
         await dbContext.Authors.AddRangeAsync(authors);
         await dbContext.SaveChangesAsync();

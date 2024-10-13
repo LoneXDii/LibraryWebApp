@@ -22,7 +22,6 @@ public class DbInitializer : IDbInitializer
 
     public async Task SeedData()
     {
-        //_dbContext.Database.EnsureCreated();
         if (await _roleManager.FindByNameAsync(Config.Admin) is null)
         {
             await _roleManager.CreateAsync(new IdentityRole(Config.Admin));

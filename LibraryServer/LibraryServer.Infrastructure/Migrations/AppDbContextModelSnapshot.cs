@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace LibraryServer.Domain.Migrations
+namespace LibraryServer.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -47,7 +47,7 @@ namespace LibraryServer.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
                 });
 
             modelBuilder.Entity("LibraryServer.Domain.Entities.Book", b =>
@@ -88,7 +88,7 @@ namespace LibraryServer.Domain.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("LibraryServer.Domain.Entities.Genre", b =>
@@ -109,7 +109,7 @@ namespace LibraryServer.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
                 });
 
             modelBuilder.Entity("LibraryServer.Domain.Entities.TakenBook", b =>
@@ -136,7 +136,7 @@ namespace LibraryServer.Domain.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("TakenBooks");
+                    b.ToTable("TakenBooks", (string)null);
                 });
 
             modelBuilder.Entity("LibraryServer.Domain.Entities.Book", b =>

@@ -4,7 +4,7 @@ WORKDIR /App
 COPY ["LibraryServer.sln", "./"]
 COPY ["LibraryServer.API/LibraryServer.API.csproj", "LibraryServer.API/"]
 COPY ["LibraryServer.Application/LibraryServer.Application.csproj", "LibraryServer.Application/"]
-COPY ["LibraryServer.DataAccess/LibraryServer.DataAccess.csproj", "LibraryServer.DataAccess/"]
+COPY ["LibraryServer.Infrastructure/LibraryServer.Infrastructure.csproj", "LibraryServer.Infrastructure/"]
 COPY ["LibraryServer.Domain/LibraryServer.Domain.csproj", "LibraryServer.Domain/"]
 
 RUN dotnet restore "./LibraryServer.API/LibraryServer.API.csproj"
