@@ -22,8 +22,11 @@ public static class DependencyInjection
                 .AddMediatR(cfg =>
                     cfg.RegisterServicesFromAssemblies(typeof(DependencyInjection).Assembly))
                 .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
-                .AddFluentValidationAutoValidation();
-
+                .AddFluentValidationAutoValidation(cfg => 
+                {
+                    cfg.EnableFormBindingSourceAutomaticValidation = true;
+                    cfg.EnableBodyBindingSourceAutomaticValidation = true;
+                });
 
         return services;
     }

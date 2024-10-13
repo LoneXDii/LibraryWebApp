@@ -1,8 +1,8 @@
-﻿using LibraryServer.Application.Services.Interfaces;
-using LibraryServer.Domain.Common.Models;
+﻿using LibraryServer.Domain.Common.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Attributes;
 
 namespace LibraryServer.API.Controllers;
 
@@ -51,6 +51,7 @@ public class BooksController : ControllerBase
 
     [HttpPost]
     [Authorize(Policy = "admin")]
+    [AutoValidation]
     public async Task<ActionResult<BookDTO>> PostBook([FromForm] BookWithImageFileDTO book)
     {
         var response = await _mediator.Send(new AddBookRequest(book));

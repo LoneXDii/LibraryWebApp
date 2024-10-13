@@ -12,98 +12,98 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Author>(entity =>
+        modelBuilder.Entity<Author>(author =>
         {
-            entity.ToTable("Authors");
+            author.ToTable("Authors");
 
-            entity.HasKey(e => e.Id);
+            author.HasKey(a => a.Id);
 
-            entity.Property(e => e.Name)
+            author.Property(a => a.Name)
                   .IsRequired()
                   .HasColumnType("longtext");
 
-            entity.Property(e => e.Surname)
+            author.Property(a => a.Surname)
                   .IsRequired()
                   .HasColumnType("longtext");
 
-            entity.Property(e => e.Country)
+            author.Property(a => a.Country)
                   .IsRequired()
                   .HasColumnType("longtext");
 
-            entity.Property(e => e.DateOfBirth)
+            author.Property(a => a.DateOfBirth)
                   .IsRequired()
                   .HasColumnType("datetime(6)");
         });
 
-        modelBuilder.Entity<Genre>(entity =>
+        modelBuilder.Entity<Genre>(genre =>
         {
-            entity.ToTable("Genres");
+            genre.ToTable("Genres");
 
-            entity.HasKey(e => e.Id);
+            genre.HasKey(g => g.Id);
 
-            entity.Property(e => e.Name)
-                  .IsRequired()
-                  .HasColumnType("longtext");
+            genre.Property(g => g.Name)
+                 .IsRequired()
+                 .HasColumnType("longtext");
 
-            entity.Property(e => e.NormalizedName)
-                  .IsRequired()
-                  .HasColumnType("longtext");
+            genre.Property(g => g.NormalizedName)
+                 .IsRequired()
+                 .HasColumnType("longtext");
         });
 
-        modelBuilder.Entity<Book>(entity =>
+        modelBuilder.Entity<Book>(book =>
         {
-            entity.ToTable("Books");
+            book.ToTable("Books");
 
-            entity.HasKey(e => e.Id);
+            book.HasKey(b => b.Id);
 
-            entity.Property(e => e.ISBN)
+            book.Property(b => b.ISBN)
                   .IsRequired()
                   .HasColumnType("longtext");
 
-            entity.Property(e => e.Title)
+            book.Property(b => b.Title)
                   .IsRequired()
                   .HasColumnType("longtext");
 
-            entity.Property(e => e.Description)
+            book.Property(b => b.Description)
                   .IsRequired()
                   .HasColumnType("longtext");
 
-            entity.Property(e => e.Quantity)
+            book.Property(b => b.Quantity)
                   .IsRequired()
                   .HasColumnType("int");
 
-            entity.Property(e => e.Image)
+            book.Property(b => b.Image)
                   .HasColumnType("longtext");
 
-            entity.HasOne(d => d.Author)
-                  .WithMany(p => p.Books)
-                  .HasForeignKey(d => d.AuthorId);
+            book.HasOne(b => b.Author)
+                  .WithMany(a => a.Books)
+                  .HasForeignKey(b => b.AuthorId);
 
-            entity.HasOne(d => d.Genre)
+            book.HasOne(b => b.Genre)
                   .WithMany()
-                  .HasForeignKey(d => d.GenreId);
+                  .HasForeignKey(b => b.GenreId);
         });
 
-        modelBuilder.Entity<TakenBook>(entity =>
+        modelBuilder.Entity<TakenBook>(takenBook =>
         {
-            entity.ToTable("TakenBooks");
+            takenBook.ToTable("TakenBooks");
 
-            entity.HasKey(e => e.Id);
+            takenBook.HasKey(tb => tb.Id);
 
-            entity.Property(e => e.UserId)
-                  .HasColumnType("longtext");
+            takenBook.Property(tb => tb.UserId)
+                     .HasColumnType("longtext");
 
-            entity.Property(e => e.TimeOfTake)
-                  .IsRequired()
-                  .HasColumnType("datetime(6)");
+            takenBook.Property(tb => tb.TimeOfTake)
+                     .IsRequired()
+                     .HasColumnType("datetime(6)");
 
-            entity.Property(e => e.TimeToReturn)
-                  .IsRequired()
-                  .HasColumnType("datetime(6)");
+            takenBook.Property(tb => tb.TimeToReturn)
+                     .IsRequired()
+                     .HasColumnType("datetime(6)");
 
-            entity.HasOne(d => d.Book)
-                  .WithMany()
-                  .HasForeignKey(d => d.BookId);
+            takenBook.HasOne(tb => tb.Book)
+                     .WithMany()
+                     .HasForeignKey(tb => tb.BookId);
         });
     }
 

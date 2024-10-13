@@ -22,6 +22,7 @@ export default function BookCreate(){
     const [isbnError, setIsbnError] = useState(false)
     const [descriptionError, setDestriptionError] = useState(false)
     const [quantityError, setQuantityError] = useState(false)
+    const [isbnErrorMessage, setIsbnErrorMessage] = useState((<></>))
 
     const handleChange = (e) => { 
         const { name, value } = e.target;
@@ -54,13 +55,28 @@ export default function BookCreate(){
         setDestriptionError(!isDescriptionOk)
         setQuantityError(!isQuantityOk)
         setIsbnError(!isIsbnOk)
+        setIsbnErrorMessage((<></>))
 
         if(!(isDescriptionOk && isIsbnOk && isQuantityOk && isTitleOk)){
             return
         }
 
-        let response = await BookService.CreateBook(book, imageFile)
-        handleGoBack()
+        let error = await BookService.CreateBook(book, imageFile)
+        if (!error){
+            handleGoBack()
+        }
+        else{
+            let errMessage = ""
+            for (const key in error.response.data.errors) {
+                if (error.response.data.errors.hasOwnProperty(key)) {
+                  errMessage += error.response.data.errors[key]
+                }
+            }
+            console.log(errMessage)
+            setIsbnErrorMessage((<div className="alert alert-danger" role="alert">
+            {errMessage}
+        </div>))
+        }
     }
 
     function handleGoBack(){
@@ -78,6 +94,7 @@ export default function BookCreate(){
             </div>
             <div>
                 <label>ISBN:</label>
+                {isbnErrorMessage}
                 <input type="text" name="isbn" className="form-control" 
                        value={book.isbn} onChange={handleChange}
                        style={{border: isbnError ? '2px solid red' : null}} 

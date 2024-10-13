@@ -90,6 +90,7 @@ export class BookService{
         catch(error){
             console.log('Error in saving book')
             console.log(error)
+            return error
         }
     }
 
