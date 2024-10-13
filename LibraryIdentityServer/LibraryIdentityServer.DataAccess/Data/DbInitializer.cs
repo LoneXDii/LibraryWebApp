@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using IdentityModel;
-using LibraryIdentityServer.Application.IdentityConfiguration;
+using LibraryIdentityServer.Domain.Data;
 using LibraryIdentityServer.DataAcess.Data;
+using Microsoft.EntityFrameworkCore;
+using LibraryIdentityServer.Domain.IdentityConfiguration;
 
-namespace LibraryIdentityServer.API.Temp;
+namespace LibraryIdentityServer.DataAccess.Data;
 
 public class DbInitializer : IDbInitializer
 {
@@ -22,6 +24,8 @@ public class DbInitializer : IDbInitializer
 
     public async Task SeedData()
     {
+        _dbContext.Database.Migrate();
+
         if (await _roleManager.FindByNameAsync(Config.Admin) is null)
         {
             await _roleManager.CreateAsync(new IdentityRole(Config.Admin));

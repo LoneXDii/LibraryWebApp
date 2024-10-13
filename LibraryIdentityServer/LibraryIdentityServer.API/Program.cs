@@ -1,6 +1,6 @@
 using LibraryIdentityServer.API.Middleware;
-using LibraryIdentityServer.API.Temp;
 using LibraryIdentityServer.Application;
+using LibraryIdentityServer.Domain.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,8 +16,6 @@ var usersDataBase = builder.Configuration["MYSQL_DATABASE2"] ?? builder.Configur
 var connStr = $"server={host};user={user};password={password};port={port};database={usersDataBase}";
 
 builder.Services.AddApplication(connStr, builder.Configuration);
-
-builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

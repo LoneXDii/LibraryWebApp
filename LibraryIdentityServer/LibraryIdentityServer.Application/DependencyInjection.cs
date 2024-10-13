@@ -1,9 +1,9 @@
 ﻿using Duende.IdentityServer.Services;
-using LibraryIdentityServer.Application.IdentityConfiguration;
 using LibraryIdentityServer.Application.Services;
 using LibraryIdentityServer.Application.Services.Interfaces;
 using LibraryIdentityServer.DataAcess;
 using LibraryIdentityServer.Domain.Common.Models;
+using LibraryIdentityServer.Domain.IdentityConfiguration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

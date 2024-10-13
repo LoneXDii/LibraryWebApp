@@ -8,7 +8,6 @@ public class AppDbContext : IdentityDbContext<AppUser>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
-        Database.Migrate();
     }
 
     public DbSet<AppUser> AppUsers { get; set; }

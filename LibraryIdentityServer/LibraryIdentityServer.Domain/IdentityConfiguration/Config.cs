@@ -1,7 +1,7 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 
-namespace LibraryIdentityServer.Application.IdentityConfiguration;
+namespace LibraryIdentityServer.Domain.IdentityConfiguration;
 
 public static class Config
 {

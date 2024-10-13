@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using IdentityModel;
-using LibraryIdentityServer.Application.IdentityConfiguration;
 using LibraryIdentityServer.Application.Models;
 using LibraryIdentityServer.Application.Services.Interfaces;
 using LibraryIdentityServer.Application.Validators;
 using LibraryIdentityServer.Domain.Common.Models;
+using LibraryIdentityServer.Domain.IdentityConfiguration;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using System.Text;
