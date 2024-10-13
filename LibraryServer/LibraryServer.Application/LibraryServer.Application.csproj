@@ -13,10 +13,11 @@
     <PackageReference Include="FluentValidation" Version="11.10.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LibraryServer.Infrastructure\LibraryServer.Infrastructure.csproj" />
+    <ProjectReference Include="..\LibraryServer.Domain\LibraryServer.Domain.csproj" />
   </ItemGroup>
 
 </Project>

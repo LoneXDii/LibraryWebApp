@@ -10,10 +10,9 @@ namespace LibraryServer.Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services, string? connStr, IConfiguration cfg)
+    public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddDataAcess(connStr, cfg)
-                .AddAutoMapper(cfg =>
+        services.AddAutoMapper(cfg =>
                     {
                         cfg.AddExpressionMapping();
                     }, typeof(AppMappingProfile))

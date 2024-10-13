@@ -1,14 +1,22 @@
-﻿using LibraryServer.Domain.BlobStorage;
-using LibraryServer.Domain.Data;
-using LibraryServer.Domain.Entities;
+﻿using LibraryServer.Domain.Abstactions.Data;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace LibraryServer.API.Temp;
+namespace LibraryServer.Infrastructure.DataSeeder;
 
-public class DbInitializer
-{
-    public static async Task SeedData(WebApplication app)
+internal class DbSeeder : IDbSeeder { 
+    private readonly IConfiguration _cfg;
+    private readonly IServiceProvider _serviceProvider;
+
+    public DbSeeder(IConfiguration cfg, IServiceProvider serviceProvider)
     {
-        using var scope = app.Services.CreateScope();
+        _cfg = cfg;
+        _serviceProvider = serviceProvider;
+    }
+
+    public async Task SeedDataAsync()
+    {
+        using var scope = _serviceProvider.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         if (dbContext.Authors.Any())
         {
@@ -16,7 +24,7 @@ public class DbInitializer
         }
 
         var blobService = scope.ServiceProvider.GetRequiredService<IBlobService>();
-        var appUri =  app.Configuration["IMAGE_PATH"] ?? "https://localhost:7001/api/files/";
+        var appUri = _cfg["IMAGE_PATH"] ?? "https://localhost:7001/api/files/";
 
         var imagePaths = new List<string>();
 
@@ -29,56 +37,56 @@ public class DbInitializer
             var guid = await blobService.UploadAsync(stream, "image/jpeg");
             imagePaths.Add(appUri + guid.ToString());
         }
-        
+
         List<Genre> genres = new List<Genre>
         {
-            new Genre 
-            { 
-                Name = "Science Fiction",                     
+            new Genre
+            {
+                Name = "Science Fiction",
                 NormalizedName = "science-fiction"
             },
             new Genre
-            { 
+            {
                 Name = "Fantasy",
                 NormalizedName = "fantasy"
             },
-            new Genre 
-            { 
+            new Genre
+            {
                 Name = "Mystery",
                 NormalizedName = "mystery"
             },
-            new Genre 
-            { 
-                Name = "Thriller", 
+            new Genre
+            {
+                Name = "Thriller",
                 NormalizedName = "thriller"
             },
-            new Genre 
-            { 
+            new Genre
+            {
                 Name = "Romance",
                 NormalizedName = "romance"
             },
-            new Genre 
-            { 
+            new Genre
+            {
                 Name = "Horror",
                 NormalizedName = "horror"
             },
-            new Genre 
-            { 
+            new Genre
+            {
                 Name = "Historical",
                 NormalizedName = "historical"
             },
-            new Genre 
-            { 
+            new Genre
+            {
                 Name = "Biography",
                 NormalizedName = "biography"
             },
-            new Genre 
-            { 
+            new Genre
+            {
                 Name = "Self-Help",
                 NormalizedName = "self-help"
             },
-            new Genre 
-            { 
+            new Genre
+            {
                 Name = "Non-Fiction",
                 NormalizedName = "non-fiction"
             }

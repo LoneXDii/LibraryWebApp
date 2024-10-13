@@ -1,6 +1,7 @@
 using LibraryServer.API.Middleware;
-using LibraryServer.API.Temp;
 using LibraryServer.Application;
+using LibraryServer.Domain;
+using LibraryServer.Domain.Abstactions.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
@@ -20,7 +21,9 @@ var user = builder.Configuration["MYSQL_USER"] ?? builder.Configuration.GetConne
 var usersDataBase = builder.Configuration["MYSQL_DATABASE"] ?? builder.Configuration.GetConnectionString("MYSQL_DATABASE");
 
 var connStr = $"server={host};user={user};password={password};port={port};database={usersDataBase}";
-builder.Services.AddApplication(connStr, builder.Configuration);
+
+builder.Services.AddInfrastructure(connStr, builder.Configuration)
+                .AddApplication();
 
 var key = builder.Configuration.GetValue<string>("Kestrel:Secret");
 
@@ -53,8 +56,13 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<IDbSeeder>();
+    await seeder.SeedDataAsync();
+}
+
 app.UseMiddleware<ExceptionMiddleware>();
-await DbInitializer.SeedData(app);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
