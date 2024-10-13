@@ -11,7 +11,9 @@ internal class ListBookWithPaginationRequestHandler(IUnitOfWork unitOfWork, IMap
         int _maxPageSize = 21;
         int pageSize = request.PageSize;
         if (pageSize > _maxPageSize)
+        {
             pageSize = _maxPageSize;
+        }
 
         var dataList = new PaginatedListModel<Book>();
 
