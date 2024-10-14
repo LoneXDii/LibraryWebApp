@@ -1,5 +1,5 @@
 ﻿using LibraryIdentityServer.Application.Models;
-using LibraryIdentityServer.Application.Services.Interfaces;
+using LibraryIdentityServer.Application.UseCases.CreateUser;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryIdentityServer.API.Controllers;
@@ -8,18 +8,18 @@ namespace LibraryIdentityServer.API.Controllers;
 [ApiController]
 public class UsersController : ControllerBase
 {
-    private readonly IUserService _userService;
+    private readonly ICreateUserUseCase _createUserUseCase;
 
-    public UsersController(IUserService userService)
+    public UsersController(ICreateUserUseCase createUserUseCase)
     {
-        _userService = userService;
+        _createUserUseCase = createUserUseCase;
     }
 
     [HttpPost]
     [Route("register")]
     public async Task<IActionResult> Register(RegisterModel model)
     {
-        await _userService.CreateUserAsync(model);
+        await _createUserUseCase.ExecuteAsync(model);
         return Ok();
     }
 }

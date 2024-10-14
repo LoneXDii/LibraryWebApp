@@ -1,11 +1,15 @@
 ﻿using Duende.IdentityServer.Services;
+using FluentValidation;
+using LibraryIdentityServer.Application.Mapping;
 using LibraryIdentityServer.Application.Services;
-using LibraryIdentityServer.Application.Services.Interfaces;
+using LibraryIdentityServer.Application.UseCases.CreateUser;
 using LibraryIdentityServer.DataAcess;
 using LibraryIdentityServer.Domain.Common.Models;
 using LibraryIdentityServer.Domain.IdentityConfiguration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+using System.Reflection;
 
 namespace LibraryIdentityServer.Application;
 
@@ -31,7 +35,10 @@ public static class DependencyInjection
                 .AddProfileService<ProfileService>();
 
         services.AddScoped<IProfileService, ProfileService>()
-                .AddScoped<IUserService, UserService>();
+                .AddScoped<ICreateUserUseCase, CreateUserUseCase>()
+                .AddAutoMapper(typeof(AppMappingProfile))
+                .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
+                .AddFluentValidationAutoValidation();
 
         return services;
     }

@@ -12,9 +12,9 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddAutoMapper(cfg =>
-                    {
-                        cfg.AddExpressionMapping();
-                    }, typeof(AppMappingProfile))
+                 {
+                    cfg.AddExpressionMapping();
+                 }, typeof(AppMappingProfile))
                 .AddMediatR(cfg =>
                     cfg.RegisterServicesFromAssemblies(typeof(DependencyInjection).Assembly))
                 .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())

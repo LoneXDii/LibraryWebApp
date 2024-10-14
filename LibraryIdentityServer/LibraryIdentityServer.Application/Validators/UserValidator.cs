@@ -3,7 +3,7 @@ using LibraryIdentityServer.Application.Models;
 
 namespace LibraryIdentityServer.Application.Validators;
 
-internal class UserValidator : AbstractValidator<RegisterModel>
+public class UserValidator : AbstractValidator<RegisterModel>
 {
     public UserValidator()
     {
