@@ -114,7 +114,7 @@ export class BookService{
     }
 
     static async getTakenBooks(){
-        let uri = ApiConfiguration.apiBaseUri + `api/library/user-books/${AuthenticationService.userId}`
+        let uri = ApiConfiguration.apiBaseUri + `api/library/user-books`
         let response = await apiService.get(uri)
         return response.data
     }

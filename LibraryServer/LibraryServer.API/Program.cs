@@ -1,6 +1,4 @@
 using LibraryServer.API.Middleware;
-using LibraryServer.API.Services.Interfaces;
-using LibraryServer.API.Services;
 using LibraryServer.Application;
 using LibraryServer.Domain;
 using LibraryServer.Domain.Abstactions.Data;
@@ -26,8 +24,7 @@ var usersDataBase = builder.Configuration["MYSQL_DATABASE"] ?? builder.Configura
 var connStr = $"server={host};user={user};password={password};port={port};database={usersDataBase}";
 
 builder.Services.AddInfrastructure(connStr, builder.Configuration)
-                .AddApplication()
-                .AddScoped<IUserValidationService, UserValidationService>();
+                .AddApplication();
 
 var key = builder.Configuration.GetValue<string>("Kestrel:Secret");
 
